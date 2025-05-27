@@ -8,7 +8,7 @@
 select
     '{{ framework }}' as framework,
     '{{ check_id }}' as check_id,
-    'EBS Volumes should be encrypted' as title,
+    'EBS Volumes should be encrypted at rest' as title,
     arn as identifier,
     null as metadata,
     case when encrypted = true
