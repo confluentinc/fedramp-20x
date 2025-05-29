@@ -11,7 +11,7 @@ select
     'RDS Clusters should be encrypted at rest' as title,
     arn as identifier,
     null as metadata,
-    case when encrypted = true
+    case when storage_encrypted = true
              then 'pass'
          else 'fail'
         end as status

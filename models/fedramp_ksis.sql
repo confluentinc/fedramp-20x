@@ -1,15 +1,116 @@
 with
     aggregated as (
-        -- KSI SC
-      ({{ ebs_volumes_should_be_encrypted_at_rest('KSI_SC', '1.0') }})
-        {{ union() }}
-      ({{ rds_clusters_should_be_encrypted_at_rest('KSI_SC', '1.1') }})
-        {{ union() }}
-      ({{ s3_buckets_should_be_encrypted_at_rest('KSI_SC', '1.2') }})
-        {{ union() }}
-      ({{ elasticache_clusters_should_be_encrypted_at_rest('KSI_SC', '1.3') }})
-        {{ union() }}
-      ({{ elasticache_replication_groups_should_be_encrypted_at_rest('KSI_SC', '1.4') }})
+        -- KSI-CNA-01: Configure ALL information resources to limit inbound and outbound traffic
+        -- KSI-CNA-02: Design systems to minimize the attack surface and minimize lateral movement if compromised
+        {{ daemonsets_should_run_as_non_root('KSI-CNA-02', '1.0') }}
+            {{ union() }}
+        {{ deployments_should_run_as_non_root('KSI-CNA-02', '1.1') }}
+            {{ union() }}
+        {{ statefulsets_should_run_as_non_root('KSI-CNA-02', '1.2') }}
+            {{ union() }}
+        -- KSI-CNA-03: Use logical networking and related capabilities to enforce traffic flow controls
+        -- KSI-CNA-04: Use immutable infrastructure with strictly defined functionality and privileges by default
+        /* Disabled while aws_ecr_repositories is not present in BigQuery
+        ({{ ecr_repositories_should_have_immutable_tags('KSI-CNA-04', '1.0') }})
+            {{ union() }} */
+
+        -- KSI-CNA-05: Have denial of service protection
+        -- KSI-CNA-06: Design systems for high availability and rapid recovery
+        ({{ rds_instances_should_be_multi_az('KSI-CNA-06', '1.0') }})
+            {{ union() }}
+        ({{ rds_clusters_should_be_multi_az('KSI-CNA-06', '1.1') }})
+            {{ union() }}
+        ({{ redis_replication_groups_should_have_automatic_failover_enabled('KSI-CNA-06', '1.2') }})
+            {{ union() }}
+        ({{ elb_should_be_multi_az('KSI-CNA-06', '1.3') }})
+            {{ union() }}
+
+        -- KSI-CNA-07: Ensure cloud-native information resources are implemented based on host provider’s best practices and documented guidance
+
+        -- KSI-SVC-01: Harden and review network and system configurations
+        -- KSI-SVC-02: Encrypt or otherwise secure network traffic
+        ({{ rds_clusters_should_prohibit_public_access('KSI-SVC-02', '1.0') }})
+            {{ union() }}
+        ({{ rds_db_instances_should_prohibit_public_access('KSI-SVC-02', '1.1') }})
+            {{ union() }}
+        /* Disabled due to aws_rds_snapshots not being present in BigQuery
+        ({{ rds_snapshots_should_prohibit_public_access('KSI-SVC-02', '1.2') }})
+            {{ union() }} */
+        ({{ s3_buckets_should_not_be_publicly_accessible('KSI-SVC-02', '1.3') }})
+            {{ union() }}
+        ({{ elb_should_redirect_http_to_https('KSI-SVC-02', '1.4') }})
+            {{ union() }}
+        ({{ redis_replication_groups_should_be_encrypted_in_transit('KSI-CNA-06', '1.3')}})
+            {{ union() }}
+
+        -- KSI-SVC-03: Encrypt all federal and sensitive information at rest
+        ({{ ebs_volumes_should_be_encrypted_at_rest('KSI-SVC-03', '1.0') }})
+            {{ union() }}
+        ({{ rds_clusters_should_be_encrypted_at_rest('KSI-SVC-03', '1.1') }})
+            {{ union() }}
+        ({{ rds_db_instances_should_be_encrypted_at_rest('KSI-SVC-03', '1.2')}})
+            {{ union() }}
+        ({{ s3_buckets_should_be_encrypted_at_rest('KSI-SVC-03', '1.3') }})
+            {{ union() }}
+        ({{ elasticache_clusters_should_be_encrypted_at_rest('KSI-SVC-03', '1.4') }})
+            {{ union() }}
+        ({{ elasticache_replication_groups_should_be_encrypted_at_rest('KSI-SVC-03', '1.5') }})
+            {{ union() }}
+        -- KSI-SVC-04: Manage configuration centrally
+        -- KSI-SVC-05: Enforce system and information resource integrity through cryptographic means
+        -- KSI-SVC-06: Use automated key management systems to manage, protect, and regularly rotate digital keys and certificates
+        ({{ kms_key_should_have_rotation_enabled('KSI-SVC-06', '1.0') }})
+            {{ union() }}
+        ({{ cmk_should_have_rotation_enabled('KSI-SVC-06', '1.1') }})
+            {{ union() }}
+        -- KSI-SVC-07: Use a consistent, risk-informed approach for applying security patches
+
+        -- KSI-IAM-01: Enforce multi-factor authentication (MFA) using methods that are difficult to intercept or impersonate (phishing-resistant MFA) for all user authentication
+        -- KSI-IAM-02: Use secure passwordless methods for user authentication and authorization when feasible, otherwise enforce strong passwords with MFA
+        -- KSI-IAM-03: Enforce appropriately secure authentication methods for non-user accounts and services
+        -- KSI-IAM-04: Use a least-privileged, role and attribute-based, and just-in-time security authorization model for all user and non-user accounts and services
+        -- KSI-IAM-05: Apply zero trust design principles
+        -- KSI-IAM-06: Automatically disable or otherwise secure accounts with privileged access in response to suspicious activity
+
+        -- KSI-MLA-01: Operate a Security Information and Event Management (SIEM) or similar system(s) for centralized, tamper-resistent logging of events, activities, and changes
+        -- KSI-MLA-02: Regularly review and audit logs
+        -- KSI-MLA-03: Rapidly detect and remediate or mitigate vulnerabilities
+        -- KSI-MLA-04: Perform authenticated vulnerability scanning on information resources
+        -- KSI-MLA-05: Perform Infrastructure as Code and configuration evaluation and testing
+        -- KSI-MLA-06: Centrally track and prioritize the mitigation and/or remediation of identified vulnerabilities
+
+        -- KSI-CMT-01: Log and monitor system modifications
+        -- KSI-CMT-02: Execute changes though redeployment of version controlled immutable resources rather than direct modification wherever possible
+        -- KSI-CMT-03: Implement automated testing and validation of changes prior to deployment
+        -- KSI-CMT-04: Have a documented change management procedure
+        -- KSI-CMT-05: Evaluate the risk and potential impact of any change
+
+        -- KSI-PIY-01: Have an up-to-date information resource inventory or code defining all deployed assets, software, and services
+        -- KSI-PIY-02: Have policies outlining the security objectives of all information resources
+        -- KSI-PIY-03: Maintain a vulnerability disclosure program
+        -- KSI-PIY-04: Build security considerations into the Software Development Lifecycle and align with CISA Secure By Design principles
+        -- KSI-PIY-05: Document methods used to evaluate information resource implementations
+        -- KSI-PIY-06: Have a dedicated staff and budget for security with executive support, commensurate with the size, complexity, scope, and risk of the service offering
+        -- KSI-PIY-07: Document risk management decisions for software supply chain security
+
+        -- KSI-TPR-01: Identify all third-party information resources
+        -- KSI-TPR-02: Regularly confirm that services handling federal information **or** are likely to impact the confidentiality, integrity, or availability of federal information are FedRAMP authorized and securely configured
+        -- KSI-TPR-03: Identify and prioritize mitigation of potential supply chain risks
+        -- KSI-TPR-04: Monitor third party software information resources for upstream vulnerabilities, with contractual notification requirements or active monitoring services
+
+        -- KSI-CED-01: Ensure all employees receive security awareness training
+        -- KSI-CED-02: Require role-specific training for high risk roles, including at least roles with privileged access
+
+        -- KSI-RPL-01: Define Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO)
+        -- KSI-RPL-02: Develop and maintain a recovery plan that aligns with the defined recovery objectives
+        -- KSI-RPL-03: Perform system backups aligned with recovery objectives
+        ({{ rds_clusters_should_have_backup_recovery('KSI-RPL-03', '1.0') }})
+
+        -- KSI-RPL-04: Regularly test the capability to recover from incidents and contingencies
+
+        -- KSI-INR-01: Report incidents according to FedRAMP requirements and cloud service provider policies
+        -- KSI-INR-02: Maintain a log of incidents and periodically review past incidents for patterns or vulnerabilities
+        -- KSI-INR-03: Generate after action reports and regularly incorporate lessons learned into operations
     )
 select
     {{ gen_timestamp() }},
