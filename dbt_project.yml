@@ -16,5 +16,7 @@ clean-targets:
 
 models:
   fedramp_20x:
+    fedramp_ksis:
+      +materialized: table
     k8s_container_images:
       +materialized: table
