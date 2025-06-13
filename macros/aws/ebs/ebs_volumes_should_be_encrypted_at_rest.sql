@@ -15,5 +15,6 @@ select
          then 'pass'
          else 'fail'
     end as status
-from {{ full_table_name("aws_ebs_volumes") }}
+from {{ full_table_name("aws_ec2_ebs_volumes") }}
+WHERE {{ partition_filter() }}
 {% endmacro %}

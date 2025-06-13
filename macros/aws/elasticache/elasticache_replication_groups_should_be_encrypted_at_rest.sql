@@ -16,4 +16,5 @@ select
          else 'fail'
         end as status
 from {{ full_table_name("aws_elasticache_replication_groups") }}
+WHERE {{ partition_filter() }}
 {% endmacro %}
