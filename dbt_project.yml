@@ -20,10 +20,3 @@ models:
       +materialized: table
     k8s_container_images:
       +materialized: table
-    fedramp_ksis:
-      +materialized: table
-
-vars:
-  default_system_namespaces:
-    - "kube-system"
-    - "gke-mcs"
