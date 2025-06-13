@@ -22,6 +22,9 @@ with
         ({{ k8s_clusters_should_have_enforcement_webhooks('KSI-SVC-04', '1.0') }})
             {{ union() }}
         ({{ k8s_has_image_enforcement_policies('KSI-SVC-04', '1.1') }})
+            {{ union() }}
+        ({{ k8s_image_enforcement_policies_should_not_ignore_failures('KSI-SVC-04', '1.2') }})
+
     )
 select
     {{ gen_timestamp() }},
