@@ -9,7 +9,7 @@
 select
     '{{ framework }}' as framework,
     '{{ check_id }}' as check_id,
-    'Kubernetes clusters should have image verifier installed' as title,
+    'Kubernetes clusters should have enforcement webhooks installed' as title,
     cluster.arn as identifier,
     null as metadata,
     case
@@ -20,5 +20,6 @@ select
 from {{ full_table_name("aws_eks_clusters") }} as cluster
 right join {{ full_table_name("k8s_admissionregistration_validating_webhook_configurations") }} as vw
 on cluster.name = vw.context
-where TIMESTAMP_TRUNC(cluster._cq_sync_time, DAY) = TIMESTAMP(CURRENT_DATE())
+where vw.name = '{{ var("image_signing_webhook") }}'
+and TIMESTAMP_TRUNC(cluster._cq_sync_time, DAY) = TIMESTAMP(CURRENT_DATE())
 {% endmacro %}
