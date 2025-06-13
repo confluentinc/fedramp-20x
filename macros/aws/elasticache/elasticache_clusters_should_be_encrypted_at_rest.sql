@@ -14,7 +14,8 @@ select
     case when at_rest_encryption_enabled = true
         then 'pass'
         else 'fail'
-    end as status
+    end as status,
+    tags,
 from {{ full_table_name("aws_elasticache_clusters") }}
 WHERE {{ partition_filter() }}
 {% endmacro %}

@@ -14,7 +14,8 @@ select
     case when storage_encrypted = true
              then 'pass'
          else 'fail'
-        end as status
+        end as status,
+    tags
 from {{ full_table_name("aws_rds_instances") }}
 WHERE {{ partition_filter() }}
 {% endmacro %}
