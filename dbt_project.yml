@@ -20,3 +20,14 @@ models:
       +materialized: table
     k8s_container_images:
       +materialized: table
+
+vars:
+  iac_tagging_scheme:
+    key: ""
+    values: []
+  ksi_cmt_02_tables:
+    - "aws_s3_buckets"
+    - "aws_elasticache_clusters"
+    - "aws_rds_clusters"
+    - "aws_rds_instances"
+    - "aws_ec2_vpcs"
