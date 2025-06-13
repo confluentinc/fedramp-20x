@@ -1,15 +1,15 @@
 -- Ensure that all of our Gatekeeper policies are in enforcement mode
-{% macro k8s_gatekeeper_should_be_enforcing(framework, check_id) %}
-  {{ return(adapter.dispatch('k8s_gatekeeper_should_be_enforcing')(framework, check_id)) }}
+{% macro k8s_has_image_enforcement_policies(framework, check_id) %}
+  {{ return(adapter.dispatch('k8s_has_image_enforcement_policies')(framework, check_id)) }}
 {% endmacro %}
 
-{% macro default__k8s_gatekeeper_should_be_enforcing(framework, check_id) %}{% endmacro %}
+{% macro default__k8s_has_image_enforcement_policies(framework, check_id) %}{% endmacro %}
 
-{% macro bigquery__k8s_gatekeeper_should_be_enforcing(framework, check_id) %}
+{% macro bigquery__k8s_has_image_enforcement_policies(framework, check_id) %}
 select
     '{{ framework }}' as framework,
     '{{ check_id }}' as check_id,
-    'Kubernetes clusters should have gatekeeper in enforcement mode' as title,
+    'Kubernetes clusters should have image policies in enforcement mode' as title,
     cluster.arn as identifier,
     null as metadata,
     case
@@ -20,10 +20,6 @@ select
 from {{ full_table_name("aws_eks_clusters") }} as cluster
 right join {{ full_table_name("k8s_custom_resources") }} as cr
 on cluster.name = cr.context
-where cr.kind in (
-    'K8sExternalDataCosign',
-    'K8sExternalDataCosignEphemeralContainers',
-    'K8sExternalDataCosignInitContainers'
-)
+where cr.kind in ({{ to_sql_list(var("policy_enforcement_crds"))}})
 and TIMESTAMP_TRUNC(cluster._cq_sync_time, DAY) = TIMESTAMP(CURRENT_DATE())
     {% endmacro %}

@@ -19,9 +19,9 @@ with
             {{ union() }}
 
         -- KSI-SVC-05: Enforce system and information resource integrity through cryptographic means
-        ({{ k8s_clusters_should_have_image_verifier('KSI-SVC-04', '1.0') }})
+        ({{ k8s_clusters_should_have_enforcement_webhooks('KSI-SVC-04', '1.0') }})
             {{ union() }}
-        ({{ k8s_gatekeeper_should_be_enforcing('KSI-SVC-04', '1.1') }})
+        ({{ k8s_has_image_enforcement_policies('KSI-SVC-04', '1.1') }})
     )
 select
     {{ gen_timestamp() }},
