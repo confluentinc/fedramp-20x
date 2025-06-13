@@ -13,3 +13,8 @@ target-path: "target"
 clean-targets:
   - "target"
   - "dbt_packages"
+
+models:
+  fedramp_20x:
+    fedramp_ksis:
+      +materialized: table

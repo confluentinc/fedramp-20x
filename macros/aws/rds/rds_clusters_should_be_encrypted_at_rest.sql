@@ -14,6 +14,7 @@ select
     case when encrypted = true
              then 'pass'
          else 'fail'
-        end as status
+        end as status,
+    tags
 from {{ full_table_name("aws_rds_clusters") }}
 {% endmacro %}
