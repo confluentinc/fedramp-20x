@@ -5,7 +5,7 @@ with
         {{ alb_should_have_acceptable_tls_policy('KSI-SVC-02', '1.0')}}
             {{ union() }}
         {{ alb_should_redirect_plaintext_ports('KSI-SVC-02', '1.1')}}
-
+            {{ union() }}
         -- KSI-SVC-03: Encrypt all federal and sensitive information at rest
         ({{ ebs_volumes_should_be_encrypted_at_rest('KSI_SC', '1.0') }})
             {{ union() }}
@@ -16,6 +16,9 @@ with
         ({{ elasticache_clusters_should_be_encrypted_at_rest('KSI_SC', '1.3') }})
             {{ union() }}
         ({{ elasticache_replication_groups_should_be_encrypted_at_rest('KSI_SC', '1.4') }})
+            {{ union() }}
+         -- KSI-CMT-01: Log and monitor system modifications
+        ({{ organization_cloudtrail_should_emit_events_to_s3('KSI-CMT-01', '1.0') }})
     )
 select
     {{ gen_timestamp() }},
