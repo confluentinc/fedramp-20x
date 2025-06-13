@@ -1,4 +1,3 @@
--- Ensure that all of our Gatekeeper policies are in enforcement mode
 {% macro k8s_has_image_enforcement_policies(framework, check_id) %}
   {{ return(adapter.dispatch('k8s_has_image_enforcement_policies')(framework, check_id)) }}
 {% endmacro %}

@@ -1,4 +1,3 @@
--- Ensure that all EKS clusters have image verifier installed
 {% macro k8s_clusters_should_have_enforcement_webhooks(framework, check_id) %}
   {{ return(adapter.dispatch('k8s_clusters_should_have_enforcement_webhooks')(framework, check_id)) }}
 {% endmacro %}

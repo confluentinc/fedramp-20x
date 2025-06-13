@@ -1,4 +1,3 @@
--- Ensure that all EKS clusters have image verifier installed
 {% macro k8s_image_enforcement_policies_should_not_ignore_failures(framework, check_id) %}
   {{ return(adapter.dispatch('k8s_image_enforcement_policies_should_not_ignore_failures')(framework, check_id)) }}
 {% endmacro %}
