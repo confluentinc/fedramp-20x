@@ -7,22 +7,22 @@
 {% macro bigquery__k8s_container_images(table) %}
 WITH coalesced_data AS (
     SELECT
-        JSON_EXTRACT_SCALAR(container.image) as image,
+        JSON_VALUE(container, '$.image') as image,
         context as context,
         '{{ table }}' as resource_type,
         name as resource_name,
-        JSON_EXTRACT_SCALAR(container.name) as container_name,
+        JSON_VALUE(container, '$.name') as container_name,
         namespace,
     FROM {{ full_table_name(table) }},
     UNNEST(JSON_QUERY_ARRAY(spec_template.spec.containers)) AS container
     WHERE {{ partition_filter() }}
     {{ union() }}
     SELECT
-        JSON_EXTRACT_SCALAR(container.image) as image,
+        JSON_VALUE(container, '$.image') as image,
         context as context,
         '{{ table }}' as resource_type,
         name as resource_name,
-        JSON_EXTRACT_SCALAR(container.name) as container_name,
+        JSON_VALUE(container, '$.name') as container_name,
         namespace,
     FROM {{ full_table_name(table) }},
     UNNEST(JSON_QUERY_ARRAY(spec_template.spec.initContainers)) AS container
