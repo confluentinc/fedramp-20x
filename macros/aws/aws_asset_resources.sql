@@ -15,7 +15,7 @@ _cq_id, _cq_source_name, _cq_sync_time,
   {% else %}
     SPLIT(arn, ':')[SAFE_OFFSET(4)]
   {% endif %} AS request_account_id,
-    CASE WHEN SPLIT(SPLIT(arn, ':')[SAFE_OFFSET(5)], '/')[SAFE_OFFSET(2)] = '' AND SPLIT(arn, ':')[SAFE_OFFSET(6)] = ''
+    CASE WHEN SPLIT(SPLIT(arn, ':')[SAFE_OFFSET(5)], '/')[SAFE_OFFSET(1)] IS NULL AND SPLIT(arn, ':')[SAFE_OFFSET(6)] IS NULL
     THEN NULL
     ELSE SPLIT(SPLIT(arn, ':')[SAFE_OFFSET(5)], '/')[SAFE_OFFSET(0)] END AS TYPE,
     arn,
