@@ -55,7 +55,6 @@ with
         ({{ rds_instances_should_have_backup_vault_configured('KSI-RPL-03', '1.1') }})
             {{ union() }}
         ({{ s3_buckets_should_have_backup_vault_configured('KSI-RPL-03', '1.2') }})
->>>>>>> master
     )
 select
     {{ gen_timestamp() }},
