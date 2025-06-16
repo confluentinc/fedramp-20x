@@ -18,7 +18,6 @@ with
         ({{ elasticache_replication_groups_should_be_encrypted_at_rest('KSI_SC', '1.4') }})
             {{ union() }}
 
-
         -- KSI-SVC-05: Enforce system and information resource integrity through cryptographic means
         ({{ k8s_clusters_should_have_enforcement_webhooks('KSI-SVC-04', '1.0') }})
             {{ union() }}
@@ -29,6 +28,12 @@ with
 
         -- KSI-CMT-01: Log and monitor system modifications
         ({{ organization_cloudtrail_should_emit_events_to_s3('KSI-CMT-01', '1.0') }})
+            {{ union() }}
+
+        -- KSI-CMT-02: Execute changes through redeployment of version controlled immutable resources rather than direct modification wherever possible
+        ({{ k8s_images_should_use_immutable_registry('KSI-CMT-02', '1.0')}})
+            {{ union() }}
+        ({{ aws_resources_should_be_managed_by_iac('KSI-CMT-02', '1.1') }})
     )
 select
     {{ gen_timestamp() }},
