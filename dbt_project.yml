@@ -22,6 +22,8 @@ models:
       +materialized: table
 
 vars:
+  image_signing_webhook: ""
+  policy_enforcement_crds: []
   iac_tagging_scheme:
     key: ""
     values: []

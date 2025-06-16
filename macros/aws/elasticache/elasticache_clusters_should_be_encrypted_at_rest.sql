@@ -17,4 +17,5 @@ select
     end as status,
     tags,
 from {{ full_table_name("aws_elasticache_clusters") }}
+WHERE {{ partition_filter() }}
 {% endmacro %}
