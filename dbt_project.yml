@@ -20,3 +20,7 @@ models:
       +materialized: table
     k8s_container_images:
       +materialized: table
+
+vars:
+  image_signing_webhook: ""
+  policy_enforcement_crds: []
