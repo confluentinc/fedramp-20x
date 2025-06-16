@@ -20,6 +20,8 @@ models:
       +materialized: table
     k8s_container_images:
       +materialized: table
+    aws_resources:
+      +materialized: table
 
 vars:
   image_signing_webhook: ""
