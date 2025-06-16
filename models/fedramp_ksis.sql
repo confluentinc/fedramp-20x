@@ -18,16 +18,17 @@ with
         ({{ elasticache_replication_groups_should_be_encrypted_at_rest('KSI_SC', '1.4') }})
             {{ union() }}
 
-         -- KSI-CMT-01: Log and monitor system modifications
-        ({{ organization_cloudtrail_should_emit_events_to_s3('KSI-CMT-01', '1.0') }})
-            {{ union() }}
+
         -- KSI-SVC-05: Enforce system and information resource integrity through cryptographic means
         ({{ k8s_clusters_should_have_enforcement_webhooks('KSI-SVC-04', '1.0') }})
             {{ union() }}
         ({{ k8s_has_image_enforcement_policies('KSI-SVC-04', '1.1') }})
             {{ union() }}
         ({{ k8s_image_enforcement_policies_should_not_ignore_failures('KSI-SVC-04', '1.2') }})
+            {{ union() }}
 
+        -- KSI-CMT-01: Log and monitor system modifications
+        ({{ organization_cloudtrail_should_emit_events_to_s3('KSI-CMT-01', '1.0') }})
     )
 select
     {{ gen_timestamp() }},
