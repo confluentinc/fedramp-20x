@@ -10,6 +10,14 @@ with
         ({{ aws_resources_should_be_managed_by_iac('KSI-CMT-02', '1.1') }})
             {{ union() }}
 
+        -- KSI-CNA-04: Use immutable infrastructure with strictly defined functionality and privileges by default
+        ({{ k8s_images_should_use_immutable_tags('KSI-CNA-04', '1.0') }})
+            {{ union() }}
+        ({{ k8s_workloads_should_be_immutable('KSI-CNA-04', '1.1') }})
+            {{ union() }}
+        ({{ k8s_images_should_use_internal_registry('KSI-CNA-04', '1.2') }})
+            {{ union() }}
+
         -- KSI-CNA-06: Design systems for high availability and rapid recovery
         ({{ vpcs_should_have_subnets_in_multiple_azs('KSI-CNA-06', '1.0')}})
             {{ union() }}
