@@ -1,7 +1,7 @@
 {% macro union() %}
-  {% if target.type == 'bigquery' %}
+  {%- if target.type == 'bigquery' -%}
     union all
-  {% else %}
+  {%- else -%}
     union
-  {% endif %}
+  {%- endif -%}
 {% endmacro %}
