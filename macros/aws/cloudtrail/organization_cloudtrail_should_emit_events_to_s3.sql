@@ -17,7 +17,7 @@ select
          then 'pass'
          else 'fail'
     end as status,
-    tags,
+    tags
 from {{ full_table_name("aws_cloudtrail_trails") }}
 where is_organization_trail = true
 and {{ partition_filter() }}
