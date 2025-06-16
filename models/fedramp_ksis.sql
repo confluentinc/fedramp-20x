@@ -15,7 +15,7 @@ with
             {{ union() }}
         ({{ k8s_workloads_should_be_immutable('KSI-CNA-04', '1.1') }})
             {{ union() }}
-        ({{ k8s_images_should_use_internal_registry('KSI-CNA-05', '1.2') }})
+        ({{ k8s_images_should_use_internal_registry('KSI-CNA-04', '1.2') }})
             {{ union() }}
 
         -- KSI-CNA-06: Design systems for high availability and rapid recovery
