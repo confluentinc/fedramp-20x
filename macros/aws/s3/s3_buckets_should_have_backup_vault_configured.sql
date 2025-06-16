@@ -12,12 +12,12 @@ select
     s3.arn as identifier,
     null as metadata,
     case when bpr.arn is not null
-        and vrp.status != 'EXPIRED'
-        and DATE(vrp.creation_date) >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
-    then 'pass'
-    else 'fail'
-end as status,
-    rds.tags
+            and vrp.status != 'EXPIRED'
+            and DATE(vrp.creation_date) >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)
+        then 'pass'
+        else 'fail'
+    end as status,
+    s3.tags
 from {{ full_table_name("aws_s3_buckets") }} s3
 left join {{ full_table_name("aws_backup_protected_resources") }} as bpr
     on bpr.resource_arn = s3.arn

@@ -14,7 +14,7 @@ select
     case when backup_retention_period is null
             or backup_retention_period < 7 then 'fail'
         else 'pass'
-        end as status
+        end as status,
     tags
 from {{ full_table_name("aws_rds_instances") }}
     {% endmacro %}
