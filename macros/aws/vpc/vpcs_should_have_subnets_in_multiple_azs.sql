@@ -18,7 +18,7 @@ select
     vpc.tags
 from {{ full_table_name("aws_ec2_vpcs") }} vpc
 join (
-  select vpc_id, count(availability_zone) as az_count
+  select vpc_id, count(distinct availability_zone) as az_count
   from {{ full_table_name("aws_ec2_subnets") }}
   where {{ partition_filter() }}
   group by vpc_id, availability_zone
