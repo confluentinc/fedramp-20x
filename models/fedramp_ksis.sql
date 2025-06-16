@@ -10,6 +10,12 @@ with
         ({{ aws_resources_should_be_managed_by_iac('KSI-CMT-02', '1.1') }})
             {{ union() }}
 
+        -- KSI-CNA-06: Design systems for high availability and rapid recovery
+        ({{ vpcs_should_have_subnets_in_multiple_azs('KSI-CNA-06', '1.0')}})
+            {{ union() }}
+        ({{ eks_cluster_node_groups_should_span_multiple_azs('KSI-CNA-06', '1.1') }})
+            {{ union() }}
+
         -- KSI-SVC-02: Encrypt or otherwise secure network traffic
         {{ alb_should_have_acceptable_tls_policy('KSI-SVC-02', '1.0')}}
             {{ union() }}
@@ -26,6 +32,7 @@ with
         ({{ elasticache_clusters_should_be_encrypted_at_rest('KSI_SC', '1.3') }})
             {{ union() }}
         ({{ elasticache_replication_groups_should_be_encrypted_at_rest('KSI_SC', '1.4') }})
+
             {{ union() }}
 
         -- KSI-SVC-05: Enforce system and information resource integrity through cryptographic means
