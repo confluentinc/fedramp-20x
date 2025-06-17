@@ -12,7 +12,7 @@ SELECT
 aws_iam_accounts.account_id as account_id,
 aws_iam_accounts.account_id as resource_id,
 CASE WHEN
-'alternate_contact_type' IS NULL
+alternate_contact_type IS NULL
 THEN 'fail'
 ELSE 'pass'
 END AS status

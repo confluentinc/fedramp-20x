@@ -8,7 +8,7 @@
 SELECT 
     '{{framework}}' As framework,
     '{{check_id}}' As check_id,
-    'API Gateway should be associated with a WAF We0ACL' as title,
+    'API Gateway should be associated with a WAF ACL' as title,
     account_id, 
     arn as resource_id,
     CASE
