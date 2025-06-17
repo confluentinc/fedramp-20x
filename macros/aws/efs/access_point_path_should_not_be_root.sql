@@ -1,0 +1,21 @@
+{% macro access_point_path_should_not_be_root(framework, check_id) %}
+  {{ return(adapter.dispatch('access_point_path_should_not_be_root')(framework, check_id)) }}
+{% endmacro %}
+
+{% macro default__access_point_path_should_not_be_root(framework, check_id) %}{% endmacro %}
+
+{% macro bigquery__access_point_path_should_not_be_root(framework, check_id) %}
+select 
+    '{{framework}}' As framework,
+    '{{check_id}}' As check_id,
+    'EFS access points should enforce a root directory' as title,
+    account_id,
+    arn as resource_id,
+    CASE
+        WHEN JSON_VALUE(root_directory.Path) = '/' THEN 'fail'
+        ELSE 'pass'
+    END as status
+FROM 
+    {{ full_table_name("aws_efs_access_points") }}
+where {{ partition_filter() }}
+{% endmacro %}

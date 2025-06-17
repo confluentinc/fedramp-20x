@@ -1,0 +1,23 @@
+{% macro advanced_health_reporting_enabled(framework, check_id) %}
+  {{ return(adapter.dispatch('advanced_health_reporting_enabled')(framework, check_id)) }}
+{% endmacro %}
+
+{% macro default__advanced_health_reporting_enabled(framework, check_id) %}{% endmacro %}
+
+{% macro bigquery__advanced_health_reporting_enabled(framework, check_id) %}
+select
+    '{{framework}}' as framework,
+    '{{check_id}}' as check_id,
+    'Elastic Beanstalk environments should have enhanced health reporting enabled' as title,
+    account_id,
+    arn as resource_id,
+    case when
+        health_status is null
+        or health_status = ''
+        or health is null
+        then 'fail'
+        else 'pass'
+    end as status
+from {{ full_table_name("aws_elasticbeanstalk_environments") }}
+where {{ partition_filter() }}
+{% endmacro %}

@@ -16,7 +16,7 @@ FROM
 INNER JOIN 
     {{ full_table_name("INFORMATION_SCHEMA.COLUMNS") }} c ON t.table_name = c.table_name AND t.table_schema = c.table_schema
 WHERE
-    t.table_type = 'BASE TABLE' AND t.table_name LIKE 'aws_%s' AND t.table_name != 'aws_resources'
+    t.table_type = 'BASE TABLE' AND t.table_name LIKE 'aws_%s' AND t.table_name != 'aws_resources' AND t.table_name NOT LIKE 'aws_compliance__%'
 GROUP BY 
     t.table_name
 HAVING
