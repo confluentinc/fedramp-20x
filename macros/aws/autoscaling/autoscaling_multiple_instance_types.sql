@@ -26,4 +26,5 @@ JOIN (
     WHERE {{ partition_filter("aag") }}
   GROUP BY arn
 ) AS ditc ON aag.arn = ditc.arn
+WHERE {{ partition_filter("aag") }}
 {% endmacro %}

@@ -21,6 +21,7 @@ FROM {{ full_table_name("aws_iam_accounts") }}
 LEFT JOIN(
     SELECT * FROM {{ full_table_name("aws_account_alternate_contacts") }}
     WHERE alternate_contact_type='SECURITY'
+    {{ partition_filter("aws_account_alternate_contacts") }}
 ) AS account_security_contacts
 ON aws_iam_accounts.account_id = account_security_contacts.account_id
 where {{ partition_filter("aws_iam_accounts") }}

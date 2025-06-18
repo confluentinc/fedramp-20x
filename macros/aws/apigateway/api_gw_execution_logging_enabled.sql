@@ -18,7 +18,7 @@
 from
     {{ ref('aws_compliance__api_gateway_method_settings') }} s
 left join
-    {{ full_table_name("aws_apigateway_rest_apis") }} r on s.rest_api_arn = r.arn
+    {{ full_table_name("aws_apigateway_rest_apis") }} r on s.rest_api_arn = r.arn and {{ partition_filter("r")}}
 )
 
 union all
@@ -36,7 +36,9 @@ union all
 from
     {{ full_table_name("aws_apigatewayv2_api_stages") }} s
 left join
-    {{ full_table_name("aws_apigatewayv2_apis") }} a on s.api_arn = a.arn
+    {{ full_table_name("aws_apigatewayv2_apis") }} a
+on s.api_arn = a.arn
+and {{ partition_join("s", "a") }}
 where {{ partition_filter("s") }}
 )
 {% endmacro %}   

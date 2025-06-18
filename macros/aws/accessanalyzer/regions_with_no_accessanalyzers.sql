@@ -22,6 +22,7 @@ SELECT
 FROM
     {{ full_table_name("aws_regions") }} ar
     LEFT JOIN {{ full_table_name("aws_accessanalyzer_analyzers") }} aregion ON
-        ar.region = aregion.region
+        ar.region = aregion.region and
+     {{ partition_join("ar", "a") }}
 WHERE {{ partition_filter("ar") }}
 {% endmacro %}

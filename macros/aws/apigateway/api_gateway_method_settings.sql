@@ -20,7 +20,7 @@ SELECT
     CAST(JSON_VALUE(ms.LoggingLevel) AS STRING) AS logging_level,
     r.account_id
 FROM {{ full_table_name("aws_apigateway_rest_api_stages") }} s
-JOIN {{ full_table_name("aws_apigateway_rest_apis") }} r ON s.rest_api_arn=r.arn,
+JOIN {{ full_table_name("aws_apigateway_rest_apis") }} r ON s.rest_api_arn=r.arn and {{ partition_join("s", "r") }},
 UNNEST(JSON_QUERY_ARRAY(s.method_settings)) AS ms
 WHERE {{ partition_filter("s") }}
 {% endmacro %}
