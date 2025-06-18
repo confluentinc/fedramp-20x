@@ -37,7 +37,15 @@ with
         ({{ nacls_should_not_have_broad_egress('KSI-CNA-01', '1.3') }})
             {{ union() }}
 
--- KSI-CNA-03: Use logical networking and related capabilities to enforce traffic flow controls
+        -- KSI-CNA-03: Use logical networking and related capabilities to enforce traffic flow controls
+        ({{ security_groups_should_not_have_broad_ingress('KSI-CNA-01', '1.0') }})
+            {{ union() }}
+        ({{ security_groups_should_not_have_broad_egress('KSI-CNA-01', '1.1') }})
+            {{ union() }}
+        ({{ nacls_should_not_have_broad_ingress('KSI-CNA-01', '1.2') }})
+            {{ union() }}
+        ({{ nacls_should_not_have_broad_egress('KSI-CNA-01', '1.3') }})
+            {{ union() }}
 
         -- KSI-CNA-04: Use immutable infrastructure with strictly defined functionality and privileges by default
         ({{ k8s_images_should_use_immutable_tags('KSI-CNA-04', '1.0') }})
