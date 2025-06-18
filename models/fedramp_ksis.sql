@@ -41,20 +41,20 @@ with
 
         -- KSI-CNA-07: Ensure cloud-native information resources are implemented based on host provider's best practices and documented guidance.
         ({{ evaluate_aws_cis_v3_compliance('KSI-CNA-07', '1.0') }})
-            {{ union () }}
+            {{ union() }}
 
         -- KSI-IAM-01: Use centrally managed authentication and authorization.
 
         -- KSI-IAM-02: Control access based on roles and cloud-native functions.
 
         -- KSI-IAM-03: Enforce minimum password and authentication requirements.
-        ({{ okta_users_require_mfa('KSI-IAM-02', '1.0')}})
+        ({{ okta_users_require_mfa('KSI-IAM-03', '1.0')}})
             {{ union() }}
-        ({{ okta_apps_should_require_multifactor_authentication('KSI-IAM-01', '1.1') }})
+        ({{ okta_apps_should_require_multifactor_authentication('KSI-IAM-03', '1.1') }})
             {{ union() }}
-        ({{ okta_users_require_strong_password('KSI-IAM-02', '1.1') }})
+        ({{ okta_users_require_strong_password('KSI-IAM-03', '1.2') }})
             {{ union() }}
-        ({{ okta_service_accounts_have_secure_authentication('KSI-IAM-03', '1.0') }})
+        ({{ okta_service_accounts_have_secure_authentication('KSI-IAM-03', '1.3') }})
             {{ union() }}
 
         -- KSI-IAM-04: Manage and protect privileged accounts.
@@ -71,18 +71,6 @@ with
         -- KSI-MON-02: Monitor security events and alerts.
         -- KSI-MON-03: Use automated monitoring tools.
         -- KSI-MON-04: Regularly review monitoring data.
-
-
-
-        -- KSI-MLA-04: Perform authenticated vulnerability scanning on information resources
-
-        -- KSI-RPL-03: Perform system backups aligned with recovery objectives
-        ({{ rds_instances_should_have_backups_configured('KSI-RPL-03', '1.0') }})
-            {{ union() }}
-        ({{ rds_instances_should_have_backup_vault_configured('KSI-RPL-03', '1.1') }})
-            {{ union() }}
-        ({{ s3_buckets_should_have_backup_vault_configured('KSI-RPL-03', '1.2') }})
-            {{ union() }}
 
         -- KSI-SVC-01: Harden and review network and system configurations
 
@@ -107,11 +95,11 @@ with
         -- KSI-SVC-04: Manage configuration centrally
 
         -- KSI-SVC-05: Enforce system and information resource integrity through cryptographic means
-        ({{ k8s_clusters_should_have_enforcement_webhooks('KSI-SVC-04', '1.0') }})
+        ({{ k8s_clusters_should_have_enforcement_webhooks('KSI-SVC-05', '1.0') }})
             {{ union() }}
-        ({{ k8s_has_image_enforcement_policies('KSI-SVC-04', '1.1') }})
+        ({{ k8s_has_image_enforcement_policies('KSI-SVC-05', '1.1') }})
             {{ union() }}
-        ({{ k8s_image_enforcement_policies_should_not_ignore_failures('KSI-SVC-04', '1.2') }})
+        ({{ k8s_image_enforcement_policies_should_not_ignore_failures('KSI-SVC-05', '1.2') }})
             {{ union() }}
 
         -- KSI-SVC-06: Use automated key management systems to manage, protect, and regularly rotate digital keys and certificates.
@@ -121,15 +109,15 @@ with
         -- KSI-SVC-07: Use a consistent, risk-informed approach for applying security patches
 
         -- KSI-VLN-01: Regularly scan for vulnerabilities.
-        ({{ ec2_instances_should_be_scanned_by_inspector('KSI-MLA-04', '1.0')}})
+        ({{ ec2_instances_should_be_scanned_by_inspector('KSI-VLN-01', '1.0')}})
             {{ union() }}
 
         -- KSI-VLN-02: Track and remediate identified vulnerabilities.
-        ({{ inspector_vulnerabilities_should_be_resolved_in_sla('KSI-MLA-04', '1.1') }})
+        ({{ inspector_vulnerabilities_should_be_resolved_in_sla('KSI-VLN-02', '1.1') }})
             {{ union() }}
 
         -- KSI-VLN-03: Use automated vulnerability scanning tools.
-        ({{ ec2_instances_should_be_scanned_by_inspector('KSI-MLA-04', '1.0')}})
+        ({{ ec2_instances_should_be_scanned_by_inspector('KSI-VLN-01', '1.0')}})
             {{ union() }}
 
         -- KSI-VLN-04: Maintain vulnerability management program.
