@@ -65,15 +65,15 @@ with
             {{ union() }}
 
         -- KSI-SVC-03: Encrypt all federal and sensitive information at rest
-        ({{ ebs_volumes_should_be_encrypted_at_rest('KSI_SC', '1.0') }})
+        ({{ ebs_volumes_should_be_encrypted_at_rest('KSI-SVC-03', '1.0') }})
             {{ union() }}
-        ({{ rds_instances_should_be_encrypted_at_rest('KSI_SC', '1.1') }})
+        ({{ rds_instances_should_be_encrypted_at_rest('KSI-SVC-03', '1.1') }})
             {{ union() }}
-        ({{ s3_buckets_should_be_encrypted_at_rest('KSI_SC', '1.2') }})
+        ({{ s3_buckets_should_be_encrypted_at_rest('KSI-SVC-03', '1.2') }})
             {{ union() }}
-        ({{ elasticache_clusters_should_be_encrypted_at_rest('KSI_SC', '1.3') }})
+        ({{ elasticache_clusters_should_be_encrypted_at_rest('KSI-SVC-03', '1.3') }})
             {{ union() }}
-        ({{ elasticache_replication_groups_should_be_encrypted_at_rest('KSI_SC', '1.4') }})
+        ({{ elasticache_replication_groups_should_be_encrypted_at_rest('KSI-SVC-03', '1.4') }})
             {{ union() }}
 
         -- KSI-SVC-05: Enforce system and information resource integrity through cryptographic means
@@ -88,3 +88,5 @@ select
     {{ gen_timestamp() }},
     aggregated.*
 from aggregated
+
+    alb.ingress.kubernetes.io/inbound-cidrs: 165.85.106.12/32,165.85.106.4/32,52.42.206.49/32,44.241.184.54/32,52.204.227.221/32,18.215.4.158/32,165.1.143.111/32,165.1.143.107/32,165.1.137.42/32,165.1.137.43/32,3.32.235.101/32,3.31.137.213/32,52.61.229.196/32,15.200.61.5/32,3.31.218.189/32,15.200.55.112/32
