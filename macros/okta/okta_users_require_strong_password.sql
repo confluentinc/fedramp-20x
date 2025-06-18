@@ -1,11 +1,11 @@
 
-{% macro okta_service_accounts_have_secure_authentication(framework, check_id) %}
-  {{ return(adapter.dispatch('okta_service_accounts_have_secure_authentication')(framework, check_id)) }}
+{% macro okta_users_require_strong_password(framework, check_id) %}
+  {{ return(adapter.dispatch('okta_users_require_strong_password')(framework, check_id)) }}
 {% endmacro %}
 
-{% macro default__okta_service_accounts_have_secure_authentication(framework, check_id) %}{% endmacro %}
+{% macro default__okta_users_require_strong_password(framework, check_id) %}{% endmacro %}
 
-{% macro bigquery__okta_service_accounts_have_secure_authentication(framework, check_id) %}
+{% macro bigquery__okta_users_require_strong_password(framework, check_id) %}
 with password_policies as (
     select id, additional_properties
     from {{ full_table_name("okta_policies") }}
@@ -34,16 +34,16 @@ user_groups as (
 select
     '{{ framework }}' as framework,
     '{{ check_id }}' as check_id,
-    'Service Accounts require secure authentication' as title,
+    'User authentication requires strong passwords' as title,
     JSON_VALUE(user.profile, "$.email") as identifier,
     null as metadata,
     case when exists (select * from user_groups where user_id = user.id limit 1)
-        then 'pass'
-        else 'fail'
-    end as status,
+             then 'pass'
+         else 'fail'
+        end as status,
     JSON_OBJECT() as tags
 from {{ full_table_name("okta_users") }} as user
-where JSON_VALUE(profile, "$.serviceAccount") = "true"
-and {{ partition_filter("user") }}
+where JSON_VALUE(profile, "$.serviceAccount") IS DISTINCT FROM "true"
+  and {{ partition_filter("user") }}
 
-{% endmacro %}
+    {% endmacro %}

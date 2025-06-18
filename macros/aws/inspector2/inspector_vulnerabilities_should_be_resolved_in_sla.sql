@@ -19,8 +19,8 @@ select
         else 'pass'
     end as status,
     case
-        when JSON_VALUE(resource, '$.Tags') is not null then JSON_VALUE(resource, '$.Tags')
-        else NULL
+        when JSON_QUERY(resource, '$.Tags') is not null then JSON_QUERY(resource, '$.Tags')
+        else JSON_OBJECT()
     end as tags
 from {{ full_table_name("aws_inspector2_findings") }} as findings,
         unnest(JSON_QUERY_ARRAY(findings.resources)) as resource
