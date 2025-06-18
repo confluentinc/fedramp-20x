@@ -24,22 +24,24 @@ with
         ({{ eks_cluster_node_groups_should_span_multiple_azs('KSI-CNA-06', '1.1') }})
             {{ union() }}
 
-        -- KSI-IAM-01: Enforce multi-factor authentication (MFA) using methods that are difficult to intercept or
-        -- impersonate (phishing-resistant MFA) for all user authentication
-        ({{ okta_users_require_mfa('KSI-IAM-01', '1.0')}})
+        -- KSI-IAM-01: Use centrally managed authentication and authorization.
+
+
+        -- KSI-IAM-02: Control access based on roles and cloud-native functions.
+
+
+        -- KSI-IAM-03: Enforce minimum password and authentication requirements.
+        ({{ okta_users_require_mfa('KSI-IAM-02', '1.0')}})
             {{ union() }}
         ({{ okta_apps_should_require_multifactor_authentication('KSI-IAM-01', '1.1') }})
             {{ union() }}
-
-        -- KSI-IAM-02: Use secure passwordless methods for user authentication and authorization when feasible,
-        -- otherwise enforce strong passwords with MFA
-        ({{ okta_users_require_mfa('KSI-IAM-02', '1.0')}})
-            {{ union() }}
         ({{ okta_users_require_strong_password('KSI-IAM-02', '1.1') }})
             {{ union() }}
-
-        -- KSI-IAM-03: Enforce appropriately secure authentication methods for non-user accounts and services
         ({{ okta_service_accounts_have_secure_authentication('KSI-IAM-03', '1.0') }})
+            {{ union() }}
+
+        -- KSI-IAM-04: Manage and protect privileged accounts.
+        ({{ iam_root_user_has_no_access_keys('KSI-IAM-04', '1.0') }})
             {{ union() }}
 
         -- KSI-MLA-04: Perform authenticated vulnerability scanning on information resources
