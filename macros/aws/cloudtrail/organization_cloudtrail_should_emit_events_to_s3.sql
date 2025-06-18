@@ -10,7 +10,7 @@ select
     '{{ check_id }}' as check_id,
     'Cloudtrail should emit change logs to S3 for review' as title,
     account_id as identifier,
-    s3_bucket_name as metadata,
+    null as metadata,
     case when
         s3_bucket_name is not null and
         JSON_VALUE(status, '$.IsLogging') = 'true'

@@ -17,6 +17,8 @@ select
     else 'pass'
   end as status
 from {{ full_table_name("aws_kms_keys") }} akk
-left join {{ full_table_name("aws_kms_key_rotation_statuses") }} akkrs on akk.arn = akkrs.key_arn
+left join {{ full_table_name("aws_kms_key_rotation_statuses") }} akkrs
+on akk.arn = akkrs.key_arn
+and {{ partition_join("akk", "akkrs") }}
 where {{ partition_filter("akk") }}
 {% endmacro %}

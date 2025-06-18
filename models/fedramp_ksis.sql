@@ -28,30 +28,26 @@ with
         ({{ evaluate_aws_cis_v3_compliance('KSI-CNA-07', '1.0') }})
             {{ union () }}
 
-        -- KSI-SVC-02: Encrypt or otherwise secure network traffic
-        {{ alb_should_have_acceptable_tls_policy('KSI-SVC-02', '1.0')}}
+        -- KSI-IAM-01: Use centrally managed authentication and authorization.
+
+        -- KSI-IAM-02: Control access based on roles and cloud-native functions.
+
+        -- KSI-IAM-03: Enforce minimum password and authentication requirements.
+        ({{ okta_users_require_mfa('KSI-IAM-02', '1.0')}})
             {{ union() }}
-        {{ alb_should_redirect_plaintext_ports('KSI-SVC-02', '1.1')}}
+        ({{ okta_apps_should_require_multifactor_authentication('KSI-IAM-01', '1.1') }})
+            {{ union() }}
+        ({{ okta_users_require_strong_password('KSI-IAM-02', '1.1') }})
+            {{ union() }}
+        ({{ okta_service_accounts_have_secure_authentication('KSI-IAM-03', '1.0') }})
             {{ union() }}
 
-        -- KSI-SVC-03: Encrypt all federal and sensitive information at rest
-        ({{ ebs_volumes_should_be_encrypted_at_rest('KSI_SC', '1.0') }})
-            {{ union() }}
-        ({{ rds_instances_should_be_encrypted_at_rest('KSI_SC', '1.1') }})
-            {{ union() }}
-        ({{ s3_buckets_should_be_encrypted_at_rest('KSI_SC', '1.2') }})
-            {{ union() }}
-        ({{ elasticache_clusters_should_be_encrypted_at_rest('KSI_SC', '1.3') }})
-            {{ union() }}
-        ({{ elasticache_replication_groups_should_be_encrypted_at_rest('KSI_SC', '1.4') }})
+        -- KSI-IAM-04: Manage and protect privileged accounts.
+        ({{ iam_root_user_has_no_access_keys('KSI-IAM-04', '1.0') }})
             {{ union() }}
 
-        -- KSI-SVC-05: Enforce system and information resource integrity through cryptographic means
-        ({{ k8s_clusters_should_have_enforcement_webhooks('KSI-SVC-04', '1.0') }})
-            {{ union() }}
-        ({{ k8s_has_image_enforcement_policies('KSI-SVC-04', '1.1') }})
-            {{ union() }}
-        ({{ k8s_image_enforcement_policies_should_not_ignore_failures('KSI-SVC-04', '1.2') }})
+        -- KSI-SVC-06: Use automated key management systems to manage, protect, and regularly rotate digital keys and certificates.
+        ({{ aws_cisv3_mapping('KSI-SVC-06', '1.0', '3.6') }}) -- Ensure Key rotation is enabled for all customer managed KMS keys
             {{ union() }}
 
         -- KSI-MLA-04: Perform authenticated vulnerability scanning on information resources
@@ -66,6 +62,33 @@ with
         ({{ rds_instances_should_have_backup_vault_configured('KSI-RPL-03', '1.1') }})
             {{ union() }}
         ({{ s3_buckets_should_have_backup_vault_configured('KSI-RPL-03', '1.2') }})
+            {{ union() }}
+
+        -- KSI-SVC-02: Encrypt or otherwise secure network traffic
+        {{ alb_should_have_acceptable_tls_policy('KSI-SVC-02', '1.0')}}
+            {{ union() }}
+        {{ alb_should_redirect_plaintext_ports('KSI-SVC-02', '1.1')}}
+            {{ union() }}
+
+        -- KSI-SVC-03: Encrypt all federal and sensitive information at rest
+        ({{ ebs_volumes_should_be_encrypted_at_rest('KSI-SVC-03', '1.0') }})
+            {{ union() }}
+        ({{ rds_instances_should_be_encrypted_at_rest('KSI-SVC-03', '1.1') }})
+            {{ union() }}
+        ({{ s3_buckets_should_be_encrypted_at_rest('KSI-SVC-03', '1.2') }})
+            {{ union() }}
+        ({{ elasticache_clusters_should_be_encrypted_at_rest('KSI-SVC-03', '1.3') }})
+            {{ union() }}
+        ({{ elasticache_replication_groups_should_be_encrypted_at_rest('KSI-SVC-03', '1.4') }})
+            {{ union() }}
+
+        -- KSI-SVC-05: Enforce system and information resource integrity through cryptographic means
+        ({{ k8s_clusters_should_have_enforcement_webhooks('KSI-SVC-04', '1.0') }})
+            {{ union() }}
+        ({{ k8s_has_image_enforcement_policies('KSI-SVC-04', '1.1') }})
+            {{ union() }}
+        ({{ k8s_image_enforcement_policies_should_not_ignore_failures('KSI-SVC-04', '1.2') }})
+
     )
 select
     {{ gen_timestamp() }},

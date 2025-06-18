@@ -16,6 +16,6 @@ select
         then 'fail'
         else 'pass'
     end as status,
-    null as tags
+    JSON_OBJECT() as tags
 from {{ full_table_name("k8s_container_images") }}
     {% endmacro %}
