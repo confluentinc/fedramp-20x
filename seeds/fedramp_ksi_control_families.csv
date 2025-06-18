@@ -1,0 +1,40 @@
+control_family,control,title
+KSI-CNA,KSI-CNA-01,Configure ALL information resources to limit inbound and outbound traffic
+KSI-CNA,KSI-CNA-02,Design systems to minimize the attack surface and minimize lateral movement if compromised
+KSI-CNA,KSI-CNA-03,Use logical networking and related capabilities to enforce traffic flow controls
+KSI-CNA,KSI-CNA-04,Use immutable infrastructure with strictly defined functionality and privileges by default
+KSI-CNA,KSI-CNA-05,Have denial of service protection
+KSI-CNA,KSI-CNA-06,Design systems for high availability and rapid recovery
+KSI-CNA,KSI-CNA-07,Ensure cloud-native information resources are implemented based on host provider’s best practices and documented guidance
+KSI-SVC,KSI-SVC-01,Harden and review network and system configurations
+KSI-SVC,KSI-SVC-02,Encrypt or otherwise secure network traffic
+KSI-SVC,KSI-SVC-03,Encrypt all federal and sensitive information at rest
+KSI-SVC,KSI-SVC-04,Manage configuration centrally
+KSI-SVC,KSI-SVC-05,Enforce system and information resource integrity through cryptographic means
+KSI-SVC,KSI-SVC-06,"Use automated key management systems to manage, protect, and regularly rotate digital keys and certificate"
+KSI-SVC,KSI-SVC-07,"Use a consistent, risk-informed approach for applying security patches"
+KSI-IAM,KSI-IAM-01,Use centrally managed authentication and authorization.
+KSI-IAM,KSI-IAM-02,Control access based on roles and cloud-native functions.
+KSI-IAM,KSI-IAM-03,Enforce minimum password and authentication requirements.
+KSI-IAM,KSI-IAM-04,Manage and protect privileged accounts.
+KSI-IAM,KSI-IAM-05,Regularly review and validate access.
+KSI-AUD,KSI-AUD-01,Enable and configure detailed audit logging.
+KSI-AUD,KSI-AUD-02,Protect audit logs from tampering and deletion.
+KSI-AUD,KSI-AUD-03,Monitor audit logs for suspicious activity.
+KSI-AUD,KSI-AUD-04,Retain audit logs according to requirements.
+KSI-CMT,KSI-CMT-01,Use infrastructure-as-code to deploy and manage infrastructure.
+KSI-CMT,KSI-CMT-02,Track and document configuration changes.
+KSI-CMT,KSI-CMT-03,Review and validate configuration changes.
+KSI-CMT,KSI-CMT-04,Use configuration management for all system components.
+KSI-MON,KSI-MON-01,Monitor system performance and availability.
+KSI-MON,KSI-MON-02,Monitor security events and alerts.
+KSI-MON,KSI-MON-03,Use automated monitoring tools.
+KSI-MON,KSI-MON-04,Regularly review monitoring data.
+KSI-VLN,KSI-VLN-01,Regularly scan for vulnerabilities.
+KSI-VLN,KSI-VLN-02,Track and remediate identified vulnerabilities.
+KSI-VLN,KSI-VLN-03,Use automated vulnerability scanning tools.
+KSI-VLN,KSI-VLN-04,Maintain vulnerability management program.
+KSI-INC,KSI-INC-01,Maintain incident response procedures.
+KSI-INC,KSI-INC-02,Report security incidents promptly.
+KSI-INC,KSI-INC-03,Document and track incident responses.
+KSI-INC,KSI-INC-04,Review and update incident response procedures.
