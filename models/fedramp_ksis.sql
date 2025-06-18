@@ -44,6 +44,10 @@ with
         ({{ iam_root_user_has_no_access_keys('KSI-IAM-04', '1.0') }})
             {{ union() }}
 
+        -- KSI-SVC-06: Use automated key management systems to manage, protect, and regularly rotate digital keys and certificates.
+        ({{ aws_cisv3_mapping('KSI-SVC-06', '1.0', '3.6') }}) -- Ensure Key rotation is enabled for all customer managed KMS keys
+            {{ union() }}
+
         -- KSI-MLA-04: Perform authenticated vulnerability scanning on information resources
         ({{ ec2_instances_should_be_scanned_by_inspector('KSI-MLA-04', '1.0')}})
             {{ union() }}
