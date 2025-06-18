@@ -118,7 +118,6 @@ with
 
         -- KSI-VLN-03: Use automated vulnerability scanning tools.
         ({{ ec2_instances_should_be_scanned_by_inspector('KSI-VLN-01', '1.0')}})
-            {{ union() }}
 
         -- KSI-VLN-04: Maintain vulnerability management program.
     )

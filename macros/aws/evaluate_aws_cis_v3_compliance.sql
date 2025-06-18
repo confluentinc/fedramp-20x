@@ -14,7 +14,7 @@ with control_results as (
     FROM {{ ref('aws_compliance__cis_v3_0_0') }}
     where check_id NOT IN ({{ to_sql_list(var('ksi_cna_07_excluded_controls'))}})
     and account_id IN ({{ to_sql_list(var('ksi_cna_07_account_ids'))}})
-    GROUP BY framework, check_id;
+    GROUP BY framework, check_id
 )
 select
     '{{ framework }}' as framework,
@@ -22,13 +22,13 @@ select
     'Overall AWS CIS compliance' as title,
     "CIS_v3" as identifier,
     JSON_OBJECT(
-        'compliance', (control_results.pass / (control_results.fail + control_results.pass)),
+        'compliance', (control_results.pass / NULLIF((control_results.fail + control_results.pass), 0)),
         'check_id', control_results.check_id
     ) as metadata,
-    case when (control_results.pass / (control_results.fail + control_results.pass)) > .9
+    case when (control_results.pass / NULLIF((control_results.fail + control_results.pass), 0)) > .9
         then 'pass'
         else 'fail'
     end as status,
-    tags
+    JSON_OBJECT() as tags
 from control_results
     {% endmacro %}
