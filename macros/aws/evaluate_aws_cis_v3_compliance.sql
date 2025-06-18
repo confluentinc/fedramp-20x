@@ -1,10 +1,10 @@
-{% macro evaluate_cis_compliance(framework, check_id) %}
-  {{ return(adapter.dispatch('evaluate_cis_compliance')(framework, check_id)) }}
+{% macro evaluate_aws_cis_v3_compliance(framework, check_id) %}
+  {{ return(adapter.dispatch('evaluate_aws_cis_v3_compliance')(framework, check_id)) }}
 {% endmacro %}
 
-{% macro default__evaluate_cis_compliance(framework, check_id) %}{% endmacro %}
+{% macro default__evaluate_aws_cis_v3_compliance(framework, check_id) %}{% endmacro %}
 
-{% macro bigquery__evaluate_cis_compliance(framework, check_id) %}
+{% macro bigquery__evaluate_aws_cis_v3_compliance(framework, check_id) %}
 {% set ksi_cna_07_excluded_controls = var('ksi_cna_07_excluded_controls') %}
 
 with control_results as (
