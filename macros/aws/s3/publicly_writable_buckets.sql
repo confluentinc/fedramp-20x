@@ -15,9 +15,12 @@ with policy_allow_public as (
                 bp.policy_json.Statement.Principal as principals
             from
                 {{ full_table_name("aws_s3_buckets") }} b
-            inner join {{ full_table_name("aws_s3_bucket_policies") }} bp on b.arn = bp.bucket_arn
+            inner join {{ full_table_name("aws_s3_bucket_policies") }} bp
+            on b.arn = bp.bucket_arn
+            and {{ partition_join("b", "bp") }}
             where
                 JSON_VALUE(bp.policy_json.Statement.Effect) = '"Allow"'
+            and {{ partition_filter("b", ) }}
         ) as foo
     where
         JSON_VALUE(principals) = '"*"'
@@ -53,6 +56,7 @@ left join policy_allow_public on
         aws_s3_buckets.arn = policy_allow_public.arn
 left join {{ full_table_name("aws_s3_bucket_public_access_blocks") }} on
         aws_s3_buckets.arn = aws_s3_bucket_public_access_blocks.bucket_arn
+        and {{ partition_join("aws_s3_buckets", "aws_s3_bucket_public_access_blocks") }}
 where
     (
         CAST( JSON_VALUE(aws_s3_bucket_public_access_blocks.public_access_block_configuration.BlockPublicAcls) AS BOOL) != TRUE

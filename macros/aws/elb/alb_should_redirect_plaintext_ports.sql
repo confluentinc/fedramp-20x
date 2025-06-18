@@ -20,6 +20,8 @@ select
     lb.tags as tags
 from {{ full_table_name("aws_elbv2_listeners") }} list,
      UNNEST(JSON_QUERY_ARRAY(default_actions)) AS da
-left join {{ full_table_name("aws_elbv2_load_balancers") }} lb using (load_balancer_arn)
+left join {{ full_table_name("aws_elbv2_load_balancers") }} lb
+on list.load_balancer_arn = lb.load_balance_arn
+    and {{ partition_join("list", "lb") }}
 WHERE TIMESTAMP_TRUNC(lb._cq_sync_time, DAY) = TIMESTAMP(CURRENT_DATE())
     {% endmacro %}

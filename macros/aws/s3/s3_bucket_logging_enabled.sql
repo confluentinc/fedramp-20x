@@ -19,5 +19,6 @@ FROM
     {{ full_table_name("aws_s3_buckets") }} as b
 LEFT JOIN
     {{ full_table_name("aws_s3_bucket_loggings") }} as bl on bl.bucket_arn = b.arn
+    and {{ partition_join("b", "bl") }}
 WHERE {{ partition_filter("b") }}
 {% endmacro %}

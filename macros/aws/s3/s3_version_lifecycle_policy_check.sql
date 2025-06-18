@@ -21,10 +21,12 @@ LEFT JOIN
     {{ full_table_name("aws_s3_bucket_versionings") }} AS bv
     ON
     b.arn = bv.bucket_arn
+    and {{ partition_join("b", "bv") }}
 LEFT JOIN
     {{ full_table_name("aws_s3_bucket_lifecycles") }} AS l
     ON
     b.arn = l.bucket_arn
+    and {{ partition_join("b", "l") }}
 where bv.status = 'Enabled'
 and {{ partition_filter("b") }}
 {% endmacro %}

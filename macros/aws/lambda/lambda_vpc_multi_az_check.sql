@@ -22,6 +22,7 @@ LEFT JOIN
     {{ full_table_name("aws_ec2_subnets") }} s
 ON
     JSON_VALUE(a.value) = s.subnet_id
+and {{ partition_join("l", "s") }}
 where {{ partition_filter("l") }}
 group by l.arn, l.account_id
 {% endmacro %}

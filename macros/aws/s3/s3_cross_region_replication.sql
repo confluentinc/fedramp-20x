@@ -17,5 +17,6 @@ select
 from
      {{ full_table_name("aws_s3_buckets") }}
      inner join  {{ full_table_name("aws_s3_bucket_replications") }} on aws_s3_buckets.arn = aws_s3_bucket_replications.bucket_arn
+    and {{ partition_join("aws_s3_buckets", "aws_s3_bucket_replications") }}
 where {{ partition_filter("aws_s3_buckets")}}
 {% endmacro %}

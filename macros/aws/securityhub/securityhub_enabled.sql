@@ -5,7 +5,11 @@
 {% macro default__securityhub_enabled(framework, check_id) %}{% endmacro %}
 
 {% macro bigquery__securityhub_enabled(framework, check_id) %}
-with enabled_securityhub_regions as (select account_id, region from {{ full_table_name("aws_securityhub_hubs") }})
+with enabled_securityhub_regions as (
+    select account_id, region
+    from {{ full_table_name("aws_securityhub_hubs") }}
+    where {{ partition_filter() }}
+)
 
 select
        '{{framework}}'                    as framework,

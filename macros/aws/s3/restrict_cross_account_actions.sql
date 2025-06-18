@@ -20,7 +20,7 @@ FROM (
         principals,
         actions
     FROM {{ full_table_name("aws_s3_buckets") }} b
-        INNER JOIN {{ full_table_name("aws_s3_bucket_policies") }} ON b.arn = aws_s3_bucket_policies.bucket_arn,
+        INNER JOIN {{ full_table_name("aws_s3_bucket_policies") }} ON b.arn = aws_s3_bucket_policies.bucket_arn and {{ partition_join("b", "aws_s3_bucket_policies") }},
         UNNEST(JSON_QUERY_ARRAY(aws_s3_bucket_policies.policy_json.Statement)) AS statements,
         UNNEST(JSON_QUERY_ARRAY(statements.Principal)) AS principals,
         UNNEST(JSON_QUERY_ARRAY(statements.Action)) AS actions

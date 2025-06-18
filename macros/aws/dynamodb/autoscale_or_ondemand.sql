@@ -24,11 +24,13 @@ FROM
       AND pr.resource_id = concat('table/', t.table_name)
 	  AND pr.policy_type = 'TargetTrackingScaling'
       AND pr.scalable_dimension = 'dynamodb:table:ReadCapacityUnits'
+      AND {{ partition_join("pr", "t") }}
   LEFT JOIN {{ full_table_name("aws_applicationautoscaling_policies") }} AS pw ON
       pw.service_namespace = 'dynamodb'
       AND pw.resource_id = concat('table/', t.table_name)
 	  AND pw.policy_type = 'TargetTrackingScaling'
       AND pw.scalable_dimension = 'dynamodb:table:WriteCapacityUnits'
+      AND {{ partition_join("pw", "t") }}
 where {{ partition_filter("t") }}
 group by t.account_id, t.arn, status
 {% endmacro %}

@@ -20,5 +20,6 @@ select
 from {{ full_table_name("aws_ec2_vpcs") }}
 left join {{ full_table_name("aws_ec2_flow_logs") }} on
         aws_ec2_vpcs.vpc_id = aws_ec2_flow_logs.resource_id
+     and {{ partition_join("aws_ec2_vpcs", "aws_ec2_flow_logs") }}
 where {{ partition_filter("aws_ec2_vpcs") }}
 {% endmacro %}

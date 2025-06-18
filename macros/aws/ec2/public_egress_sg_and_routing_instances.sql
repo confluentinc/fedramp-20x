@@ -20,12 +20,13 @@ where subnet_id in
         from {{ full_table_name("aws_ec2_route_tables") }} t, UNNEST(JSON_QUERY_ARRAY(t.associations)) AS a, UNNEST(JSON_QUERY_ARRAY(t.routes)) AS r
         --  Find all routes in any route table that contains a route to 0.0.0.0/0 or ::/0
         where JSON_VALUE(r.DestinationCidrBlock) = '0.0.0.0/0' OR JSON_VALUE(r.DestinationIpv6CidrBlock) = '::/0'
+        and {{ partition_filter("t") }}
     )
     and instance_id in
     -- 	Find all instances that have egress rule that allows access to all ip addresses
     (select instance_id
         from {{ full_table_name("aws_ec2_instances") }}, UNNEST(JSON_QUERY_ARRAY(security_groups)) AS sg
         inner join {{ ref('aws_compliance__security_group_egress_rules') }} on id = JSON_VALUE(sg.GroupId)
-        where (ip = '0.0.0.0/0' or ip6 = '::/0'))
+        where (ip = '0.0.0.0/0' or ip6 = '::/0')) and
 and {{ partition_filter() }}
 {% endmacro %}

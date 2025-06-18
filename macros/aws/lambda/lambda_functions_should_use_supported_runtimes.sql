@@ -15,6 +15,7 @@ select
     ELSE 'pass' END AS status
 FROM {{ full_table_name("aws_lambda_functions") }} f
 LEFT JOIN {{ full_table_name("aws_lambda_runtimes") }} r ON r.name = CAST( JSON_VALUE(f.configuration.Runtime) AS STRING)
+and {{ partition_join("f", "r") }}
 WHERE  CAST( JSON_VALUE(f.configuration.PackageType) AS STRING) != 'Image'
 and {{ partition_filter("f") }}
 {% endmacro %}

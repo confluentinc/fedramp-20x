@@ -12,7 +12,7 @@ with association_compliance_status_groups as(
     from
         {{ full_table_name("aws_ssm_instance_compliance_items") }}
     where
-        compliance_type = 'Association'
+        compliance_type = 'Association' and {{ partition_filter() }}
 )
 select
     '{{framework}}' as framework,
@@ -25,6 +25,7 @@ select
      then 'fail' else 'pass' end as status
  from
      {{ full_table_name("aws_ssm_instances") }}
-	 inner join association_compliance_status_groups on aws_ssm_instances.arn = association_compliance_status_groups.instance_arn
+	 inner join association_compliance_status_groups
+         on aws_ssm_instances.arn = association_compliance_status_groups.instance_arn
 where {{ partition_filter("aws_ssm_instances") }}
 {% endmacro %}

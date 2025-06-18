@@ -16,6 +16,7 @@ WITH pvs AS (
         END AS statements
     FROM {{ full_table_name("aws_iam_policies") }} p
     JOIN {{ full_table_name("aws_iam_policy_default_versions") }} pv ON pv._cq_parent_id = p._cq_id
+    AND {{ partition_join("p", "pv") }}
     WHERE p.arn not like 'arn:aws:iam::aws:policy%'
     AND {{ partition_filter("p") }}
 ),

@@ -19,7 +19,7 @@ select distinct
         else 'pass' 
     end as status
 from {{ full_table_name("aws_iam_users") }}
-left join {{ full_table_name("aws_iam_user_attached_policies") }} on aws_iam_users.arn = aws_iam_user_attached_policies.user_arn
-left join {{ full_table_name("aws_iam_user_policies") }} on aws_iam_users.arn = aws_iam_user_policies.user_arn
+left join {{ full_table_name("aws_iam_user_attached_policies") }} on aws_iam_users.arn = aws_iam_user_attached_policies.user_arn and {{ partition_join("aws_iam_users", "aws_iam_user_attached_policies") }}
+left join {{ full_table_name("aws_iam_user_policies") }} on aws_iam_users.arn = aws_iam_user_policies.user_arn and {{ partition_join("aws_iam_users", "aws_iam_user_policies") }}
 where {{ partition_filter("aws_iam_users") }}
 {% endmacro %}

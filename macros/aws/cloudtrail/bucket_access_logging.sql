@@ -18,7 +18,7 @@ select
         else 'pass'
     end as status
 from {{ full_table_name("aws_cloudtrail_trails") }} t
-inner join {{ full_table_name("aws_s3_buckets") }} b on t.s3_bucket_name = b.name
-inner join {{ full_table_name("aws_s3_bucket_loggings") }} l on b.arn = l.bucket_arn
+inner join {{ full_table_name("aws_s3_buckets") }} b on t.s3_bucket_name = b.name and {{ partition_join("t", "b") }}
+inner join {{ full_table_name("aws_s3_bucket_loggings") }} l on b.arn = l.bucket_arn and {{ partition_join("b", "l") }}
 where {{ partition_filter("t") }}
 {% endmacro %}

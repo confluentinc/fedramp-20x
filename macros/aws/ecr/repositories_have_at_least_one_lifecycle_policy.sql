@@ -19,5 +19,6 @@ select DISTINCT
      {{ full_table_name("aws_ecr_repositories") }} r
  LEFT JOIN {{ full_table_name("aws_ecr_repository_lifecycle_policies") }} p
     ON r.repository_name = p.repository_name
+    and {{ partition_join("r", "p") }}
 where {{ partition_filter("r") }}
 {% endmacro %}

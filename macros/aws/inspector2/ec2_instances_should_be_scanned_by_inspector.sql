@@ -20,5 +20,6 @@ end as status,
 from {{ full_table_name("aws_ec2_instances") }} ec2
 left join {{ full_table_name("aws_inspector2_covered_resources") }} as icr
     on ec2.instance_id = icr.resource_id
-where TIMESTAMP_TRUNC(ec2._cq_sync_time, DAY) = TIMESTAMP(CURRENT_DATE())
+    {{ partition_join("icr", "ec2") }}
+where {{ partition_filter("ec2") }}
     {% endmacro %}

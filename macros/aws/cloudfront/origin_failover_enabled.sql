@@ -5,7 +5,11 @@
 {% macro default__origin_failover_enabled(framework, check_id) %}{% endmacro %}
 
 {% macro bigquery__origin_failover_enabled(framework, check_id) %}
-with origin_groups as ( select acd.arn, distribution_config.OriginGroups.Items as ogs from {{ full_table_name("aws_cloudfront_distributions") }} acd),
+with origin_groups as (
+select acd.arn, distribution_config.OriginGroups.Items as ogs
+from {{ full_table_name("aws_cloudfront_distributions") }} acd
+where {{ partition_filter("acd") }}
+),
      oids as (
 select distinct
     account_id,

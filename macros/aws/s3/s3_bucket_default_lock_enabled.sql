@@ -17,7 +17,7 @@ FROM
 LEFT JOIN
     {{ full_table_name("aws_s3_bucket_object_lock_configurations") }} b
 ON
-    a.arn = b.bucket_arn
+    a.arn = b.bucket_arn and {{ partition_join("a", "b") }}
 WHERE {{ partition_filter("a") }}
 GROUP BY
     a.account_id,

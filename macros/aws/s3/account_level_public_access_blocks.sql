@@ -22,5 +22,6 @@ from
 left join
     {{ full_table_name("aws_s3_accounts") }} on
         aws_iam_accounts.account_id = aws_s3_accounts.account_id
+ and {{ partition_join("aws_iam_accounts", "aws_s3_accounts")}}
 where {{ partition_filter("aws_iam_accounts") }}
 {% endmacro %}

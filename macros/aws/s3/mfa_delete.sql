@@ -20,5 +20,6 @@ FROM
   {{ full_table_name("aws_s3_buckets") }} b
 JOIN
   {{ full_table_name("aws_s3_bucket_versionings") }} v ON b.arn = v.bucket_arn
+  and {{ partition_join("b", "v") }}
 WHERE {{ partition_filter("b") }}
 {% endmacro %}

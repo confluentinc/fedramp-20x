@@ -20,8 +20,8 @@ select
     rds.tags
 from {{ full_table_name("aws_rds_instances") }} rds
 left join {{ full_table_name("aws_backup_protected_resources") }} as bpr
-    on bpr.resource_arn = rds.arn
+    on bpr.resource_arn = rds.arn and {{ partition_join("bpr", "rds") }}
 left join {{ full_table_name("aws_backup_vault_recovery_points")}} as vrp
-    on bpr.last_recovery_point_arn = vrp.arn
+    on bpr.last_recovery_point_arn = vrp.arn and {{ partition_join("bpr", "vrp") }}
 where TIMESTAMP_TRUNC(rds._cq_sync_time, DAY) = TIMESTAMP(CURRENT_DATE())
     {% endmacro %}

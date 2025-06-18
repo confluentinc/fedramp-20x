@@ -17,7 +17,7 @@ WHERE EXISTS (
     SELECT 1
     FROM {{ full_table_name("aws_redshift_cluster_parameter_groups") }} as rscpg
     INNER JOIN {{ full_table_name("aws_redshift_cluster_parameters") }} as rscp
-        ON rscpg.cluster_arn = rscp.cluster_arn
+        ON rscpg.cluster_arn = rscp.cluster_arn and {{ partition_join("rscpg", "rscp") }}
     WHERE rsc.arn = rscpg.cluster_arn
         AND (
             (rscp.parameter_name = 'require_ssl' AND rscp.parameter_value = 'false')
@@ -28,7 +28,7 @@ WHERE EXISTS (
                 WHERE cluster_arn = rscpg.cluster_arn
                     AND parameter_name = 'require_ssl'
             )
-        )
+        ) and {{ partition_filter("rscpg")}}
 )
 AND {{ partition_filter("rsc") }}
 {% endmacro %}

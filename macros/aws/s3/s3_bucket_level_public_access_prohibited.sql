@@ -24,6 +24,6 @@ FROM
  as b
 LEFT JOIN
     {{ full_table_name("aws_s3_bucket_public_access_blocks") }}
- as pab on pab.bucket_arn = b.arn
+ as pab on pab.bucket_arn = b.arn and {{ partition_join("b", "pab") }}
 where {{ partition_filter("b") }}
 {% endmacro %}

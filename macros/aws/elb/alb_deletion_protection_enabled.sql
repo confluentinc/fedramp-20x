@@ -20,5 +20,6 @@ from {{ full_table_name("aws_elbv2_load_balancers") }} lb
          inner join
      {{ full_table_name("aws_elbv2_load_balancer_attributes") }} a on
                  a.load_balancer_arn = lb.arn AND a.key='deletion_protection.enabled'
+      and {{ partition_join("lb", "a") }}
 where {{ partition_filter("lb") }}
 {% endmacro %}

@@ -25,6 +25,7 @@ SELECT DISTINCT
 FROM
     s3_origins s
 INNER JOIN {{ full_table_name("aws_s3_buckets") }} b ON SPLIT(s3_domain_name, '.')[OFFSET(0)] = b.name
+WHERE {{ partition_filter("s") }}
  )
   
 SELECT DISTINCT

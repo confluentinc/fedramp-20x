@@ -18,6 +18,6 @@ select
   end as status
 FROM {{ full_table_name("aws_dynamodb_tables") }} t
   LEFT JOIN {{ full_table_name("aws_dynamodb_table_continuous_backups") }}
- b ON b.table_arn = t.arn
+ b ON b.table_arn = t.arn and {{ partition_join("t", "b") }}
 where {{ partition_filter("t") }}
  {% endmacro %}

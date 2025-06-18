@@ -17,6 +17,8 @@ select
     end as status,
     lb.tags as tags
 from {{ full_table_name("aws_elbv2_listeners") }} list
-left join {{ full_table_name("aws_elbv2_load_balancers") }} lb using (load_balancer_arn)
-WHERE TIMESTAMP_TRUNC(lb._cq_sync_time, DAY) = TIMESTAMP(CURRENT_DATE())
-    {% endmacro %}
+left join {{ full_table_name("aws_elbv2_load_balancers") }} lb
+on list.load_balancer_arn = lb.load_balance_arn
+and {{ partition_join("list", "lb") }}
+WHERE {{ partition_filter("list") }}
+{% endmacro %}

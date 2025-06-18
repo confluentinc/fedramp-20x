@@ -14,9 +14,12 @@ with policy_allow_public as (
                 bp.policy_json.Statement.Principal as principals
             from
                 {{ full_table_name("aws_s3_buckets") }} b
-                inner join {{ full_table_name("aws_s3_bucket_policies") }} bp on b.arn = bp.bucket_arn
+                inner join {{ full_table_name("aws_s3_bucket_policies") }} bp
+                on b.arn = bp.bucket_arn
+                and {{ partition_join("b", "bp") }}
             where
                 JSON_VALUE(bp.policy_json.Statement.Effect) = '"Allow"'
+            and {{ partition_filter("b") }}
         ) as foo
     where
         JSON_VALUE(principals) = '"*"'

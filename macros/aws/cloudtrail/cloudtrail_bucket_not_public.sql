@@ -25,9 +25,9 @@ select
         
     ) as anon_statements
 from {{ full_table_name("aws_cloudtrail_trails") }}
-inner join {{ full_table_name("aws_s3_buckets") }} on aws_cloudtrail_trails.s3_bucket_name = aws_s3_buckets.name
-left join {{ full_table_name("aws_s3_bucket_grants") }} on aws_s3_bucket_grants._cq_parent_id = aws_s3_buckets._cq_id
-left join {{ full_table_name("aws_s3_bucket_policies") }} on aws_s3_bucket_policies._cq_parent_id = aws_s3_buckets._cq_id,
+inner join {{ full_table_name("aws_s3_buckets") }} on aws_cloudtrail_trails.s3_bucket_name = aws_s3_buckets.name and {{ partition_join("aws_cloudtrail_trails", "aws_s3_buckets") }}
+left join {{ full_table_name("aws_s3_bucket_grants") }} on aws_s3_bucket_grants._cq_parent_id = aws_s3_buckets._cq_id and {{ partition_join("aws_s3_buckets", "aws_s3_bucket_grants") }}
+left join {{ full_table_name("aws_s3_bucket_policies") }} on aws_s3_bucket_policies._cq_parent_id = aws_s3_buckets._cq_id and {{ partition_join("aws_s3_buckets", "aws_s3_bucket_policies") }}
 UNNEST(JSON_QUERY_ARRAY(aws_s3_bucket_policies.policy_json.Statement)) AS statements,
 UNNEST(JSON_QUERY_ARRAY(statements.Principal)) AS principals
 where {{ partition_filter("aws_cloudtrail_trails") }}

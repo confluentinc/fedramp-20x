@@ -24,5 +24,5 @@ select
     end as tags
 from {{ full_table_name("aws_inspector2_findings") }} as findings,
         unnest(JSON_QUERY_ARRAY(findings.resources)) as resource
-where TIMESTAMP_TRUNC(_cq_sync_time, DAY) = TIMESTAMP(CURRENT_DATE())
+where {{ partition_filter() }}
     {% endmacro %}

@@ -35,6 +35,6 @@ select
            end
 from {{ full_table_name("aws_iam_credential_reports") }} r
          left join {{ full_table_name("aws_iam_user_access_keys") }} k on
-        k.user_arn = r.arn
+        k.user_arn = r.arn and {{ partition_join("r", "k") }}
 where {{ partition_filter("r") }}
 {% endmacro %}

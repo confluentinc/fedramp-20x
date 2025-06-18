@@ -19,5 +19,6 @@ select
 from {{ full_table_name("aws_s3_buckets") }} buckets
 left join {{ full_table_name("aws_s3_bucket_encryption_rules") }} encrules
 on buckets.arn = encrules.bucket_arn
+and {{ partition_join("buckets", "encrules") }}
 WHERE TIMESTAMP_TRUNC(buckets._cq_sync_time, DAY) = TIMESTAMP(CURRENT_DATE())
 {% endmacro %}

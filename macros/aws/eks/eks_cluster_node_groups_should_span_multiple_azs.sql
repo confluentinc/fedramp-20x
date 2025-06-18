@@ -23,7 +23,7 @@ join (
     join unnest(subnets) as subnet
     join {{ full_table_name("aws_ec2_subnets") }} as subnet_data
     on subnet = subnet_data.subnet_id
-    where TIMESTAMP_TRUNC(cng._cq_sync_time, DAY) = TIMESTAMP(CURRENT_DATE())
+    where {{ partition_filter("cng")}}
     group by cluster_name, region
 ) as subnet_az_count
 on eks.name = subnet_az_count.cluster_name

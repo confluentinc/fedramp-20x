@@ -20,8 +20,8 @@ select
     s3.tags
 from {{ full_table_name("aws_s3_buckets") }} s3
 left join {{ full_table_name("aws_backup_protected_resources") }} as bpr
-    on bpr.resource_arn = s3.arn
+    on bpr.resource_arn = s3.arn and {{ partition_join("s3", "bpr") }}
 left join {{ full_table_name("aws_backup_vault_recovery_points")}} as vrp
-    on bpr.last_recovery_point_arn = vrp.arn
+    on bpr.last_recovery_point_arn = vrp.arn and {{ partition_join("bpr", "vrp") }}
 where TIMESTAMP_TRUNC(s3._cq_sync_time, DAY) = TIMESTAMP(CURRENT_DATE())
     {% endmacro %}

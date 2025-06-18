@@ -20,5 +20,6 @@ FROM
 JOIN 
     {{ full_table_name("aws_elasticache_clusters") }} c 
     ON r.replication_group_id = c.replication_group_id
+    and {{ partition_join("c", "r") }}
 where {{ partition_filter("r") }}
  {% endmacro %}

@@ -21,5 +21,6 @@ FROM
   {{ full_table_name("aws_ec2_instances") }} ec2
 JOIN
   {{ full_table_name("aws_iam_instance_profiles") }} iip ON iip.arn = JSON_VALUE(ec2.iam_instance_profile.arn)
+     and {{ partition_join("iip", "ec2") }}
 where {{ partition_filter("ec2") }}
 {% endmacro %}

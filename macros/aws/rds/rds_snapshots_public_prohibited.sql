@@ -18,7 +18,7 @@ select
 FROM
     {{ full_table_name("aws_rds_cluster_snapshots") }},
     UNNEST(JSON_QUERY_ARRAY(ATTRIBUTES)) AS a
-
+where {{ partition_filter("aws_rds_cluster_snapshots") }}
 UNION ALL
 
 SELECT

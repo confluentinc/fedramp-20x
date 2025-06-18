@@ -20,6 +20,7 @@
     inner join
         {{ full_table_name("aws_elbv2_load_balancer_attributes") }} a on
             a.load_balancer_arn = lb.arn AND a.key='access_logs.s3.enabled'
+       and {{ partition_join("lb", "a") }}
   where {{ partition_filter("lb") }}
 )
 

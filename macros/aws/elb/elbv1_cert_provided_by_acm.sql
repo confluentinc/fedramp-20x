@@ -30,5 +30,6 @@ select
   end as status
 from listeners
 left join {{ full_table_name("aws_acm_certificates") }} on aws_acm_certificates.arn = listeners.ssl_certificate_id
+where {{ partition_filter("aws_acm_certificates") }}
 
 {% endmacro %}

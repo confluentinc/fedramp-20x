@@ -16,13 +16,14 @@ WITH identity_providers AS (
         account_id
       FROM
         {{ full_table_name("aws_iam_openid_connect_identity_providers") }}
-
+      where {{ partition_filter() }}
       UNION ALL
 
       SELECT
         account_id
       FROM
         {{ full_table_name("aws_iam_saml_identity_providers") }}
+      where {{ partition_filter() }}
     ) providers
   GROUP BY
     account_id

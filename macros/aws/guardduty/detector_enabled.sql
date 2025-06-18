@@ -9,6 +9,7 @@ with enabled_detector_regions as (
     select request_account_id as account_id, request_region as region
     from {{ full_table_name("aws_guardduty_detectors") }}
     where status = 'ENABLED'
+    and {{ partition_filter() }}
 )
 
 select

@@ -16,6 +16,8 @@ select
     then 'fail' else 'pass' end as status
 from
     {{ full_table_name("aws_ec2_instances") }}
-left outer join {{ full_table_name("aws_ssm_instances") }} on aws_ec2_instances.instance_id = aws_ssm_instances.instance_id
+left outer join {{ full_table_name("aws_ssm_instances") }}
+    on aws_ec2_instances.instance_id = aws_ssm_instances.instance_id
+    and {{ partition_join("aws_ec2_instances", "aws_ssm_instances") }}
 where {{ partition_filter("aws_ec2_instances") }}
 {% endmacro %}

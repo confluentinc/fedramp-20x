@@ -21,5 +21,6 @@ LEFT JOIN
     {{ full_table_name("aws_s3_bucket_lifecycles") }} AS l
 ON
     b.arn = l.bucket_arn
+and {{ partition_join("b", "l") }}
 where {{ partition_filter("b") }}
 {% endmacro %}

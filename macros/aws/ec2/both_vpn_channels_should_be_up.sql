@@ -12,6 +12,8 @@ WITH TunnelStatus AS (
     FROM
         {{ full_table_name("aws_ec2_vpn_connections") }} c,
         UNNEST(JSON_QUERY_ARRAY(c.vgw_telemetry)) AS t
+    WHERE
+        {{ partition_filter("c") }}
 )
 
 SELECT

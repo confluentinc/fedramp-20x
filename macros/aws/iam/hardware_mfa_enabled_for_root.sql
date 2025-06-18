@@ -16,7 +16,7 @@ select
 from {{ full_table_name("aws_iam_credential_reports") }} cr
 left join
     {{ full_table_name("aws_iam_virtual_mfa_devices") }} mfa on
-        JSON_VALUE(mfa.user.Arn) = cr.arn
+        JSON_VALUE(mfa.user.Arn) = cr.arn and {{ partition_join("mfa", "cr") }}
 where cr.user = '<root_account>'
 and {{ partition_filter("cr") }}
 group by mfa.serial_number, cr.mfa_active, cr.arn

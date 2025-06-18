@@ -18,5 +18,6 @@ select
 FROM
   {{ full_table_name("aws_iam_role_attached_policies") }} a
   JOIN {{ full_table_name("aws_iam_roles") }} r ON a._cq_parent_id = r._cq_id
+  and {{ partition_join("a", "r") }}
 where {{ partition_filter("a") }}
 {% endmacro %}
