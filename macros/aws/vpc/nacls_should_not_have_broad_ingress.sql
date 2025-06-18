@@ -20,7 +20,7 @@ from {{ full_table_name("aws_ec2_network_acls") }}
     left join (
   select arn from {{ ref('aws_compliance__networks_acls_ingress_rules') }}
   where (cidr_block = '0.0.0.0/0' or ipv6_cidr_block = '::/0')
-  and (port_range_from is null or port_range_from is null)
+  and (port_range_to is null or port_range_from is null)
   group by arn
 ) ingress
 on ingress.arn = aws_ec2_network_acls.arn

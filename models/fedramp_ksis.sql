@@ -28,23 +28,23 @@ with
             {{ union() }}
 
         -- KSI-CNA-02: Design systems to minimize the attack surface and minimize lateral movement if compromised
-        ({{ security_groups_should_not_have_broad_ingress('KSI-CNA-01', '1.0') }})
+        ({{ security_groups_should_not_have_broad_ingress('KSI-CNA-02', '1.0') }})
             {{ union() }}
-        ({{ security_groups_should_not_have_broad_egress('KSI-CNA-01', '1.1') }})
+        ({{ security_groups_should_not_have_broad_egress('KSI-CNA-02', '1.1') }})
             {{ union() }}
-        ({{ nacls_should_not_have_broad_ingress('KSI-CNA-01', '1.2') }})
+        ({{ nacls_should_not_have_broad_ingress('KSI-CNA-02', '1.2') }})
             {{ union() }}
-        ({{ nacls_should_not_have_broad_egress('KSI-CNA-01', '1.3') }})
+        ({{ nacls_should_not_have_broad_egress('KSI-CNA-02', '1.3') }})
             {{ union() }}
 
         -- KSI-CNA-03: Use logical networking and related capabilities to enforce traffic flow controls
-        ({{ security_groups_should_not_have_broad_ingress('KSI-CNA-01', '1.0') }})
+        ({{ security_groups_should_not_have_broad_ingress('KSI-CNA-03', '1.0') }})
             {{ union() }}
-        ({{ security_groups_should_not_have_broad_egress('KSI-CNA-01', '1.1') }})
+        ({{ security_groups_should_not_have_broad_egress('KSI-CNA-03', '1.1') }})
             {{ union() }}
-        ({{ nacls_should_not_have_broad_ingress('KSI-CNA-01', '1.2') }})
+        ({{ nacls_should_not_have_broad_ingress('KSI-CNA-03', '1.2') }})
             {{ union() }}
-        ({{ nacls_should_not_have_broad_egress('KSI-CNA-01', '1.3') }})
+        ({{ nacls_should_not_have_broad_egress('KSI-CNA-03', '1.3') }})
             {{ union() }}
 
         -- KSI-CNA-04: Use immutable infrastructure with strictly defined functionality and privileges by default
