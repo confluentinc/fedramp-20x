@@ -18,6 +18,6 @@ select
         then 'pass'
         else 'fail'
     end as status,
-    null as tags
+    JSON_OBJECT() as tags
 from images
     {% endmacro %}

@@ -18,7 +18,7 @@ select
          then 'pass'
          else 'fail'
     end as status,
-    tags,
+    tags
 from images
 left join {{ full_table_name("aws_ecr_repositories") }} as er
     on images.image_name = er.repository_uri
