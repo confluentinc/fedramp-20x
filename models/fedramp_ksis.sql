@@ -40,7 +40,7 @@ with
             {{ union() }}
 
         -- KSI-CNA-07: Ensure cloud-native information resources are implemented based on host provider's best practices and documented guidance.
-        ({{ evaluate_aws_cis_v3_compliance('KSI-CNA-07', '1.0') }})
+        ({{ evaluate_cis_compliance('KSI-CNA-07', '1.0') }})
             {{ union() }}
 
         -- KSI-IAM-01: Use centrally managed authentication and authorization.
