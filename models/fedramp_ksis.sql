@@ -33,7 +33,9 @@ with
 
         -- KSI-IAM-02: Use secure passwordless methods for user authentication and authorization when feasible,
         -- otherwise enforce strong passwords with MFA
-        ({{ okta_users_require_strong_password('KSI-IAM-02', '1.0') }})
+        ({{ okta_users_require_mfa('KSI-IAM-02', '1.0')}})
+            {{ union() }}
+        ({{ okta_users_require_strong_password('KSI-IAM-02', '1.1') }})
             {{ union() }}
 
         -- KSI-IAM-03: Enforce appropriately secure authentication methods for non-user accounts and services
