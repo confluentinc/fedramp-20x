@@ -1,6 +1,12 @@
 with
     aggregated as (
         -- KSI-AUD-01: Enable and configure detailed audit logging.
+        ({{ aws_cisv3_mapping('KSI-AUD-01', '1.0', '3.1') }}) -- CloudTrail is enabled in all regions
+            {{ union() }}
+        ({{ aws_cisv3_mapping('KSI-AUD-01', '1.1', '3.8') }}) -- CloudTrail Write events are enabled
+            {{ union() }}
+        ({{ aws_cisv3_mapping('KSI-AUD-01', '1.2', '3.9') }}) -- CloudTrail Read events are enabled
+            {{ union() }}
         -- KSI-AUD-02: Protect audit logs from tampering and deletion.
         -- KSI-AUD-03: Monitor audit logs for suspicious activity.
         -- KSI-AUD-04: Retain audit logs according to requirements.
@@ -69,6 +75,15 @@ with
 
         -- KSI-MON-01: Monitor system performance and availability.
         -- KSI-MON-02: Monitor security events and alerts.
+        ({{ aws_cisv3_mapping('KSI-MON-02', '1.0', '3.1') }}) -- CloudTrail is enabled in all regions
+            {{ union() }}
+        ({{ aws_cisv3_mapping('KSI-MON-02', '1.1', '3.8') }}) -- CloudTrail Write events are enabled
+            {{ union() }}
+        ({{ aws_cisv3_mapping('KSI-MON-02', '1.2', '3.9') }}) -- CloudTrail Read events are enabled
+            {{ union() }}
+        ({{ aws_cisv3_mapping('KSI-MON-02', '1.3', '3.7') }}) -- CloudTrail Read events are enabled
+            {{ union() }}
+
         -- KSI-MON-03: Use automated monitoring tools.
         -- KSI-MON-04: Regularly review monitoring data.
 

@@ -33,5 +33,7 @@ inner join
         aws_cloudtrail_trails.arn = aws_cloudtrail_trail_event_selectors.trail_arn
         and aws_cloudtrail_trails.region = aws_cloudtrail_trail_event_selectors.region
         and aws_cloudtrail_trails.account_id = aws_cloudtrail_trail_event_selectors.account_id
-where {{ partition_filter("aws_cloudtrail_trails") }}
+where aws_cloudtrail_trails.is_organization_trail = true
+and {{ partition_filter("aws_cloudtrail_trails") }}
+
 {% endmacro %}
