@@ -1,40 +1,52 @@
-control_family,control,title
-KSI-CNA,KSI-CNA-01,Configure ALL information resources to limit inbound and outbound traffic
-KSI-CNA,KSI-CNA-02,Design systems to minimize the attack surface and minimize lateral movement if compromised
-KSI-CNA,KSI-CNA-03,Use logical networking and related capabilities to enforce traffic flow controls
-KSI-CNA,KSI-CNA-04,Use immutable infrastructure with strictly defined functionality and privileges by default
-KSI-CNA,KSI-CNA-05,Have denial of service protection
-KSI-CNA,KSI-CNA-06,Design systems for high availability and rapid recovery
-KSI-CNA,KSI-CNA-07,Ensure cloud-native information resources are implemented based on host provider’s best practices and documented guidance
-KSI-SVC,KSI-SVC-01,Harden and review network and system configurations
-KSI-SVC,KSI-SVC-02,Encrypt or otherwise secure network traffic
-KSI-SVC,KSI-SVC-03,Encrypt all federal and sensitive information at rest
-KSI-SVC,KSI-SVC-04,Manage configuration centrally
-KSI-SVC,KSI-SVC-05,Enforce system and information resource integrity through cryptographic means
-KSI-SVC,KSI-SVC-06,"Use automated key management systems to manage, protect, and regularly rotate digital keys and certificates"
-KSI-SVC,KSI-SVC-07,"Use a consistent, risk-informed approach for applying security patches"
-KSI-IAM,KSI-IAM-01,Use centrally managed authentication and authorization.
-KSI-IAM,KSI-IAM-02,Control access based on roles and cloud-native functions.
-KSI-IAM,KSI-IAM-03,Enforce minimum password and authentication requirements.
-KSI-IAM,KSI-IAM-04,Manage and protect privileged accounts.
-KSI-IAM,KSI-IAM-05,Regularly review and validate access.
-KSI-AUD,KSI-AUD-01,Enable and configure detailed audit logging.
-KSI-AUD,KSI-AUD-02,Protect audit logs from tampering and deletion.
-KSI-AUD,KSI-AUD-03,Monitor audit logs for suspicious activity.
-KSI-AUD,KSI-AUD-04,Retain audit logs according to requirements.
-KSI-CMT,KSI-CMT-01,Use infrastructure-as-code to deploy and manage infrastructure.
-KSI-CMT,KSI-CMT-02,Track and document configuration changes.
-KSI-CMT,KSI-CMT-03,Review and validate configuration changes.
-KSI-CMT,KSI-CMT-04,Use configuration management for all system components.
-KSI-MON,KSI-MON-01,Monitor system performance and availability.
-KSI-MON,KSI-MON-02,Monitor security events and alerts.
-KSI-MON,KSI-MON-03,Use automated monitoring tools.
-KSI-MON,KSI-MON-04,Regularly review monitoring data.
-KSI-VLN,KSI-VLN-01,Regularly scan for vulnerabilities.
-KSI-VLN,KSI-VLN-02,Track and remediate identified vulnerabilities.
-KSI-VLN,KSI-VLN-03,Use automated vulnerability scanning tools.
-KSI-VLN,KSI-VLN-04,Maintain vulnerability management program.
-KSI-INC,KSI-INC-01,Maintain incident response procedures.
-KSI-INC,KSI-INC-02,Report security incidents promptly.
-KSI-INC,KSI-INC-03,Document and track incident responses.
-KSI-INC,KSI-INC-04,Review and update incident response procedures.
+control_family,control_family_title,control,control_title
+KSI-CNA,Cloud Native Architecture,KSI-CNA-01,Configure ALL information resources to limit inbound and outbound traffic
+KSI-CNA,Cloud Native Architecture,KSI-CNA-02,Design systems to minimize the attack surface and minimize lateral movement if compromised
+KSI-CNA,Cloud Native Architecture,KSI-CNA-03,Use logical networking and related capabilities to enforce traffic flow controls
+KSI-CNA,Cloud Native Architecture,KSI-CNA-04,Use immutable infrastructure with strictly defined functionality and privileges by default
+KSI-CNA,Cloud Native Architecture,KSI-CNA-05,Have denial of service protection
+KSI-CNA,Cloud Native Architecture,KSI-CNA-06,Design systems for high availability and rapid recovery
+KSI-CNA,Cloud Native Architecture,KSI-CNA-07,Ensure cloud-native information resources are implemented based on host provider’s best practices and documented guidance
+KSI-SVC,Service Configuration,KSI-SVC-01,Harden and review network and system configurations
+KSI-SVC,Service Configuration,KSI-SVC-02,Encrypt or otherwise secure network traffic
+KSI-SVC,Service Configuration,KSI-SVC-03,Encrypt all federal and sensitive information at rest
+KSI-SVC,Service Configuration,KSI-SVC-04,Manage configuration centrally
+KSI-SVC,Service Configuration,KSI-SVC-05,Enforce system and information resource integrity through cryptographic means
+KSI-SVC,Service Configuration,KSI-SVC-06,"Use automated key management systems to manage, protect, and regularly rotate digital keys and certificates"
+KSI-SVC,Service Configuration,KSI-SVC-07,"Use a consistent, risk-informed approach for applying security patches"
+KSI-IAM,Identity and Access Management,KSI-IAM-01,Enforce multi-factor authentication (MFA) using methods that are difficult to intercept or impersonate (phishing-resistant MFA) for all user authentication.
+KSI-IAM,Identity and Access Management,KSI-IAM-02,"Use secure passwordless methods for user authentication and authorization when feasible, otherwise enforce strong passwords with MFA."
+KSI-IAM,Identity and Access Management,KSI-IAM-03,"Enforce appropriately secure authentication methods for non-user accounts and services."
+KSI-IAM,Identity and Access Management,KSI-IAM-04,"Use a least-privileged, role and attribute-based, and just-in-time security authorization model for all user and non-user accounts and services."
+KSI-IAM,Identity and Access Management,KSI-IAM-05,Apply zero trust design principles.
+KSI-IAM,Identity and Access Management,KSI-IAM-06,Automatically disable or otherwise secure accounts with privileged access in response to suspicious activity.
+KSI-MLA,"Monitoring, Logging, and Auditing",KSI-MLA-01,"Operate a Security Information and Event Management (SIEM) or similar system(s) for centralized, tamper-resistent logging of events, activities, and changes."
+KSI-MLA,"Monitoring, Logging, and Auditing",KSI-MLA-02,"Regularly review and audit logs."
+KSI-MLA,"Monitoring, Logging, and Auditing",KSI-MLA-03,"Rapidly detect and remediate or mitigate vulnerabilities."
+KSI-MLA,"Monitoring, Logging, and Auditing",KSI-MLA-04,"Perform authenticated vulnerability scanning on information resources."
+KSI-MLA,"Monitoring, Logging, and Auditing",KSI-MLA-05,Perform Infrastructure as Code and configuration evaluation and testing.
+KSI-MLA,"Monitoring, Logging, and Auditing",KSI-MLA-06,"Centrally track and prioritize the mitigation and/or remediation of identified vulnerabilities."
+KSI-CMT,Configuration Management,KSI-CMT-01,Log and monitor system modifications.
+KSI-CMT,Configuration Management,KSI-CMT-02,Execute changes through redeployment of version controlled immutable resources rather than direct modification wherever possible.
+KSI-CMT,Configuration Management,KSI-CMT-03,Implement automated testing and validation of changes prior to deployment.
+KSI-CMT,Configuration Management,KSI-CMT-04,Have a documented change management procedure.
+KSI-CMT,Configuration Management,KSI-CMT-05,Evaluate the risk and potential impact of any change.
+KSI-PIY,Policy and Inventory,KSI-PIY-01,"Have an up-to-date information resource inventory or code defining all deployed assets, software, and services."
+KSI-PIY,Policy and Inventory,KSI-PIY-02,Have policies outlining the security objectives of all information resources.
+KSI-PIY,Policy and Inventory,KSI-PIY-03,Maintain a vulnerability disclosure program.
+KSI-PIY,Policy and Inventory,KSI-PIY-04,Build security considerations into the Software Development Lifecycle and align with CISA Secure By Design principles.
+KSI-PIY,Policy and Inventory,KSI-PIY-05,Document methods used to evaluate information resource implementations.
+KSI-PIY,Policy and Inventory,KSI-PIY-06,"Have a dedicated staff and budget for security with executive support, commensurate with the size, complexity, scope, and risk of the service offering."
+KSI-PIY,Policy and Inventory,KSI-PIY-07,Document risk management decisions for software supply chain security.
+KSI-TPR,Third-Party Information Resources,KSI-TPR-01,"Identify all third-party information resources."
+KSI-TPR,Third-Party Information Resources,KSI-TPR-02,"Regularly confirm that services handling federal information or are likely to impact the confidentiality, integrity, or availability of federal information are FedRAMP authorized and securely configured."
+KSI-TPR,Third-Party Information Resources,KSI-TPR-03,"Identify and prioritize mitigation of potential supply chain risks."
+KSI-TPR,Third-Party Information Resources,KSI-TPR-04,"Monitor third party software information resources for upstream vulnerabilities, with contractual notification requirements or active monitoring services."
+KSI-CED,Cybersecurity Education,KSI-CED-01,Ensure all employees receive security awareness training.
+KSI-CED,Cybersecurity Education,KSI-CED-02,"Require role-specific training for high risk roles, including at least roles with privileged access."
+KSI-RPL,Recovery Planning,KSI-RPL-01,"Define Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO)."
+KSI-RPL,Recovery Planning,KSI-RPL-02,Develop and maintain a recovery plan that aligns with the defined recovery objectives.
+KSI-RPL,Recovery Planning,KSI-RPL-03,Perform system backups aligned with recovery objectives.
+KSI-RPL,Recovery Planning,KSI-RPL-04,Regularly test the capability to recover from incidents and contingencies.
+KSI-INR,Incident Reporting,KSI-INR-01,"Report incidents according to FedRAMP requirements and cloud service provider policies."
+KSI-INR,Incident Reporting,KSI-INR-02,Maintain a log of incidents and periodically review past incidents for patterns or vulnerabilities.
+KSI-INR,Incident Reporting,KSI-INR-03,Generate after action reports and regularly incorporate lessons learned into operations.
