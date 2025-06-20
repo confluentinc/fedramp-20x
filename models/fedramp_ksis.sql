@@ -93,7 +93,7 @@ with
             {{ union() }}
 
         -- KSI-IAM-05: Apply zero trust design principles.
-        -- KSI-IAM-05: Automatically disable or otherwise secure accounts with privileged access in response to suspicious activity.
+        -- KSI-IAM-06: Automatically disable or otherwise secure accounts with privileged access in response to suspicious activity.
 
         -- KSI-INR-01: Report incidents according to FedRAMP requirements and cloud service provider policies.
         -- KSI-INR-02: Maintain a log of incidents and periodically review past incidents for patterns or vulnerabilities.

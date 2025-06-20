@@ -42,11 +42,11 @@ KSI-TPR,Third-Party Information Resources,KSI-TPR-02,"Regularly confirm that ser
 KSI-TPR,Third-Party Information Resources,KSI-TPR-03,"Identify and prioritize mitigation of potential supply chain risks."
 KSI-TPR,Third-Party Information Resources,KSI-TPR-04,"Monitor third party software information resources for upstream vulnerabilities, with contractual notification requirements or active monitoring services."
 KSI-CED,Cybersecurity Education,KSI-CED-01,Ensure all employees receive security awareness training.
-KSI-CED,Cybersecurity Education,KSI-CED-02,Require role-specific training for high risk roles, including at least roles with privileged access.
-KSI-RPL,KSI-RPL-01,"Define Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO)."
-KSI-RPL,KSI-RPL-02,Develop and maintain a recovery plan that aligns with the defined recovery objectives.
-KSI-RPL,KSI-RPL-03,Perform system backups aligned with recovery objectives.
-KSI-RPL,KSI-RPL-04,Regularly test the capability to recover from incidents and contingencies.
+KSI-CED,Cybersecurity Education,KSI-CED-02,"Require role-specific training for high risk roles, including at least roles with privileged access."
+KSI-RPL,Recovery Planning,KSI-RPL-01,"Define Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO)."
+KSI-RPL,Recovery Planning,KSI-RPL-02,Develop and maintain a recovery plan that aligns with the defined recovery objectives.
+KSI-RPL,Recovery Planning,KSI-RPL-03,Perform system backups aligned with recovery objectives.
+KSI-RPL,Recovery Planning,KSI-RPL-04,Regularly test the capability to recover from incidents and contingencies.
 KSI-INR,Incident Reporting,KSI-INR-01,"Report incidents according to FedRAMP requirements and cloud service provider policies."
 KSI-INR,Incident Reporting,KSI-INR-02,Maintain a log of incidents and periodically review past incidents for patterns or vulnerabilities.
 KSI-INR,Incident Reporting,KSI-INR-03,Generate after action reports and regularly incorporate lessons learned into operations.
