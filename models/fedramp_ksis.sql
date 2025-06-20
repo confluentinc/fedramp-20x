@@ -20,8 +20,32 @@ with
             {{ union() }}
 
         -- KSI-CNA-01: Configure ALL information resources to limit inbound and outbound traffic
+        ({{ aws_cisv3_mapping('KSI-CNA-01', '1.0', '2.3.3') }}) -- RDS Should not be publicly accessible
+            {{ union() }}
+        ({{ aws_foundational_security_mapping('KSI-CNA-01', '1.1', 'ec2.2') }})
+            {{ union() }}
+        ({{ alb_security_groups_should_restrict_to_limited_ports('KSI-CNA-01', '1.2') }})
+            {{ union() }}
+
         -- KSI-CNA-02: Design systems to minimize the attack surface and minimize lateral movement if compromised
+        ({{ security_groups_should_not_have_broad_ingress('KSI-CNA-02', '1.0') }})
+            {{ union() }}
+        ({{ security_groups_should_not_have_broad_egress('KSI-CNA-02', '1.1') }})
+            {{ union() }}
+        ({{ nacls_should_not_have_broad_ingress('KSI-CNA-02', '1.2') }})
+            {{ union() }}
+        ({{ nacls_should_not_have_broad_egress('KSI-CNA-02', '1.3') }})
+            {{ union() }}
+
         -- KSI-CNA-03: Use logical networking and related capabilities to enforce traffic flow controls
+        ({{ security_groups_should_not_have_broad_ingress('KSI-CNA-03', '1.0') }})
+            {{ union() }}
+        ({{ security_groups_should_not_have_broad_egress('KSI-CNA-03', '1.1') }})
+            {{ union() }}
+        ({{ nacls_should_not_have_broad_ingress('KSI-CNA-03', '1.2') }})
+            {{ union() }}
+        ({{ nacls_should_not_have_broad_egress('KSI-CNA-03', '1.3') }})
+            {{ union() }}
 
         -- KSI-CNA-04: Use immutable infrastructure with strictly defined functionality and privileges by default
         ({{ k8s_images_should_use_immutable_tags('KSI-CNA-04', '1.0') }})
@@ -40,8 +64,6 @@ with
             {{ union() }}
 
         -- KSI-CNA-07: Ensure cloud-native information resources are implemented based on host provider's best practices and documented guidance.
-        ({{ evaluate_aws_cis_v3_compliance('KSI-CNA-07', '1.0') }})
-            {{ union() }}
 
         -- KSI-IAM-01: Use centrally managed authentication and authorization.
 
@@ -118,7 +140,6 @@ with
 
         -- KSI-VLN-03: Use automated vulnerability scanning tools.
         ({{ ec2_instances_should_be_scanned_by_inspector('KSI-VLN-01', '1.0')}})
-            {{ union() }}
 
         -- KSI-VLN-04: Maintain vulnerability management program.
     )

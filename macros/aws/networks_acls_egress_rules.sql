@@ -1,10 +1,10 @@
-{% macro networks_acls_ingress_rules(framework, check_id) %}
-  {{ return(adapter.dispatch('networks_acls_ingress_rules')()) }}
+{% macro networks_acls_egress_rules(framework, check_id) %}
+  {{ return(adapter.dispatch('networks_acls_egress_rules')()) }}
 {% endmacro %}
 
-{% macro default__networks_acls_ingress_rules() %}{% endmacro %}
+{% macro default__networks_acls_egress_rules() %}{% endmacro %}
 
-{% macro bigquery__networks_acls_ingress_rules() %}
+{% macro bigquery__networks_acls_egress_rules() %}
 WITH rules AS (SELECT aena.arn,
                       aena.account_id,
                       JSON_VALUE(entry, "$.PortRange.From") as port_range_from,
@@ -20,6 +20,5 @@ WITH rules AS (SELECT aena.arn,
                )
 SELECT arn, account_id, port_range_from, port_range_to, protocol, cidr_block, ipv6_cidr_block
 FROM rules
-WHERE egress IS DISTINCT FROM 'true'
-  AND rule_action = 'allow'
+WHERE egress = 'true' AND rule_action = 'allow'
 {% endmacro %}
