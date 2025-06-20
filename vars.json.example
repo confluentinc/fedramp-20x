@@ -3,4 +3,5 @@
   "policy_enforcement_crds": []
   "ksi_cna_04_allowed_registries": [],
   "ksi_cna_07_account_ids": []
+  "third_party_vendors": []
 }

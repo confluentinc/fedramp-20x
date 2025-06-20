@@ -165,11 +165,13 @@ with
 
         -- KSI-SVC-06: Use automated key management systems to manage, protect, and regularly rotate digital keys and certificates.
         ({{ aws_cisv3_mapping('KSI-SVC-06', '1.0', '3.6') }}) -- Ensure Key rotation is enabled for all customer managed KMS keys
-
+            {{ union() }}
         -- KSI-SVC-07: Use a consistent, risk-informed approach for applying security patches
 
         -- KSI-TPR-01: Identify all third-party information resources .
         -- KSI-TPR-02: Regularly confirm that services handling federal information or are likely to impact the confidentiality, integrity, or availability of federal information are FedRAMP authorized and securely configured.
+        ({{ vendors_should_have_fedramp_authorization('KSI-TPR-02', '1.0') }})
+
         -- KSI-TPR-03: Identify and prioritize mitigation of potential supply chain risks.
         -- KSI-TPR-04: Monitor third party software information resources for upstream vulnerabilities, with contractual notification requirements or active monitoring services.
     )
