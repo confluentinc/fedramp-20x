@@ -19,4 +19,5 @@ select
 from {{ full_table_name("aws_elbv2_listeners") }} list
 left join {{ full_table_name("aws_elbv2_load_balancers") }} lb using (load_balancer_arn)
 WHERE TIMESTAMP_TRUNC(lb._cq_sync_time, DAY) = TIMESTAMP(CURRENT_DATE())
+and protocol = 'HTTPS'
     {% endmacro %}
