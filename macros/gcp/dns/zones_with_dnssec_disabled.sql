@@ -1,0 +1,25 @@
+{% macro dns_zones_with_dnssec_disabled(framework, check_id) %}
+  {{ return(adapter.dispatch('dns_zones_with_dnssec_disabled')(framework, check_id)) }}
+{% endmacro %}
+
+{% macro default__dns_zones_with_dnssec_disabled(framework, check_id) %}{% endmacro %}
+
+{% macro bigquery__dns_zones_with_dnssec_disabled(framework, check_id) %}
+select
+    DISTINCT 
+                CAST(id AS STRING)                                                                                   AS resource_id,
+                '{{framework}}' As framework,
+                '{{check_id}}' As check_id,                                                                         
+                'Ensure that DNSSEC is enabled for Cloud DNS (Automated)' AS title,
+                project_id                                                                             AS project_id,
+                CASE
+           WHEN
+               visibility != 'private'
+               and ((dnssec_config is null) 
+               or (JSON_VALUE(dnssec_config.state) = 'off'))
+                THEN 'fail'
+           ELSE 'pass'
+           END AS status
+    FROM {{ full_table_name("gcp_dns_managed_zones") }}
+    WHERE {{ partition_filter() }}
+{% endmacro %}
