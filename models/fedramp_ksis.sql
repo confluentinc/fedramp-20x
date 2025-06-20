@@ -171,6 +171,8 @@ with
 
         -- KSI-TPR-01: Identify all third-party information resources .
         -- KSI-TPR-02: Regularly confirm that services handling federal information or are likely to impact the confidentiality, integrity, or availability of federal information are FedRAMP authorized and securely configured.
+        ({{ vendors_should_have_fedramp_authorization('KSI-TPR-02', '1.0') }})
+
         -- KSI-TPR-03: Identify and prioritize mitigation of potential supply chain risks.
         -- KSI-TPR-04: Monitor third party software information resources for upstream vulnerabilities, with contractual notification requirements or active monitoring services.
     )
