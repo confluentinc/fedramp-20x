@@ -165,7 +165,7 @@ with
 
         -- KSI-SVC-06: Use automated key management systems to manage, protect, and regularly rotate digital keys and certificates.
         ({{ aws_cisv3_mapping('KSI-SVC-06', '1.0', '3.6') }}) -- Ensure Key rotation is enabled for all customer managed KMS keys
-
+            {{ union() }}
         -- KSI-SVC-07: Use a consistent, risk-informed approach for applying security patches
 
         -- KSI-TPR-01: Identify all third-party information resources .
