@@ -52,7 +52,7 @@ select distinct
                 name                                                                   AS resource_id, 
                 '{{framework}}' As framework,
                 '{{check_id}}' As check_id,                                                                         
-                'Ensure that SSH access is restricted from the internet (Automated)' AS title,
+                'Ensure that RDP access is restricted from the internet (Automated)' AS title,
                 project_id                                                                AS project_id,
                 CASE
            WHEN
