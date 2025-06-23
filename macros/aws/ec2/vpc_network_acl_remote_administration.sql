@@ -16,8 +16,8 @@ select
       and (
           (
             (port_range_from is null and port_range_to is null) -- all ports
-            or 22 between port_range_from and port_range_to
-            or 3389 between port_range_from and port_range_to
+            or '22' between port_range_from and port_range_to
+            or '3389' between port_range_from and port_range_to
           )
           and
           (

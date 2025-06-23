@@ -41,6 +41,7 @@ vars:
     - 5.2 # Covered by other CNA controls
     - 5.3 # Covered by other CNA controls
   ksi_cna_07_account_ids: []
+  third_party_vendors: []
   k8s_deployment_method_labels:
     - key: ""
       values: []
