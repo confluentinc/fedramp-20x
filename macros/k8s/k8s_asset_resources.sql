@@ -1,8 +1,8 @@
-{% macro k8s_asset_resources(table_name, ARN_EXIST, ACCOUNT_ID_EXIST, REQUEST_ACCOUNT_ID_EXIST, REGION_EXIST, TAGS_EXIST) %}
-  {{ return(adapter.dispatch('k8s_asset_resources')(table_name, ARN_EXIST, ACCOUNT_ID_EXIST, REQUEST_ACCOUNT_ID_EXIST, REGION_EXIST, TAGS_EXIST)) }}
+{% macro k8s_asset_resources(table_name) %}
+  {{ return(adapter.dispatch('k8s_asset_resources')(table_name)) }}
 {% endmacro %}
 
-{%- macro bigquery__k8s_asset_resources(table_name, ARN_EXIST, ACCOUNT_ID_EXIST, REQUEST_ACCOUNT_ID_EXIST, REGION_EXIST, TAGS_EXIST) -%}
+{%- macro bigquery__k8s_asset_resources(table_name) -%}
 SELECT 
     _cq_id,
     _cq_source_name,
