@@ -21,7 +21,7 @@ WITH
        p.name,
        CASE WHEN p.name like '%.appspot.com' THEN 'https://'||p.name ELSE 'https://' || p.name || '.storage.googleapis.com' END AS self_link,
        pp.value AS binding
-FROM {{ full_table_name("gcp_storage_buckets") }} p LEFT JOIN bindings pp ON pp.project_id=p.project_id AND pp.bucket_name=p.name AND {{ partition_join("p", "pp")}}
+FROM {{ full_table_name("gcp_storage_buckets") }} p LEFT JOIN bindings pp ON pp.project_id=p.project_id AND pp.bucket_name=p.name
     AND {{ partition_filter('p') }}
     ),
     role_members AS (
@@ -51,5 +51,4 @@ FROM {{ full_table_name("gcp_storage_buckets") }} p LEFT JOIN bindings pp ON pp.
                 ELSE 'pass'
                 END AS status
     FROM gcp_public_buckets_accesses
-    WHERE {{ partition_filter('gcp_public_buckets_accesses') }}
 {% endmacro %}
