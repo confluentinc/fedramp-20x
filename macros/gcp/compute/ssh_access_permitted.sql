@@ -68,5 +68,4 @@ select distinct
            ELSE 'pass'
            END AS status
     FROM gcp_firewall_allowed_rules
-   WHERE {{ partition_filter() }}
 {% endmacro %}
