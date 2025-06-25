@@ -121,6 +121,8 @@ with
         -- KSI-MLA-06: Centrally track and prioritize the mitigation and/or remediation of identified vulnerabilities.
 
         -- KSI-PIY-01: Have an up-to-date information resource inventory or code defining all deployed assets, software, and services.
+        ({{ asset_inventories_should_be_up_to_date('KSI-PIY-01', '1.0') }})
+            {{ union() }}
         -- KSI-PIY-02: Have policies outlining the security objectives of all information resources.
         -- KSI-PIY-03: Maintain a vulnerability disclosure program.
         -- KSI-PIY-04: Build security considerations into the Software Development Lifecycle and align with CISA Secure By Design principles.
