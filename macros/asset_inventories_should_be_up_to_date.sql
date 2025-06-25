@@ -1,3 +1,6 @@
+-- depends_on: {{ ref('aws_resources') }}
+-- depends_on: {{ ref('gcp_resources') }}
+-- depends_on: {{ ref('k8s_resources') }}
 {% macro asset_inventories_should_be_up_to_date(framework, check_id) %}
   {{ return(adapter.dispatch('asset_inventories_should_be_up_to_date')(framework, check_id)) }}
 {% endmacro %}
@@ -6,7 +9,7 @@
 
 {% macro bigquery__asset_inventories_should_be_up_to_date(framework, check_id) %}
 with inventory_list as (
-  select inventory_table from unnest([{{ ref('aws_resources') }}, {{ ref('gcp_resources') }}, {{ ref('k8s_resources') }}]) as inventory_table
+  select inventory_table from unnest(['aws_resources', 'gcp_resources', 'k8s_resources']) as inventory_table
 )
 select
     '{{ framework }}' as framework,
