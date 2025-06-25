@@ -12,7 +12,7 @@ select
     '{{ framework }}' as framework,
     '{{ check_id }}' as check_id,
     'Kubernetes images should use an immutable registry' as title,
-    image_name as identifier,
+    arn as identifier,
     null as metadata,
     case when er.repository_uri IS NOT NULL and er.image_tag_mutability = 'IMMUTABLE'
          then 'pass'

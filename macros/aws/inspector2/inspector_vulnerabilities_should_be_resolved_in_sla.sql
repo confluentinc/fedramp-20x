@@ -9,7 +9,7 @@ select
     '{{framework}}' As framework,
     '{{check_id}}' As check_id,
     'Inspector vulnerabilities should be resolved within SLA' as title,
-    JSON_VALUE(resource, '$.Id') as identifier,
+    arn as identifier,
     null as metadata,
     case
         when (findings.severity = 'CRITICAL' and status = 'ACTIVE' and DATE(findings.first_observed_at) <= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY))
