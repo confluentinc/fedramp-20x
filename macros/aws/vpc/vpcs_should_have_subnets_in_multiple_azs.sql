@@ -21,7 +21,7 @@ join (
   select vpc_id, count(distinct availability_zone) as az_count
   from {{ full_table_name("aws_ec2_subnets") }}
   where {{ partition_filter() }}
-  group by vpc_id, availability_zone
+  group by vpc_id
 ) as subnet_az_count
 on vpc.vpc_id = subnet_az_count.vpc_id
 -- Default VPCs aren't configured correctly, and we don't want to include them in this check.

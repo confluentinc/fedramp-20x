@@ -17,4 +17,5 @@ select
         end as status,
     tags
 from {{ full_table_name("aws_rds_instances") }}
+where {{ partition_filter() }}
     {% endmacro %}

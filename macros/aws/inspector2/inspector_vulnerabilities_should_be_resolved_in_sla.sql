@@ -9,7 +9,7 @@ select
     '{{framework}}' As framework,
     '{{check_id}}' As check_id,
     'Inspector vulnerabilities should be resolved within SLA' as title,
-    JSON_VALUE(resource, '$.Id') as identifier,
+    arn as identifier,
     null as metadata,
     case
         when (findings.severity = 'CRITICAL' and status = 'ACTIVE' and DATE(findings.first_observed_at) <= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY))
@@ -19,8 +19,8 @@ select
         else 'pass'
     end as status,
     case
-        when JSON_VALUE(resource, '$.Tags') is not null then JSON_VALUE(resource, '$.Tags')
-        else NULL
+        when JSON_QUERY(resource, '$.Tags') is not null then JSON_QUERY(resource, '$.Tags')
+        else JSON_OBJECT()
     end as tags
 from {{ full_table_name("aws_inspector2_findings") }} as findings,
         unnest(JSON_QUERY_ARRAY(findings.resources)) as resource

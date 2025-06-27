@@ -12,13 +12,13 @@ select
     '{{ framework }}' as framework,
     '{{ check_id }}' as check_id,
     'Kubernetes images should use an immutable registry' as title,
-    image_name as identifier,
+    arn as identifier,
     null as metadata,
     case when er.repository_uri IS NOT NULL and er.image_tag_mutability = 'IMMUTABLE'
          then 'pass'
          else 'fail'
     end as status,
-    tags,
+    tags
 from images
 left join {{ full_table_name("aws_ecr_repositories") }} as er
     on images.image_name = er.repository_uri

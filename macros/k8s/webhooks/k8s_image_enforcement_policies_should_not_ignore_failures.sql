@@ -12,7 +12,7 @@ select
     cluster.arn as identifier,
     null as metadata,
     case
-        when JSON_VALUE(webhook, "$.failurePolicy") = 'fail' then 'pass'
+        when UPPER(JSON_VALUE(webhook, "$.failurePolicy")) = 'FAIL' then 'pass'
         else 'fail'
         end as status,
     cluster.tags as tags
