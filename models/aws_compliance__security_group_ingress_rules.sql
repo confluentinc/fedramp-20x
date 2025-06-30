@@ -1,3 +1,5 @@
-
-{{ ec2_security_group_ingress_rules() }}
-
+with
+    aggregated as (
+        ({{ security_group_ingress_rules() }})
+    )
+select * from aggregated
