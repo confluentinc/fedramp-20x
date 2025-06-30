@@ -1,4 +1,4 @@
-{% macro security_group_egress_rules(framework, check_id) %}
+{% macro security_group_egress_rules() %}
   {{ return(adapter.dispatch('security_group_egress_rules')()) }}
 {% endmacro %}
 
