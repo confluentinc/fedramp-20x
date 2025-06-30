@@ -18,4 +18,5 @@ select
     tags
 from {{ full_table_name("aws_elasticache_replication_groups") }}
 WHERE {{ partition_filter() }}
+AND engine = 'redis'
 {% endmacro %}
