@@ -9,9 +9,23 @@ assess compliance with the current FedRAMP KSIs.
 A secure cloud service offering will use cloud native architecture and design principles to enforce and enhance the Confidentiality, Integrity and Availability of the system.
 
 #### KSI-CNA-01: Configure ALL information resources to limit inbound and outbound traffic
+- (AWS) RDS instances are not publicly accessible 
+- (AWS) ALBs restrict access to limited port ranges 
+- (AWS) Default security groups have no access 
+
 #### KSI-CNA-02: Design systems to minimize the attack surface and minimize lateral movement if compromised
+- (AWS) Security groups have restricted ingress and egress rules
+- (AWS) Network ACLs have restricted ingress and egress rules
+
 #### KSI-CNA-03: Use logical networking and related capabilities to enforce traffic flow controls
+- (AWS) Security groups have restricted ingress and egress rules
+- (AWS) Network ACLs have restricted ingress and egress rules
+
 #### KSI-CNA-04: Use immutable infrastructure with strictly defined functionality and privileges by default
+- (Kubernetes) Images use immutable tags instead of aliases, such as `latest`
+- (Kubernetes) Workloads are deployed through immutable tools
+- (Kubernetes) Images use allowed internal registries
+
 #### KSI-CNA-05: Have denial of service protection
 #### KSI-CNA-06: Design systems for high availability and rapid recovery
 #### KSI-CNA-07: Ensure cloud-native information resources are implemented based on host provider’s best practices and documented guidance
@@ -59,12 +73,39 @@ A secure cloud service provider will ensure that all system changes are properly
 ### KSI-PIY
 A secure cloud service offering will have intentional, organized, universal guidance for how every information resource, including personnel, is secured
 
-#### KSI-PIY-01: Log and monitor system modifications
-#### KSI-PIY-02: Execute changes though redeployment of version controlled immutable resources rather than direct modification wherever possible
-#### KSI-PIY-03: Implement automated testing and validation of changes prior to deployment
-#### KSI-PIY-04: Have a documented change management procedure
-#### KSI-PIY-05: Evaluate the risk and potential impact of any change
-#### KSI-PIY-06: Evaluate the risk and potential impact of any change
-#### KSI-PIY-07: Evaluate the risk and potential impact of any change
+#### KSI-PIY-01: Have an up-to-date information resource inventory or code defining all deployed assets, software, and services.
+#### KSI-PIY-02: Have policies outlining the security objectives of all information resources.
+#### KSI-PIY-03: Maintain a vulnerability disclosure program.
+#### KSI-PIY-04: Build security considerations into the Software Development Lifecycle and align with CISA Secure By Design principles.
+#### KSI-PIY-05: Document methods used to evaluate information resource implementations.
+#### KSI-PIY-06: Have a dedicated staff and budget for security with executive support, commensurate with the size, complexity, scope, and risk of the service offering.
+#### KSI-PIY-07: Document risk management decisions for software supply chain security.
 
+### KSI-TPR 
+A secure cloud service offering will understand, monitor, and manage supply chain risks from third-party information resources.
 
+#### KSI-TPR-01: Identify all third-party information resources .
+#### KSI-TPR-02: Regularly confirm that services handling federal information or are likely to impact the confidentiality, integrity, or availability of federal information are FedRAMP authorized and securely configured.
+#### KSI-TPR-03: Identify and prioritize mitigation of potential supply chain risks.
+#### KSI-TPR-04: Monitor third party software information resources for upstream vulnerabilities, with contractual notification requirements or active monitoring services.
+
+### KSI-CED
+A secure cloud service provider will continuously educate their employees on cybersecurity measures, testing them regularly to ensure their knowledge is satisfactory.
+
+#### KSI-CED-01: Ensure all employees receive security awareness training.
+#### KSI-CED-02: Require role-specific training for high risk roles, including at least roles with privileged access.
+
+### KSI-RPL 
+A secure cloud service offering will define, maintain, and test incident response plan(s) and recovery capabilities to ensure minimal service disruption and data loss during incidents and contingencies.
+
+#### KSI-RPL-01: Define Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO).
+#### KSI-RPL-02: Develop and maintain a recovery plan that aligns with the defined recovery objectives.
+#### KSI-RPL-03: Perform system backups aligned with recovery objectives.
+#### KSI-RPL-04: Regularly test the capability to recover from incidents and contingencies.
+
+### KSI-INR
+A secure cloud service offering will document, report, and analyze security incidents to ensure regulatory compliance and continuous security improvement.
+
+#### KSI-INR-01: Report incidents according to FedRAMP requirements and cloud service provider policies.
+#### KSI-INR-02: Maintain a log of incidents and periodically review past incidents for patterns or vulnerabilities.
+#### KSI-INR-03: Generate after action reports and regularly incorporate lessons learned into operations.
