@@ -15,7 +15,8 @@ select
         then 'pass'
         else 'fail'
     end as status,
-    tags,
+    tags
 from {{ full_table_name("aws_elasticache_clusters") }}
 WHERE {{ partition_filter() }}
+AND engine = 'redis'
 {% endmacro %}

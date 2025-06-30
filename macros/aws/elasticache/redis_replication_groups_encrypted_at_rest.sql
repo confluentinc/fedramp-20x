@@ -18,4 +18,5 @@ select
 FROM 
     {{ full_table_name("aws_elasticache_replication_groups") }}
 where {{ partition_filter() }}
+AND engine = 'redis'
 {% endmacro %}
