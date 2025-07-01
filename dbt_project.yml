@@ -226,3 +226,11 @@ vars:
     - aws_redshift_clusters
     - aws_apigatewayv2_apis
     - aws_rds_instances
+  vpc_inventory_tables:
+    - aws_ec2_instances
+    - aws_ec2_vpc_endpoints
+    - aws_ec2_vpc_peering_connections
+    - aws_eks_clusters
+    - aws_elbv2_load_balancers
+    - aws_lambda_functions
+    - aws_rds_instances
