@@ -45,6 +45,9 @@ with
             {{ union() }}
         ({{ nacls_should_not_have_broad_egress('KSI-CNA-02', '1.3') }})
             {{ union() }}
+        ({{ verify_default_vpc_unused('KSI-CNA-02', '1.4')}})
+            {{ union() }}
+
 
         -- KSI-CNA-03: Use logical networking and related capabilities to enforce traffic flow controls
         ({{ security_groups_should_not_have_broad_ingress('KSI-CNA-03', '1.0') }})
@@ -54,6 +57,8 @@ with
         ({{ nacls_should_not_have_broad_ingress('KSI-CNA-03', '1.2') }})
             {{ union() }}
         ({{ nacls_should_not_have_broad_egress('KSI-CNA-03', '1.3') }})
+            {{ union() }}
+        ({{ verify_default_vpc_unused('KSI-CNA-03', '1.4')}})
             {{ union() }}
 
         -- KSI-CNA-04: Use immutable infrastructure with strictly defined functionality and privileges by default
@@ -73,6 +78,7 @@ with
             {{ union() }}
 
         -- KSI-CNA-07: Ensure cloud-native information resources are implemented based on host provider's best practices and documented guidance.
+
 
         -- KSI-IAM-01: Enforce multi-factor authentication (MFA) using methods that are difficult to intercept or impersonate (phishing-resistant MFA) for all user authentication.
         ({{ okta_users_require_mfa('KSI-IAM-01', '1.0')}})
