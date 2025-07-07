@@ -13,7 +13,7 @@ select
     JSON_OBJECT() as metadata,
     case when exists (
         select 1 from {{ full_table_name("jira_projects") }}
-        where {{ partition_filter() }} and name = '{{ project }}'
+        where {{ partition_filter() }} and key = '{{ project }}'
         limit 1
     ) then 'pass' else 'fail' end as status,
     JSON_OBJECT() as tags

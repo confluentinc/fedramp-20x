@@ -35,7 +35,8 @@ with
         -- KSI-CMT-05: Evaluate the risk and potential impact of any change.
         ({{ jira_should_have_change_management_project('KSI-CMT-05', '1.0') }})
             {{ union() }}
-
+        ({{ jira_change_tickets_should_be_approved('KSI-CMT-05', '1.1') }})
+            {{ union() }}
         -- KSI-CNA-01: Configure ALL information resources to limit inbound and outbound traffic
         ({{ aws_cisv3_mapping('KSI-CNA-01', '1.0', '2.3.3') }}) -- RDS Should not be publicly accessible
             {{ union() }}
