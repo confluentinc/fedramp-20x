@@ -1,3 +1,7 @@
+{% set incident_tracking_jira_project = var('incident_tracking_jira_project') %}
+{% set continuous_monitoring_jira_project = var('continuous_monitoring_jira_project') %}
+{% set security_jira_project = var('security_jira_project') %}
+
 with
     aggregated as (
         -- KSI-AUD-01: Enable and configure detailed audit logging.
@@ -9,6 +13,8 @@ with
             {{ union() }}
         -- KSI-AUD-02: Protect audit logs from tampering and deletion.
         -- KSI-AUD-03: Monitor audit logs for suspicious activity.
+        ({{ jira_should_have_security_project('KSI-INR-02', '1.0') }})
+            {{ union() }}
         -- KSI-AUD-04: Retain audit logs according to requirements.
 
         -- KSI-CED-01: Ensure all employees receive security awareness training.
@@ -27,6 +33,8 @@ with
         -- KSI-CMT-03: Implement automated testing and validation of changes prior to deployment.
         -- KSI-CMT-04: Have a documented change management procedure.
         -- KSI-CMT-05: Evaluate the risk and potential impact of any change.
+        ({{ jira_should_have_change_management_project('KSI-CMT-05', '1.0') }})
+            {{ union() }}
 
         -- KSI-CNA-01: Configure ALL information resources to limit inbound and outbound traffic
         ({{ aws_cisv3_mapping('KSI-CNA-01', '1.0', '2.3.3') }}) -- RDS Should not be publicly accessible
@@ -103,6 +111,12 @@ with
 
         -- KSI-INR-01: Report incidents according to FedRAMP requirements and cloud service provider policies.
         -- KSI-INR-02: Maintain a log of incidents and periodically review past incidents for patterns or vulnerabilities.
+        ({{ jira_should_have_security_project('KSI-INR-02', '1.0') }})
+            {{ union() }}
+        ({{ jira_should_have_incident_tracking_project('KSI-INR-02', '1.1') }})
+            {{ union() }}
+
+
         -- KSI-INR-03: Generate after action reports and regularly incorporate lessons learned into operations.
 
         -- KSI-MLA-01: Operate a Security Information and Event Management (SIEM) or similar system(s) for centralized, tamper-resistent logging of events, activities, and changes.
@@ -125,6 +139,10 @@ with
         -- KSI-MLA-04: Perform authenticated vulnerability scanning on information resources.
         -- KSI-MLA-05: Perform Infrastructure as Code and configuration evaluation and testing.
         -- KSI-MLA-06: Centrally track and prioritize the mitigation and/or remediation of identified vulnerabilities.
+        ({{ jira_should_be_used_for_tracking_vulnerabilities('KSI-MLA-06', '1.0') }})
+            {{ union() }}
+        ({{ jira_should_have_continuous_monitoring_project('KSI-MLA-06', '1.1') }})
+            {{ union() }}
 
         -- KSI-PIY-01: Have an up-to-date information resource inventory or code defining all deployed assets, software, and services.
         ({{ asset_inventories_should_be_up_to_date('KSI-PIY-01', '1.0') }})
