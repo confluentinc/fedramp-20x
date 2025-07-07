@@ -13,8 +13,8 @@ with compliance as (
 )  select
     '{{ framework }}' as framework,
     '{{ check_id }}' as check_id,
-    'GCP CIS v3 Compliance (Scored)' as title,
-    'GCP CIS v3' as identifier,
+    'GCP CIS v2 Compliance (Scored)' as title,
+    'GCP CIS v2' as identifier,
     JSON_OBJECT('total', total, 'passed', passed, 'score', passed / total) as metadata,
     case when (passed / total) >= 0.8 then 'pass'
         else 'fail'
