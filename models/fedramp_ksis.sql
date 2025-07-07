@@ -13,7 +13,7 @@ with
             {{ union() }}
         -- KSI-AUD-02: Protect audit logs from tampering and deletion.
         -- KSI-AUD-03: Monitor audit logs for suspicious activity.
-        ({{ jira_should_have_security_project('KSI-INR-02', '1.0') }})
+        ({{ jira_should_have_security_project('KSI-AUD-03', '1.0') }})
             {{ union() }}
         -- KSI-AUD-04: Retain audit logs according to requirements.
 
