@@ -10,7 +10,7 @@ select
     '{{check_id}}' as check_id,
     'Security groups should not allow 0.0.0.0/0 ingress' as title,
     sg.arn as identifier,
-    null as metadata,
+    JSON_OBJECT('vpc_id', vpc.vpc_id) as metadata,
     case when ingress.id is not null
         then 'fail'
         else 'pass'

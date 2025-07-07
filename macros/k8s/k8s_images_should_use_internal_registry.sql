@@ -13,7 +13,7 @@ select
     '{{ check_id }}' as check_id,
     'Kubernetes images should use an internal registry' as title,
     image_name as identifier,
-    null as metadata,
+    JSON_OBJECT() as metadata,
     case when JSON_EXTRACT_SCALAR(FORMAT("%T", NET.HOST(image_name))) IN ({{ to_sql_list(var("ksi_cna_04_allowed_registries")) }})
         then 'pass'
         else 'fail'

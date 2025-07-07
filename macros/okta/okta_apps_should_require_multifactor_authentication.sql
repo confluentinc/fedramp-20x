@@ -25,7 +25,7 @@ select
     '{{ check_id }}' as check_id,
     'Applications should require Multi Factor Authentication' as title,
     app.label as identifier,
-    null as metadata,
+    JSON_OBJECT('policy_id', policy.id) as metadata,
     case when policy.id IS NOT NULL
              then 'pass'
          else 'fail'

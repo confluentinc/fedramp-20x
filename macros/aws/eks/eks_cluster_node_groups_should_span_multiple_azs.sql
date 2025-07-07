@@ -10,7 +10,7 @@ select
     '{{ check_id }}' as check_id,
     'EKS Clusters should have node groups in multiple availability zones' as title,
     eks.arn as identifier,
-    null as metadata,
+    JSON_OBJECT() as metadata,
     case when az_count > 1
          then 'pass'
         else 'fail'

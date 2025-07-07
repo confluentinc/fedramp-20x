@@ -36,7 +36,7 @@ select
     '{{ check_id }}' as check_id,
     'Service Accounts require secure authentication' as title,
     JSON_VALUE(user.profile, "$.email") as identifier,
-    null as metadata,
+    JSON_OBJECT() as metadata,
     case when exists (select * from user_groups where user_id = user.id limit 1)
         then 'pass'
         else 'fail'

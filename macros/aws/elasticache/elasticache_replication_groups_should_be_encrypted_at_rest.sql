@@ -10,11 +10,11 @@ select
     '{{ check_id }}' as check_id,
     'Elasticache Replication Groups should be encrypted at rest' as title,
     arn as identifier,
-    null as metadata,
+    JSON_OBJECT() as metadata,
     case when at_rest_encryption_enabled = true
-             then 'pass'
-         else 'fail'
-        end as status,
+        then 'pass'
+        else 'fail'
+    end as status,
     tags
 from {{ full_table_name("aws_elasticache_replication_groups") }}
 WHERE {{ partition_filter() }}

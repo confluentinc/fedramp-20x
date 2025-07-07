@@ -10,7 +10,7 @@ select
     '{{ check_id }}' as check_id,
     'Application Load Balancers should have an acceptable TLS policy' as title,
     list.arn as identifier,
-    null as metadata,
+    JSON_OBJECT('ssl_policy', ssl_policy) as metadata,
     case when ssl_policy = 'ELBSecurityPolicy-TLS13-1-2-FIPS-2023-04'
         then 'pass'
         else 'fail'

@@ -10,7 +10,7 @@ select
     '{{ check_id }}' as check_id,
     'Elasticache Clusters should be encrypted at rest' as title,
     arn as identifier,
-    null as metadata,
+    JSON_OBJECT() as metadata,
     case when at_rest_encryption_enabled = true
         then 'pass'
         else 'fail'

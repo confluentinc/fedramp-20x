@@ -10,7 +10,7 @@ select
     '{{check_id}}' as check_id,
     'Application Load Balancer should be configured to redirect all HTTP requests to HTTPS' as title,
     list.arn as identifier,
-    null as metadata,
+    JSON_OBJECT('protocol', protocol, 'action_type', da.Type, 'redirect_protocol', JSON_VALUE(da.RedirectConfig.Protocol)) as metadata,
     case when
              protocol = 'HTTP' and (
                  JSON_VALUE(da.Type) != 'redirect' or JSON_VALUE(da.RedirectConfig.Protocol) != 'HTTPS')

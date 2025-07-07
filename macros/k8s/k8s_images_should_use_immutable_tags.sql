@@ -11,7 +11,7 @@ select
     '{{ check_id }}' as check_id,
     'Kubernetes images should use versioned tags instead of named aliases' as title,
     CONCAT(context, '.', namespace, '.', resource_name, '.', container_name) as identifier,
-    null as metadata,
+    JSON_OBJECT('image_tag', image_tag) as metadata,
     case when image_tag IN ('master', 'latest', 'stable')
         then 'fail'
         else 'pass'

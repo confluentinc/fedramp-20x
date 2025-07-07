@@ -10,7 +10,10 @@ select
     '{{ check_id }}' as check_id,
     'S3 Buckets should be encrypted at rest' as title,
     arn as identifier,
-    null as metadata,
+    JSON_OBJECT(
+        'kms_key_id', JSON_QUERY(apply_server_side_encryption_by_default, "$.KMSMasterKeyID"),
+        'algorithm', JSON_QUERY(apply_server_side_encryption_by_default,  "$.SSEAlgorithm")
+    ) as metadata,
     case when encrules.apply_server_side_encryption_by_default IS NOT NULL
         then 'pass'
         else 'fail'

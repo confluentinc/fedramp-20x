@@ -10,7 +10,7 @@ select
     '{{check_id}}' As check_id,
     'Inspector vulnerabilities should be resolved within SLA' as title,
     arn as identifier,
-    null as metadata,
+    JSON_OBJECT('severity', findings.severity, 'first_observed_at', findings.first_observed_at) as metadata,
     case
         when (findings.severity = 'CRITICAL' and status = 'ACTIVE' and DATE(findings.first_observed_at) <= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY))
             then 'fail'
@@ -25,4 +25,6 @@ select
 from {{ full_table_name("aws_inspector2_findings") }} as findings,
         unnest(JSON_QUERY_ARRAY(findings.resources)) as resource
 where TIMESTAMP_TRUNC(_cq_sync_time, DAY) = TIMESTAMP(CURRENT_DATE())
+and findings.severity in ('CRITICAL', 'HIGH')
+and findings.status = 'ACTIVE'
     {% endmacro %}

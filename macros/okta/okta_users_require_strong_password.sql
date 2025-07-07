@@ -36,11 +36,11 @@ select
     '{{ check_id }}' as check_id,
     'User authentication requires strong passwords' as title,
     JSON_VALUE(user.profile, "$.email") as identifier,
-    null as metadata,
+    JSON_OBJECT() as metadata,
     case when exists (select * from user_groups where user_id = user.id limit 1)
-             then 'pass'
-         else 'fail'
-        end as status,
+        then 'pass'
+        else 'fail'
+    end as status,
     JSON_OBJECT() as tags
 from {{ full_table_name("okta_users") }} as user
 where JSON_VALUE(profile, "$.serviceAccount") IS DISTINCT FROM "true"

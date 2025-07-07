@@ -10,8 +10,8 @@ select
     '{{check_id}}' as check_id,
     'Security groups should not allow 0.0.0.0/0 egress' as title,
     sg.arn as identifier,
-    null as metadata,
-    case when ingress.id is not null
+    JSON_OBJECT('vpc_id', vpc.vpc_id) as metadata,
+    case when egress.id is not null
         then 'fail'
         else 'pass'
     end as status,
@@ -20,8 +20,8 @@ from {{ full_table_name("aws_ec2_security_groups") }} as sg
 left join (
   select id from {{ ref('aws_compliance__security_group_egress_rules') }}
   where (ip = '0.0.0.0/0' or ip = '::/0') group by id
-) ingress
-on ingress.id = sg.group_id
+) egress
+on egress.id = sg.group_id
 left join {{ full_table_name("aws_ec2_vpcs") }} as vpc on sg.vpc_id = vpc.vpc_id
     and {{ partition_join("sg", "vpc")}}
 where {{ partition_filter("sg") }}

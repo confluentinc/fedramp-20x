@@ -10,7 +10,7 @@ select
     '{{ check_id }}' as check_id,
     title,
     resource_id as identifier,
-    null as metadata,
+    JSON_OBJECT() as metadata,
     status,
     JSON_OBJECT() as tags
 from {{ ref("aws_compliance__foundational_security")}}

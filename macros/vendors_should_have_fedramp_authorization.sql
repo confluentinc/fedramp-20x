@@ -14,7 +14,7 @@ select
     '{{ check_id }}' as check_id,
     'Vendors should have FedRAMP authorization' as title,
     vendor as identifier,
-    null as metadata,
+    JSON_OBJECT() as metadata,
     case
         when exists (
             select 1 from {{ full_table_name("fedramp_marketplace") }}

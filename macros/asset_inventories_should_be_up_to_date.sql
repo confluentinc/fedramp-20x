@@ -16,7 +16,7 @@ select
     '{{ check_id }}' as check_id,
     'Asset Inventories should be up to date' as title,
     inventory_table as identifier,
-    null as metadata,
+    JSON_OBJECT() as metadata,
     case
         when table_name is not null
                  and DATE(creation_time) >= DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY) then 'pass'
