@@ -10,7 +10,7 @@ select
     '{{check_id}}' As check_id,
     'EC2 instances should be scanned by Inspector' as title,
     ec2.arn as identifier,
-    null as metadata,
+    JSON_OBJECT() as metadata,
     case when icr.scan_status is not null
         and JSON_VALUE(icr.scan_status, '$.StatusCode') = 'ACTIVE'
     then 'pass'

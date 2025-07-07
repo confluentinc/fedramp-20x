@@ -18,7 +18,7 @@ select
     '{{ check_id }}' as check_id,
     'AWS Resources should be managed by Infrastructure as Code' as title,
     arn as identifier,
-    null as metadata,
+    JSON_OBJECT() as metadata,
     case when JSON_VALUE(tags, '$.{{ iac_tagging_scheme["key"] }}') IN ({{ to_sql_list(iac_tagging_scheme["values"]) }})
          then 'pass'
          else 'fail'

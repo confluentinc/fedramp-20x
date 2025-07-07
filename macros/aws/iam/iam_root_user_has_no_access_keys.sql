@@ -11,7 +11,7 @@ select
     '{{ check_id }}' as check_id,
     'AWS Root Accounts should not have active access credentials' as title,
     arn as identifier,
-    null as metadata,
+    JSON_OBJECT() as metadata,
     case when access_key1_active = true or access_key2_active = true
         then 'fail'
         else 'pass'

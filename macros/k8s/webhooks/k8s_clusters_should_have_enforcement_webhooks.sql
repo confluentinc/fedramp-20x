@@ -10,7 +10,7 @@ select
     '{{ check_id }}' as check_id,
     'Kubernetes clusters should have enforcement webhooks installed' as title,
     cluster.arn as identifier,
-    null as metadata,
+    JSON_OBJECT() as metadata,
     case
         when vw.name is not null then 'pass'
         else 'fail'

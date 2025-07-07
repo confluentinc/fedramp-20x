@@ -10,7 +10,7 @@ select
     '{{ check_id }}' as check_id,
     'EBS Volumes should be encrypted at rest' as title,
     arn as identifier,
-    null as metadata,
+    JSON_OBJECT('kms_key_id', kms_key_id) as metadata,
     case when encrypted = true
          then 'pass'
          else 'fail'

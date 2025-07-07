@@ -10,7 +10,7 @@ select
     '{{check_id}}' As check_id,
     'Public ALBs should restrict traffic to defined ports' as title,
     arn as identifier,
-    null as metadata,
+    JSON_OBJECT('security_group', ingress.id) as metadata,
     case when ingress.id is not null
         then 'fail'
         else 'pass'

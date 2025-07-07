@@ -10,7 +10,7 @@ select
     '{{ check_id }}' as check_id,
     'Kubernetes clusters should have image policies in enforcement mode' as title,
     cluster.arn as identifier,
-    null as metadata,
+    JSON_OBJECT() as metadata,
     case
         when JSON_VALUE(cr.spec, '$.enforcementAction') = 'deny' then 'pass'
         else 'fail'

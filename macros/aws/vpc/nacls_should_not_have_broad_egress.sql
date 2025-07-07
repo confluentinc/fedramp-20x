@@ -10,7 +10,7 @@ select
     '{{check_id}}' as check_id,
     'Network ACLs should not allow 0.0.0.0/0 egress without port restrictions' as title,
     nacl.arn as identifier,
-    null as metadata,
+    JSON_OBJECT('vpc_id', vpc.vpc_id) as metadata,
     case when egress.arn is not null
         then 'fail'
         else 'pass'

@@ -24,7 +24,7 @@ select
     '{{ check_id }}' as check_id,
     'Kubernetes workloads should be immutable' as title,
     CONCAT(context, '.', namespace, '.', resource_name) as identifier,
-    null as metadata,
+    JSON_OBJECT() as metadata,
     case
         when {%- for check in k8s_deployment_method_labels -%}
             {% if check['operator'] == 'in' %}

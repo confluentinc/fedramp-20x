@@ -10,7 +10,7 @@ select
     '{{ check_id }}' as check_id,
     'Kubernetes clusters enforcement policies should not ignore failures' as title,
     cluster.arn as identifier,
-    null as metadata,
+    JSON_OBJECT() as metadata,
     case
         when UPPER(JSON_VALUE(webhook, "$.failurePolicy")) = 'FAIL' then 'pass'
         else 'fail'
