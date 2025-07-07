@@ -78,7 +78,12 @@ with
             {{ union() }}
 
         -- KSI-CNA-07: Ensure cloud-native information resources are implemented based on host provider's best practices and documented guidance.
-
+        ({{ aws_cis_compliance_summary('KSI-CNA-07', '1.0') }}) -- AWS CIS v3 Compliance (Scored)
+            {{ union() }}
+        ({{ aws_foundational_security_summary('KSI-CNA-07', '1.1') }}) -- AWS Foundational Security (Scored)
+            {{ union() }}
+        ({{ gcp_cis_compliance_summary('KSI-CNA-07', '1.2') }}) -- GCP CIS v2 Compliance (Scored)
+            {{ union() }}
 
         -- KSI-IAM-01: Enforce multi-factor authentication (MFA) using methods that are difficult to intercept or impersonate (phishing-resistant MFA) for all user authentication.
         ({{ okta_users_require_mfa('KSI-IAM-01', '1.0')}})

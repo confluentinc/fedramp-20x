@@ -38,8 +38,6 @@ vars:
   ksi_cna_04_allowed_registries: []
   ksi_cna_07_excluded_controls:
     - 1.17 # Govcloud support roles not required
-    - 5.2 # Covered by other CNA controls
-    - 5.3 # Covered by other CNA controls
   ksi_cna_07_account_ids: []
   third_party_vendors: []
   k8s_deployment_method_labels:
