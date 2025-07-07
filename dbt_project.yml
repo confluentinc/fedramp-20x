@@ -19,6 +19,11 @@ models:
     +materialized: table
 
 vars:
+  security_jira_project: ""
+  change_management_jira_project: ""
+  continuous_monitoring_jira_project: ""
+  incident_tracking_jira_project: ""
+  change_approval_steps: []
   image_signing_webhook: ""
   policy_enforcement_crds: []
   iac_tagging_scheme:
