@@ -1,0 +1,50 @@
+---
+slug: /
+---
+## Overview
+
+Confluent's approach for generating the 20x submission (as well as continuously doing so)
+can be broken down into 3 distinct steps:
+
+- Extracting data from Confluent's systems, and storing it in a structured format.
+- Defining KSIs and other controls as DBT models
+- Executing those DBT models using Apache Airflow in a continuous fashion.
+
+## Extracting Data with CloudQuery
+
+[CloudQuery](https://cloudquery.io/) is an open-source tool that allows you to query your cloud infrastructure using SQL.
+It provides a way to extract, transform, and load (ETL) data from various cloud providers into a SQL database, enabling
+you to analyze and manage your cloud resources effectively.
+
+Confluent is leveraging CloudQuery to run recurring syncs against all of our cloud providers, third party vendors, and
+other internal systems. These syncs extract all the relevant data, and store it in our BigQuery data warehouse. We are
+currently gathering information from the following sources:
+
+- AWS Accounts
+- GCP Projects
+- Kubernetes clusters
+- Github
+- Jira
+- Confluence
+
+Once all of this data is stored in BigQuery, we can evaluate it using DBT.
+
+## DBT Model Evaluation
+
+[DBT](https://docs.getdbt.com/docs/build/documentation) is a tool that allows you to define and run SQL-based
+transformations on your data. In the context of Confluent's 20x submission, DBT is used to define Key Security Indicators
+(KSIs) and other controls as models, which can be ran against the data extracted from Confluent's systems.
+
+Working through each KSI control, Confluent has defined a series of individual checks (macros) that evaluate portions of
+the respective KSI. Combined, these checks form an aggregate compliance score for the KSI.
+
+:::tip
+For more information on how Confluent has implemented these controls, please refer to the [Models](./docs/models/intro) section of the documentation.
+:::
+
+## Automation with Airflow
+
+With all of our data being synced to BigQuery on a recurring schedule, and DBT models that represent our KSI compliance,
+we can use Apache Airflow to orchestrate scheduling and execution of those DBT models. We automatically schedule these
+models to run on a daily basis, with reporting portals update every week. This allows Confluent to continuously monitor
+its compliance against these KSI models
