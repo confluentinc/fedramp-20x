@@ -1,0 +1,8 @@
+{
+  "label": "KSI-RPL",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "description": "A secure cloud service offering will define, maintain, and test incident response plan(s) and recovery capabilities to ensure minimal service disruption and data loss during incidents and contingencies."
+  }
+}

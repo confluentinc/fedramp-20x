@@ -1,0 +1,37 @@
+---
+sidebar_position: 5
+title: KSI-CMT-05
+description: Evaluate the risk and potential impact of any change.
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from '!!raw-loader!../../../macros/jira/jira_should_have_change_management_project.sql'
+import check11 from '!!raw-loader!../../../macros/jira/jira_change_tickets_should_be_approved.sql'
+
+# KSI-CMT-05
+
+> Evaluate the risk and potential impact of any change.
+
+## Checks
+
+### 1.0 - Jira should have a change management project
+
+Check the configured Jira instance for the Change Management project
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        {check10}
+    </CodeBlock>
+</details>
+
+### 1.1 - All change management tickets should be approved
+
+For each change management ticket in Jira, verify that one of the required approvals occured before the ticket was completed.
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        {check11}
+    </CodeBlock>
+</details>

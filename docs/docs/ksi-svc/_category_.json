@@ -1,0 +1,8 @@
+{
+  "label": "KSI-SVC",
+  "position": 9,
+  "link": {
+    "type": "generated-index",
+    "description": "A secure cloud service offering will follow FedRAMP encryption policies, continuously verify information resource integrity, and restrict access to third-party information resources."
+  }
+}
