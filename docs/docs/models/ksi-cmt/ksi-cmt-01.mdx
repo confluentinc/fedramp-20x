@@ -1,11 +1,11 @@
 ---
-sidebar_position: 1
+sidebar_position: 0
 title: KSI-CMT-01
 description: Log and monitor system modifications.
 ---
 
 import CodeBlock from '@theme/CodeBlock';
-import macro from '!!raw-loader!../../../../macros/aws/cloudtrail/organization_cloudtrail_should_emit_events_to_s3.sql'
+import check10 from "!!raw-loader!../../../../macros/aws/cloudtrail/organization_cloudtrail_should_emit_events_to_s3.sql";
 
 # KSI-CMT-01
 
@@ -13,14 +13,16 @@ import macro from '!!raw-loader!../../../../macros/aws/cloudtrail/organization_c
 
 ## Checks
 
-### 1.0 - AWS Organization Cloudtrail should emit events to S3
 
-Verify that for each AWS account, the organization cloudtrail has an event destination
-configured for S3.
+### 1.0 - Cloudtrail should emit change logs to S3 for review
+
+Verify that for each AWS account, the organization cloudtrail has an event destination configured for S3.
+
 
 <details>
-  <summary>View Macro</summary>
-  <CodeBlock language="sql">
-    {macro}
-  </CodeBlock>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
 </details>
+

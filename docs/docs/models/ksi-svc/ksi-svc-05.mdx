@@ -1,11 +1,54 @@
 ---
-sidebar_position: 5
+sidebar_position: 4
 title: KSI-SVC-05
 description: Enforce system and information resource integrity through cryptographic means.
 ---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/k8s/webhooks/k8s_clusters_should_have_enforcement_webhooks.sql";
+import check11 from "!!raw-loader!../../../../macros/k8s/webhooks/k8s_has_image_enforcement_policies.sql";
+import check12 from "!!raw-loader!../../../../macros/k8s/webhooks/k8s_image_enforcement_policies_should_not_ignore_failures.sql";
 
 # KSI-SVC-05
 
 > Enforce system and information resource integrity through cryptographic means.
 
 ## Checks
+
+
+### 1.0 - Kubernetes clusters should have enforcement webhooks installed
+
+Verify that all Kubernetes clusters have an enforcement webhook installed to ensure that only signed images are deployed.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+
+### 1.1 - Kubernetes clusters should have image policies in enforcement mode
+
+Verify that all Kubernetes clusters have image policies in enforcement mode to ensure that only signed images are deployed.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check11 }
+    </CodeBlock>
+</details>
+
+### 1.2 - Kubernetes clusters enforcement policies should not ignore failures
+
+Verify that all Kubernetes clusters have image policies that do not ignore failures to ensure that only signed images are deployed.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check12 }
+    </CodeBlock>
+</details>
+

@@ -1,9 +1,28 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 title: KSI-TPR-02
 description: Regularly confirm that services handling federal information or are likely to impact the confidentiality, integrity, or availability of federal information are FedRAMP authorized and securely configured.
 ---
 
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/vendors_should_have_fedramp_authorization.sql";
+
 # KSI-TPR-02
 
 > Regularly confirm that services handling federal information or are likely to impact the confidentiality, integrity, or availability of federal information are FedRAMP authorized and securely configured.
+
+## Checks
+
+
+### 1.0 - Vendors should have FedRAMP authorization
+
+Verify that all of the defined third-party vendors have a valid FedRAMP authorization.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+

@@ -1,11 +1,28 @@
 ---
-sidebar_position: 4
+sidebar_position: 3
 title: KSI-IAM-04
 description: Use a least-privileged, role and attribute-based, and just-in-time security authorization model for all user and non-user accounts and services.
 ---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/aws/iam/iam_root_user_has_no_access_keys.sql";
 
 # KSI-IAM-04
 
 > Use a least-privileged, role and attribute-based, and just-in-time security authorization model for all user and non-user accounts and services.
 
 ## Checks
+
+
+### 1.0 - AWS Root Accounts should not have active access credentials
+
+Verify that the root account for each AWS account does not have active access keys or secret keys.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+

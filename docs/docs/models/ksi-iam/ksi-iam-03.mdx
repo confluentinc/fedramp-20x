@@ -1,10 +1,27 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 title: KSI-IAM-03
 description: Enforce appropriately secure authentication methods for non-user accounts and services.
 ---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/okta/okta_service_accounts_have_secure_authentication.sql";
+
 # KSI-IAM-03
 
 > Enforce appropriately secure authentication methods for non-user accounts and services.
 
 ## Checks
+
+
+### 1.0 - Service Accounts require secure authentication
+
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+

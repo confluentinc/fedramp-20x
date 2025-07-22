@@ -12,7 +12,8 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "generate": "node scripts/generate-models.js"
   },
   "dependencies": {
     "@docusaurus/core": "3.8.1",
@@ -28,7 +29,10 @@
     "@docusaurus/module-type-aliases": "3.8.1",
     "@docusaurus/tsconfig": "3.8.1",
     "@docusaurus/types": "3.8.1",
-    "typescript": "~5.6.2"
+    "handlebars": "^4.7.8",
+    "templater-cli": "^1.0.6",
+    "typescript": "~5.6.2",
+    "yaml": "^2.8.0"
   },
   "browserslist": {
     "production": [

@@ -1,0 +1,397 @@
+models:
+  - name: KSI-CED
+    description: A secure cloud service provider will continuously educate their employees on cybersecurity measures, testing them regularly to ensure their knowledge is satisfactory.
+    controls:
+      - name: KSI-CED-01
+        description: Ensure all employees receive security awareness training.
+      - name: KSI-CED-02
+        description: Require role-specific training for high risk roles, including at least roles with privileged access.
+
+  - name: KSI-CMT
+    description: A secure cloud service provider will ensure that all system changes are properly documented and configuration baselines are updated accordingly.
+    controls:
+      - name: KSI-CMT-01
+        description: Log and monitor system modifications.
+        checks:
+          - id: "1.0"
+            title: Cloudtrail should emit change logs to S3 for review
+            description: |
+              Verify that for each AWS account, the organization cloudtrail has an event destination configured for S3.
+            macro: aws/cloudtrail/organization_cloudtrail_should_emit_events_to_s3.sql
+
+      - name: KSI-CMT-02
+        description: Execute changes though redeployment of version controlled immutable resources rather than direct modification wherever possible.
+        checks:
+          - id: "1.0"
+            title: Kubernetes images should use an immutable registry
+            description: |
+              For each Kubernetes image found in our asset inventory, verify that the ECR image it is sourced from is immutable.
+            macro: k8s/k8s_images_should_use_immutable_registry.sql
+          - id: "1.1"
+            title: AWS resources should be managed by Infrastructure as Code (IaC)
+            description: |
+              Given a schema of IaC tagging controls, verify that a subset of AWS resources have the appropriate tags to indicate they are managed by IaC.
+            macro: aws/aws_resources_should_be_managed_by_iac.sql
+
+      - name: KSI-CMT-03
+        description: Implement automated testing and validation of changes prior to deployment.
+      - name: KSI-CMT-04
+        description: Have a documented change management procedure.
+      - name: KSI-CMT-05
+        description: Evaluate the risk and potential impact of any change.
+        checks:
+          - id: "1.0"
+            title: Jira should have a change management project
+            description: |
+              Check the configured Jira instance for the Change Management project
+            macro: jira/jira_should_have_change_management_project.sql
+          - id: "1.1"
+            title: All change management tickets should be approved
+            description: |
+              For each change management ticket in Jira, verify that one of the required approvals occured before the ticket was completed.
+            macro: jira/jira_change_tickets_should_be_approved.sql
+
+  - name: KSI-CNA
+    description: A secure cloud service offering will use cloud native architecture and design principles to enforce and enhance the Confidentiality, Integrity and Availability of the system.
+    controls:
+      - name: KSI-CNA-01
+        description: Configure ALL information resources to limit inbound and outbound traffic.
+        checks:
+          - id: "1.0"
+            title: Ensure that public access is not given to RDS Instance (Automated)
+            description: |
+              Verify that all RDS instances have `publicly_accessible` set to `false`.
+            macro: aws/rds/rds_db_instances_should_prohibit_public_access.sql
+          - id: "1.1"
+            title: The VPC default security group should not allow inbound and outbound traffic
+            description: |
+              Verify that the default security group created in each VPC either has restrictions on allowed traffic, or has no rules
+            macro: aws/ec2/default_sg_no_access.sql
+          - id: "1.2"
+            title: Public ALBs should restrict traffic to defined ports
+            description: |
+              Verify that ALBs do not have a security group attached allowing traffic from `0.0.0.0/0` ***or*** any port number
+            macro: aws/elb/alb_security_group_should_restrict_to_limited_ports.sql
+
+      - name: KSI-CNA-02
+        description: Design systems to minimize the attack surface and minimize lateral movement if compromised.
+        checks:
+          - id: "1.0"
+            title: Security groups should not allow 0.0.0.0/0 ingress
+            description: |
+              Verify that none of the security groups have a rule that allows ingress from `0.0.0.0/0`
+            macro: aws/vpc/security_groups_should_not_have_broad_ingress.sql
+          - id: "1.1"
+            title: Security groups should not allow 0.0.0.0/0 egress
+            description: |
+              Verify that none of the security groups have a rule that allows egress from `0.0.0.0/0`
+            macro: aws/vpc/security_groups_should_not_have_broad_egress.sql
+          - id: "1.2"
+            title: Network ACLs should not allow 0.0.0.0/0 ingress without port restrictions
+            description: ""
+            macro: aws/vpc/nacls_should_not_have_broad_ingress.sql
+          - id: "1.3"
+            title: Network ACLs should not allow 0.0.0.0/0 egress without port restrictions
+            description: ""
+            macro: aws/vpc/nacls_should_not_have_broad_egress.sql
+          - id: "1.4"
+            title: Verify default AWS VPC is not used
+            description: |
+              Check our current AWS VPC Inventory, and ensure that none of the deployed resources are using the default VPC.
+            macro: aws/vpc/verify_default_vpc_unused.sql
+      - name: KSI-CNA-03
+        description: Use logical networking and related capabilities to enforce traffic flow controls.
+        checks:
+          - id: "1.0"
+            title: Security groups should not allow 0.0.0.0/0 ingress
+            description: |
+              Verify that none of the security groups have a rule that allows ingress from `0.0.0.0/0`
+            macro: aws/vpc/security_groups_should_not_have_broad_ingress.sql
+          - id: "1.1"
+            title: Security groups should not allow 0.0.0.0/0 egress
+            description: |
+              Verify that none of the security groups have a rule that allows egress from `0.0.0.0/0`
+            macro: aws/vpc/security_groups_should_not_have_broad_egress.sql
+          - id: "1.2"
+            title: Network ACLs should not allow 0.0.0.0/0 ingress without port restrictions
+            description: ""
+            macro: aws/vpc/nacls_should_not_have_broad_ingress.sql
+          - id: "1.3"
+            title: Network ACLs should not allow 0.0.0.0/0 egress without port restrictions
+            description: ""
+            macro: aws/vpc/nacls_should_not_have_broad_egress.sql
+          - id: "1.4"
+            title: Verify default AWS VPC is not used
+            description: |
+              Check our current AWS VPC Inventory, and ensure that none of the deployed resources are using the default VPC.
+            macro: aws/vpc/verify_default_vpc_unused.sql
+      - name: KSI-CNA-04
+        description: Use immutable infrastructure with strictly defined functionality and privileges by default.
+      - name: KSI-CNA-05
+        description: Have denial of service protection.
+      - name: KSI-CNA-06
+        description: Design systems for high availability and rapid recovery.
+        checks:
+          - id: "1.0"
+            title: VPCs should have subnets in multiple availability zones
+            description: |
+              Verify that every VPC has subnets in at least two availability zones, which services can leverage.
+            macro: aws/vpc/vpcs_should_have_subnets_in_multiple_azs.sql
+          - id: "1.1"
+            title: EKS Clusters should have node groups in multiple availability zones
+            description: |
+              Verify that the node groups for each EKS cluster are spread across at least two availability zones
+            macro: aws/eks/eks_cluster_node_groups_should_span_multiple_azs.sql
+      - name: KSI-CNA-07
+        description: Ensure cloud-native information resources are implemented based on host provider's best practices and documented guidance.
+        checks:
+          - id: "1.0"
+            title: AWS CIS v3 Compliance (Scored)
+            description: |
+              Evaluate the entirety of our AWS CIS Compliance benchmark, and ensure a score of >= 80% is achieved
+            macro: aws/aws_cis_compliance_summary.sql
+          - id: "1.1"
+            title: AWS Foundational Security (Scored)
+            description: |
+              Evaluate the entirety of our AWS Foundational Security benchmark, and ensure a score of >= 80% is achieved
+            macro: aws/aws_foundational_security_summary.sql
+          - id: "1.2"
+            title: GCP CIS v2 Compliance (Scored)
+            description: |
+              Evaluate the entirety of our GCP CIS Compliance benchmark, and ensure a score of >= 80% is achieved
+            macro: gcp/gcp_cis_compliance_summary.sql
+
+  - name: KSI-IAM
+    description: A secure cloud service offering will protect user data, control access, and apply zero trust principles.
+    controls:
+      - name: KSI-IAM-01
+        description: Enforce multi-factor authentication (MFA) using methods that are difficult to intercept or impersonate (phishing-resistant MFA) for all user authentication.
+        checks:
+          - id: "1.0"
+            title: Users require Multi Factor Authentication to sign in
+            description: |
+              Verify that all users have at least one Okta policy attached requiring them to use Multi Factor Authentication (MFA) to sign in.
+            macro: okta/okta_users_require_mfa.sql
+          - id: "1.1"
+            title: Applications should require Multi Factor Authentication
+            description: |
+              Verify that access to applications requires phishing-resistant Multi Factor Authentication (MFA) for all users.
+            macro: okta/okta_apps_should_require_multifactor_authentication.sql
+      - name: KSI-IAM-02
+        description: Use secure passwordless methods for user authentication and authorization when feasible, otherwise enforce strong passwords with MFA.
+        checks:
+          - id: "1.0"
+            title: User authentication requires strong passwords
+            description: |
+              Verify that all users have at least one Okta policy attached requiring password complexity. Also verify that the
+              complexity requirements are strong enough to prevent brute-force attacks.
+            macro: okta/okta_users_require_strong_password.sql
+      - name: KSI-IAM-03
+        description: Enforce appropriately secure authentication methods for non-user accounts and services.
+        checks:
+          - id: "1.0"
+            title: Service Accounts require secure authentication
+            description: |
+            macro: okta/okta_service_accounts_have_secure_authentication.sql
+
+      - name: KSI-IAM-04
+        description: Use a least-privileged, role and attribute-based, and just-in-time security authorization model for all user and non-user accounts and services.
+        checks:
+          - id: "1.0"
+            title: AWS Root Accounts should not have active access credentials
+            description: |
+              Verify that the root account for each AWS account does not have active access keys or secret keys.
+            macro: aws/iam/iam_root_user_has_no_access_keys.sql
+      - name: KSI-IAM-05
+        description: Apply zero trust design principles.
+      - name: KSI-IAM-06
+        description: Automatically disable or otherwise secure accounts with privileged access in response to suspicious activity.
+
+  - name: KSI-INR
+    description: A secure cloud service offering will document, report, and analyze security incidents to ensure regulatory compliance and continuous security improvement.
+    controls:
+      - name: KSI-INR-01
+        description: Report incidents according to FedRAMP requirements and cloud service provider policies.
+      - name: KSI-INR-02
+        description: Maintain a log of incidents and periodically review past incidents for patterns or vulnerabilities.
+        checks:
+          - id: "1.0"
+            title: Jira project should exist for Security Incident Tracking
+            description: |
+              Check the configured Jira instance for the Security Incident project
+            macro: jira/verify_jira_project_exists.sql
+          - id: "1.1"
+            title: Jira project should exist for Service Incident Tracking
+            description: |
+              Check the configured Jira instance for the Service Incident project
+            macro: jira/verify_jira_project_exists.sql
+      - name: KSI-INR-03
+        description: Generate after action reports and regularly incorporate lessons learned into operations.
+
+  - name: KSI-MLA
+    description: A secure cloud service offering will monitor, log, and audit all important events, activity, and changes.
+    controls:
+      # TODO: Fill out CIS Mappings
+      - name: KSI-MLA-01
+        description: Operate a Security Information and Event Management (SIEM) or similar system(s) for centralized, tamper-resistent logging of events, activities, and changes.
+      - name: KSI-MLA-02
+        description: Regularly review and audit logs.
+      - name: KSI-MLA-03
+        description: Rapidly detect and remediate or mitigate vulnerabilities.
+        checks:
+          - id: "1.0"
+            title: EC2 instances should be scanned by Inspector
+            description: |
+              Verify that all EC2 instances are being scanned by AWS Inspector for vulnerabilities.
+            macro: aws/inspector2/ec2_instances_should_be_scanned_by_inspector.sql
+          - id: "1.1"
+            title: Inspector vulnerabilities should be resolved within SLA
+            description:
+            macro: aws/inspector2/inspector_vulnerabilities_should_be_resolved_in_sla.sql
+      - name: KSI-MLA-04
+        description: Perform authenticated vulnerability scanning on information resources.
+      - name: KSI-MLA-05
+        description: Perform Infrastructure as Code and configuration evaluation and testing.
+      - name: KSI-MLA-06
+        description: Centrally track and prioritize the mitigation and/or remediation of identified vulnerabilities.
+        checks:
+          - id: "1.0"
+            title: Jira issues are created for tracking and remediating vulnerabilities
+            description: |
+            macro: jira/jira_should_be_used_for_tracking_vulnerabilities.sql
+          - id: "1.1"
+            title: Jira project should exist for Continuous Monitoring
+            description: |
+              Check the configured Jira instance for the Continuous Monitoring project.
+            macro: jira/verify_jira_project_exists.sql
+
+  - name: KSI-PIY
+    description: A secure cloud service offering will have intentional, organized, universal guidance for how every information resource, including personnel, is secured.
+    controls:
+      - name: KSI-PIY-01
+        description: Have an up-to-date information resource inventory or code defining all deployed assets, software, and services.
+        checks:
+          - id: "1.0"
+            title: Asset Inventories should be up to date
+            description: |
+              Verify that the listed asset inventories exists, and are up to date.
+            macro: asset_inventories_should_be_up_to_date.sql
+      - name: KSI-PIY-02
+        description: Have policies outlining the security objectives of all information resources.
+      - name: KSI-PIY-03
+        description: Maintain a vulnerability disclosure program.
+      - name: KSI-PIY-04
+        description: Build security considerations into the Software Development Lifecycle and align with CISA Secure By Design principles.
+      - name: KSI-PIY-05
+        description: Document methods used to evaluate information resource implementations.
+      - name: KSI-PIY-06
+        description: Have a dedicated staff and budget for security with executive support, commensurate with the size, complexity, scope, and risk of the service offering.
+      - name: KSI-PIY-07
+        description: Document risk management decisions for software supply chain security.
+
+  - name: KSI-RPL
+    description: A secure cloud service offering will define, maintain, and test incident response plan(s) and recovery capabilities to ensure minimal service disruption and data loss during incidents and contingencies.
+    controls:
+      - name: KSI-RPL-01
+        description: Define Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO).
+      - name: KSI-RPL-02
+        description: Develop and maintain a recovery plan that aligns with the defined recovery objectives.
+      - name: KSI-RPL-03
+        description: Perform system backups aligned with recovery objectives.
+      - name: KSI-RPL-04
+        description: Regularly test the capability to recover from incidents and contingencies.
+
+  - name: KSI-SVC
+    description: A secure cloud service offering will follow FedRAMP encryption policies, continuously verify information resource integrity, and restrict access to third-party information resources.
+    controls:
+      - name: KSI-SVC-01
+        description: Harden and review network and system configurations.
+      - name: KSI-SVC-02
+        description: Encrypt or otherwise secure network traffic.
+        checks:
+          - id: "1.0"
+            title: Application Load Balancers should have an acceptable TLS policy
+            description: |
+              Verify that all Application Load Balancers (ALBs) have a TLS policy that is acceptable according to the FedRAMP requirements.
+            macro: aws/elb/alb_should_have_acceptable_tls_policy.sql
+          - id: "1.1"
+            title: Application Load Balancer should be configured to redirect all HTTP requests to HTTPS
+            description: |
+              Verify that any HTTP listeners on Application Load Balancers (ALBs) are configured to redirect all HTTP requests to HTTPS.
+            macro: aws/elb/alb_should_redirect_plaintext_ports.sql
+      - name: KSI-SVC-03
+        description: Encrypt all federal and sensitive information at rest.
+        checks:
+          - id: "1.0"
+            title: EBS Volumes should be encrypted at rest
+            description: |
+              Verify that all EBS volumes have `encrypted: true`
+            macro: aws/ebs/ebs_volumes_should_be_encrypted_at_rest.sql
+          - id: "1.1"
+            title: RDS Instances should be encrypted at rest
+            description: |
+              Verify that all RDS instances have `storage_encrypted: true`
+            macro: aws/rds/rds_instances_should_be_encrypted_at_rest.sql
+          - id: "1.2"
+            title: S3 Buckets should be encrypted at rest
+            description: |
+              Verify that all S3 buckets have an encryption configuration present
+            macro: aws/s3/s3_buckets_should_be_encrypted_at_rest.sql
+          - id: "1.3"
+            title: Elasticache Clusters should be encrypted at rest
+            description: |
+              Verify that all Elasticache clusters have `at_rest_encryption_enabled: true`
+            macro: aws/elasticache/elasticache_clusters_should_be_encrypted_at_rest.sql
+          - id: "1.4"
+            title: Elasticache Replication Groups should be encrypted at rest
+            description: |
+              Verify that all Elasticache replication groups have `at_rest_encryption_enabled: true`
+            macro: aws/elasticache/elasticache_replication_groups_should_be_encrypted_at_rest.sql
+      - name: KSI-SVC-04
+        description: Manage configuration centrally.
+      - name: KSI-SVC-05
+        description: Enforce system and information resource integrity through cryptographic means.
+        checks:
+          - id: "1.0"
+            title: Kubernetes clusters should have enforcement webhooks installed
+            description: |
+                Verify that all Kubernetes clusters have an enforcement webhook installed to ensure that only signed images are deployed.
+            macro: k8s/webhooks/k8s_clusters_should_have_enforcement_webhooks.sql
+          - id: "1.1"
+            title: Kubernetes clusters should have image policies in enforcement mode
+            description: |
+                Verify that all Kubernetes clusters have image policies in enforcement mode to ensure that only signed images are deployed.
+            macro: k8s/webhooks/k8s_has_image_enforcement_policies.sql
+          - id: "1.2"
+            title: Kubernetes clusters enforcement policies should not ignore failures
+            description: |
+                Verify that all Kubernetes clusters have image policies that do not ignore failures to ensure that only signed images are deployed.
+            macro: k8s/webhooks/k8s_image_enforcement_policies_should_not_ignore_failures.sql
+      - name: KSI-SVC-06
+        description: Use automated key management systems to manage, protect, and regularly rotate digital keys and certificates.
+        checks:
+          - id: "1.0"
+            title: Ensure Key rotation is enabled for all customer managed KMS keys
+            description: |
+              Verify that all customer managed KMS keys have key rotation enabled. This is mapped from an existing CIS compliance check
+            macro: aws/kms/key_rotation_enabled.sql
+      - name: KSI-SVC-07
+        description: Use a consistent, risk-informed approach for applying security patches.
+
+  - name: KSI-TPR
+    description: A secure cloud service offering will understand, monitor, and manage supply chain risks from third-party information resources.
+    controls:
+      - name: KSI-TPR-01
+        description: Identify all third-party information resources.
+      - name: KSI-TPR-02
+        description: Regularly confirm that services handling federal information or are likely to impact the confidentiality, integrity, or availability of federal information are FedRAMP authorized and securely configured.
+        checks:
+          - id: "1.0"
+            title: Vendors should have FedRAMP authorization
+            description: |
+              Verify that all of the defined third-party vendors have a valid FedRAMP authorization.
+            macro: vendors_should_have_fedramp_authorization.sql
+      - name: KSI-TPR-03
+        description: Identify and prioritize mitigation of potential supply chain risks.
+      - name: KSI-TPR-04
+        description: Monitor third party software information resources for upstream vulnerabilities, with contractual notification requirements or active monitoring services.

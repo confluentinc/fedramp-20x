@@ -1,11 +1,41 @@
 ---
-sidebar_position: 6
+sidebar_position: 5
 title: KSI-CNA-06
 description: Design systems for high availability and rapid recovery.
 ---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/aws/vpc/vpcs_should_have_subnets_in_multiple_azs.sql";
+import check11 from "!!raw-loader!../../../../macros/aws/eks/eks_cluster_node_groups_should_span_multiple_azs.sql";
 
 # KSI-CNA-06
 
 > Design systems for high availability and rapid recovery.
 
 ## Checks
+
+
+### 1.0 - VPCs should have subnets in multiple availability zones
+
+Verify that every VPC has subnets in at least two availability zones, which services can leverage.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+
+### 1.1 - EKS Clusters should have node groups in multiple availability zones
+
+Verify that the node groups for each EKS cluster are spread across at least two availability zones
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check11 }
+    </CodeBlock>
+</details>
+
