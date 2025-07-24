@@ -1,0 +1,40 @@
+---
+sidebar_position: 5
+title: KSI-MLA-06
+description: Centrally track and prioritize the mitigation and/or remediation of identified vulnerabilities.
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/jira/jira_should_be_used_for_tracking_vulnerabilities.sql";
+import check11 from "!!raw-loader!../../../../macros/jira/verify_jira_project_exists.sql";
+
+# KSI-MLA-06
+
+> Centrally track and prioritize the mitigation and/or remediation of identified vulnerabilities.
+
+## Checks
+
+
+### 1.0 - Jira issues are created for tracking and remediating vulnerabilities
+
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+
+### 1.1 - Jira project should exist for Continuous Monitoring
+
+Check the configured Jira instance for the Continuous Monitoring project.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check11 }
+    </CodeBlock>
+</details>
+

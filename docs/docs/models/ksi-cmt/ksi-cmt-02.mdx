@@ -1,0 +1,41 @@
+---
+sidebar_position: 1
+title: KSI-CMT-02
+description: Execute changes though redeployment of version controlled immutable resources rather than direct modification wherever possible.
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/k8s/k8s_images_should_use_immutable_registry.sql";
+import check11 from "!!raw-loader!../../../../macros/aws/aws_resources_should_be_managed_by_iac.sql";
+
+# KSI-CMT-02
+
+> Execute changes though redeployment of version controlled immutable resources rather than direct modification wherever possible.
+
+## Checks
+
+
+### 1.0 - Kubernetes images should use an immutable registry
+
+For each Kubernetes image found in our asset inventory, verify that the ECR image it is sourced from is immutable.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+
+### 1.1 - AWS resources should be managed by Infrastructure as Code (IaC)
+
+Given a schema of IaC tagging controls, verify that a subset of AWS resources have the appropriate tags to indicate they are managed by IaC.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check11 }
+    </CodeBlock>
+</details>
+

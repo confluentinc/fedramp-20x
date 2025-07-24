@@ -1,0 +1,54 @@
+---
+sidebar_position: 6
+title: KSI-CNA-07
+description: Ensure cloud-native information resources are implemented based on host provider&#x27;s best practices and documented guidance.
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/aws/aws_cis_compliance_summary.sql";
+import check11 from "!!raw-loader!../../../../macros/aws/aws_foundational_security_summary.sql";
+import check12 from "!!raw-loader!../../../../macros/gcp/gcp_cis_compliance_summary.sql";
+
+# KSI-CNA-07
+
+> Ensure cloud-native information resources are implemented based on host provider&#x27;s best practices and documented guidance.
+
+## Checks
+
+
+### 1.0 - AWS CIS v3 Compliance (Scored)
+
+Evaluate the entirety of our AWS CIS Compliance benchmark, and ensure a score of &gt;&#x3D; 80% is achieved
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+
+### 1.1 - AWS Foundational Security (Scored)
+
+Evaluate the entirety of our AWS Foundational Security benchmark, and ensure a score of &gt;&#x3D; 80% is achieved
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check11 }
+    </CodeBlock>
+</details>
+
+### 1.2 - GCP CIS v2 Compliance (Scored)
+
+Evaluate the entirety of our GCP CIS Compliance benchmark, and ensure a score of &gt;&#x3D; 80% is achieved
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check12 }
+    </CodeBlock>
+</details>
+

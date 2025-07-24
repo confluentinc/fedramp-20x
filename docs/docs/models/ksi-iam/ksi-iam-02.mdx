@@ -1,0 +1,29 @@
+---
+sidebar_position: 1
+title: KSI-IAM-02
+description: Use secure passwordless methods for user authentication and authorization when feasible, otherwise enforce strong passwords with MFA.
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/okta/okta_users_require_strong_password.sql";
+
+# KSI-IAM-02
+
+> Use secure passwordless methods for user authentication and authorization when feasible, otherwise enforce strong passwords with MFA.
+
+## Checks
+
+
+### 1.0 - User authentication requires strong passwords
+
+Verify that all users have at least one Okta policy attached requiring password complexity. Also verify that the
+complexity requirements are strong enough to prevent brute-force attacks.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+

@@ -1,0 +1,41 @@
+---
+sidebar_position: 0
+title: KSI-IAM-01
+description: Enforce multi-factor authentication (MFA) using methods that are difficult to intercept or impersonate (phishing-resistant MFA) for all user authentication.
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/okta/okta_users_require_mfa.sql";
+import check11 from "!!raw-loader!../../../../macros/okta/okta_apps_should_require_multifactor_authentication.sql";
+
+# KSI-IAM-01
+
+> Enforce multi-factor authentication (MFA) using methods that are difficult to intercept or impersonate (phishing-resistant MFA) for all user authentication.
+
+## Checks
+
+
+### 1.0 - Users require Multi Factor Authentication to sign in
+
+Verify that all users have at least one Okta policy attached requiring them to use Multi Factor Authentication (MFA) to sign in.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+
+### 1.1 - Applications should require Multi Factor Authentication
+
+Verify that access to applications requires phishing-resistant Multi Factor Authentication (MFA) for all users.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check11 }
+    </CodeBlock>
+</details>
+

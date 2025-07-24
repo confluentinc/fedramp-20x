@@ -1,0 +1,80 @@
+---
+sidebar_position: 2
+title: KSI-SVC-03
+description: Encrypt all federal and sensitive information at rest.
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/aws/ebs/ebs_volumes_should_be_encrypted_at_rest.sql";
+import check11 from "!!raw-loader!../../../../macros/aws/rds/rds_instances_should_be_encrypted_at_rest.sql";
+import check12 from "!!raw-loader!../../../../macros/aws/s3/s3_buckets_should_be_encrypted_at_rest.sql";
+import check13 from "!!raw-loader!../../../../macros/aws/elasticache/elasticache_clusters_should_be_encrypted_at_rest.sql";
+import check14 from "!!raw-loader!../../../../macros/aws/elasticache/elasticache_replication_groups_should_be_encrypted_at_rest.sql";
+
+# KSI-SVC-03
+
+> Encrypt all federal and sensitive information at rest.
+
+## Checks
+
+
+### 1.0 - EBS Volumes should be encrypted at rest
+
+Verify that all EBS volumes have &#x60;encrypted: true&#x60;
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+
+### 1.1 - RDS Instances should be encrypted at rest
+
+Verify that all RDS instances have &#x60;storage_encrypted: true&#x60;
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check11 }
+    </CodeBlock>
+</details>
+
+### 1.2 - S3 Buckets should be encrypted at rest
+
+Verify that all S3 buckets have an encryption configuration present
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check12 }
+    </CodeBlock>
+</details>
+
+### 1.3 - Elasticache Clusters should be encrypted at rest
+
+Verify that all Elasticache clusters have &#x60;at_rest_encryption_enabled: true&#x60;
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check13 }
+    </CodeBlock>
+</details>
+
+### 1.4 - Elasticache Replication Groups should be encrypted at rest
+
+Verify that all Elasticache replication groups have &#x60;at_rest_encryption_enabled: true&#x60;
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check14 }
+    </CodeBlock>
+</details>
+

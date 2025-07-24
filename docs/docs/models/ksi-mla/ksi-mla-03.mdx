@@ -1,0 +1,40 @@
+---
+sidebar_position: 2
+title: KSI-MLA-03
+description: Rapidly detect and remediate or mitigate vulnerabilities.
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/aws/inspector2/ec2_instances_should_be_scanned_by_inspector.sql";
+import check11 from "!!raw-loader!../../../../macros/aws/inspector2/inspector_vulnerabilities_should_be_resolved_in_sla.sql";
+
+# KSI-MLA-03
+
+> Rapidly detect and remediate or mitigate vulnerabilities.
+
+## Checks
+
+
+### 1.0 - EC2 instances should be scanned by Inspector
+
+Verify that all EC2 instances are being scanned by AWS Inspector for vulnerabilities.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+
+### 1.1 - Inspector vulnerabilities should be resolved within SLA
+
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check11 }
+    </CodeBlock>
+</details>
+

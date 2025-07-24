@@ -1,0 +1,28 @@
+---
+sidebar_position: 0
+title: KSI-PIY-01
+description: Have an up-to-date information resource inventory or code defining all deployed assets, software, and services.
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/asset_inventories_should_be_up_to_date.sql";
+
+# KSI-PIY-01
+
+> Have an up-to-date information resource inventory or code defining all deployed assets, software, and services.
+
+## Checks
+
+
+### 1.0 - Asset Inventories should be up to date
+
+Verify that the listed asset inventories exists, and are up to date.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+

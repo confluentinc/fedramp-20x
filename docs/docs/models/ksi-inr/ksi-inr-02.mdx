@@ -1,0 +1,41 @@
+---
+sidebar_position: 1
+title: KSI-INR-02
+description: Maintain a log of incidents and periodically review past incidents for patterns or vulnerabilities.
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/jira/verify_jira_project_exists.sql";
+import check11 from "!!raw-loader!../../../../macros/jira/verify_jira_project_exists.sql";
+
+# KSI-INR-02
+
+> Maintain a log of incidents and periodically review past incidents for patterns or vulnerabilities.
+
+## Checks
+
+
+### 1.0 - Jira project should exist for Security Incident Tracking
+
+Check the configured Jira instance for the Security Incident project
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+
+### 1.1 - Jira project should exist for Service Incident Tracking
+
+Check the configured Jira instance for the Service Incident project
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check11 }
+    </CodeBlock>
+</details>
+

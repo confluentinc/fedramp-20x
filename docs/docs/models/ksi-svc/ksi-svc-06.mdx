@@ -1,0 +1,28 @@
+---
+sidebar_position: 5
+title: KSI-SVC-06
+description: Use automated key management systems to manage, protect, and regularly rotate digital keys and certificates.
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/aws/kms/key_rotation_enabled.sql";
+
+# KSI-SVC-06
+
+> Use automated key management systems to manage, protect, and regularly rotate digital keys and certificates.
+
+## Checks
+
+
+### 1.0 - Ensure Key rotation is enabled for all customer managed KMS keys
+
+Verify that all customer managed KMS keys have key rotation enabled. This is mapped from an existing CIS compliance check
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+

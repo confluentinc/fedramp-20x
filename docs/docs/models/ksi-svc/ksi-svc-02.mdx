@@ -1,0 +1,41 @@
+---
+sidebar_position: 1
+title: KSI-SVC-02
+description: Encrypt or otherwise secure network traffic.
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/aws/elb/alb_should_have_acceptable_tls_policy.sql";
+import check11 from "!!raw-loader!../../../../macros/aws/elb/alb_should_redirect_plaintext_ports.sql";
+
+# KSI-SVC-02
+
+> Encrypt or otherwise secure network traffic.
+
+## Checks
+
+
+### 1.0 - Application Load Balancers should have an acceptable TLS policy
+
+Verify that all Application Load Balancers (ALBs) have a TLS policy that is acceptable according to the FedRAMP requirements.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+
+### 1.1 - Application Load Balancer should be configured to redirect all HTTP requests to HTTPS
+
+Verify that any HTTP listeners on Application Load Balancers (ALBs) are configured to redirect all HTTP requests to HTTPS.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check11 }
+    </CodeBlock>
+</details>
+

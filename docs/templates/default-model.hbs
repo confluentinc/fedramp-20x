@@ -1,0 +1,39 @@
+---
+sidebar_position: {{ index }}
+title: {{ title }}
+description: {{ description }}
+---
+
+{{#if checks}}
+import CodeBlock from '@theme/CodeBlock';
+    {{#each checks}}
+{{{import id macro}}}
+    {{/each}}
+{{/if}}
+
+# {{ title }}
+
+> {{ description }}
+
+{{#if checks}}
+## Checks
+
+    {{#each checks }}
+
+### {{ id }} - {{ title }}
+
+{{ description }}
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check{{checkId id}} }
+    </CodeBlock>
+</details>
+    {{/each}}
+{{/if}}
+
+{{#unless checks}}
+:::warning
+This control is currently not automated
+{{/unless}}

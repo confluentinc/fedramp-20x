@@ -1,0 +1,54 @@
+---
+sidebar_position: 0
+title: KSI-CNA-01
+description: Configure ALL information resources to limit inbound and outbound traffic.
+---
+
+import CodeBlock from '@theme/CodeBlock';
+import check10 from "!!raw-loader!../../../../macros/aws/rds/rds_db_instances_should_prohibit_public_access.sql";
+import check11 from "!!raw-loader!../../../../macros/aws/ec2/default_sg_no_access.sql";
+import check12 from "!!raw-loader!../../../../macros/aws/elb/alb_security_group_should_restrict_to_limited_ports.sql";
+
+# KSI-CNA-01
+
+> Configure ALL information resources to limit inbound and outbound traffic.
+
+## Checks
+
+
+### 1.0 - Ensure that public access is not given to RDS Instance (Automated)
+
+Verify that all RDS instances have &#x60;publicly_accessible&#x60; set to &#x60;false&#x60;.
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check10 }
+    </CodeBlock>
+</details>
+
+### 1.1 - The VPC default security group should not allow inbound and outbound traffic
+
+Verify that the default security group created in each VPC either has restrictions on allowed traffic, or has no rules
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check11 }
+    </CodeBlock>
+</details>
+
+### 1.2 - Public ALBs should restrict traffic to defined ports
+
+Verify that ALBs do not have a security group attached allowing traffic from &#x60;0.0.0.0/0&#x60; ***or*** any port number
+
+
+<details>
+    <summary>View Macro</summary>
+    <CodeBlock language="sql">
+        { check12 }
+    </CodeBlock>
+</details>
+
