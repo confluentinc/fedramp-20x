@@ -14,7 +14,7 @@ CCG has undergone a comprehensive evaluation against the complete set of FedRAMP
 
 ## Rationale for the approach used to generate the submissions
 
-Confluent's approach for generating the submission is built using a mixture of 3rd party vendors, and open source tooling. The aggregation and analysis of our cloud configurations and other vendor data are managed in 3 distinct steps. 
+Confluent's approach for generating the submission is built using a mixture of aggregation and analysis of our cloud configurations and other vendor data which are managed in 3 distinct steps.
 
 ![Data ETL diagram showing various sources that evidence is gathered from by CloudQuery, which feeds into DBT macros and models, and ultimately into a report](/assets/data-etl.png)
 
@@ -145,7 +145,7 @@ The results from this query are used to generate the machine-readable assessment
 select
     'KSI-002' as ksi_id,
     'AC-7' as control_id,
-    'UNSUCCESSFUL_LOGIN_ATTEMPS' as check_name,
+    'UNSUCCESSFUL_LOGIN_ATTEMPTS' as check_name,
     'Lock accounts after {{ max_login_attempts }} attempts' as check,
     id as identifier,
     null as metadata,
@@ -155,7 +155,7 @@ select
             additional_properties, 
            '$.settings.password.lockout.maxAttempts'
           ) as INT64
-        ) >= {{ max_login_attemps }}
+        ) >= {{ max_login_attempts }}
         then 'pass'
         else 'fail'
     end as status
