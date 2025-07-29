@@ -26,6 +26,7 @@ vars:
   change_approval_steps: []
   image_signing_webhook: ""
   policy_enforcement_crds: []
+  aws_resources_tag_mapping: {}
   iac_tagging_scheme:
     key: ""
     values: []

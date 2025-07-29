@@ -1,20 +1,20 @@
-{% macro instances_reachable_with_public_ip() %}
-  {{ return(adapter.dispatch('instances_reachable_with_public_ip')()) }}
+{% macro rds_instances_reachable_with_public_ip() %}
+  {{ return(adapter.dispatch('rds_instances_reachable_with_public_ip')()) }}
 {% endmacro %}
 
-{% macro default__instances_reachable_with_public_ip() %}{% endmacro %}
+{% macro default__rds_instances_reachable_with_public_ip() %}{% endmacro %}
 
-{% macro bigquery__instances_reachable_with_public_ip() %}
+{% macro bigquery__rds_instances_reachable_with_public_ip() %}
 SELECT
-    'EC2 Instances with a public IP address' as title,
+    'RDS Instances that are publicly accessible' as title,
     account_id,
     arn AS resource_id,
-    'aws_ec2_instances' as resource_type,
-    'instance_with_public_ip' as reachability_type,
-    public_ip_address as endpoint,
-    'ip_address' as endpoint_type
+    'aws_rds_instances' as resource_type,
+    'publicly_accessible' as reachability_type,
+    JSON_EXTRACT_SCALAR(endpoint, "$.Address") as endpoint,
+    'dns_name' as endpoint_type
 FROM
-    {{ full_table_name("aws_ec2_instances") }}
+    {{ full_table_name("aws_rds_instances") }}
 WHERE {{ partition_filter() }}
-AND public_ip_address IS NOT NULL
+AND publicly_accessible = true
     {% endmacro %}
