@@ -52,4 +52,4 @@ blocks:
           commands:
             - cd docs
             - npm install
-            - GIT_USER=semaphore npm run deploy
+            - USE_SSH=true npm run deploy
