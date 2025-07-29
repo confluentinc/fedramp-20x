@@ -8,7 +8,7 @@ version: v1.0
 name: build-test-release
 agent:
   machine:
-    type: s1-prod-ubuntu24-04-amd64-1
+    type: s1-prod-ubuntu24-04-amd64-2
 
 auto_cancel:
   running:
@@ -21,39 +21,35 @@ queue:
   - when: "branch != 'master'"
     processing: parallel
 
-global_job_config:
-  prologue:
-    commands:
-      - checkout
-      - make show-args
-      - . vault-setup
-      - . vault-sem-get-secret v1/ci/kv/service-foundations/cc-mk-include
-      - make init-ci
-  epilogue:
-    always:
-      commands:
-        - make epilogue-ci
-
 blocks:
-  - name: "Build, Test, Release"
+  - name: "Build and Test"
+    dependencies: []
     run:
-      # don't run the build or unit tests on non-functional changes...
-      when: "change_in('/', {exclude: ['/.deployed-versions/', '.github/'], default_branch: 'master'})"
+      when: branch != 'master'
     task:
-      # You can customize your CI job here
-      #      env_vars:
-      #        # custom env_vars
-      #      prologue:
-      #        commands:
-      #          # custom vault secrets
-      #          # custom prologue commands
+      prologue:
+        commands:
+          - sem-version node 22
+          - checkout
       jobs:
-        - name: "Build, Test, Release"
+        - name: "build"
           commands:
-            - make build
-            - make test
-            - make release-ci
-      epilogue:
-        always:
+            - cd docs
+            - npm install
+            - npm run build
+
+  - name: "Deploy GitHub Pages"
+    dependencies: []
+    skip:
+      when: branch != 'master'
+    task:
+      prologue:
+        commands:
+          - sem-version node 22
+          - checkout
+      jobs:
+        - name: "build and deploy"
           commands:
-            - make testbreak-after
+            - cd docs
+            - npm install
+            - GIT_USER=semaphore npm run deploy
