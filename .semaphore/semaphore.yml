@@ -34,4 +34,4 @@ blocks:
           commands:
             - cd docs
             - npm install
-            - npm run deploy
+            - USE_SSH=true npm run deploy
