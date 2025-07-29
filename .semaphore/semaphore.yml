@@ -24,8 +24,8 @@ queue:
 blocks:
   - name: "Build and Test"
     dependencies: []
-    skip:
-      when: branch == 'master'
+    run:
+      when: branch != 'master'
     task:
       prologue:
         commands:
@@ -34,6 +34,7 @@ blocks:
       jobs:
         - name: "build"
           commands:
+            - cd docs
             - npm install
             - npm run build
 
