@@ -24,7 +24,8 @@ queue:
 blocks:
   - name: "Build and Test"
     dependencies: []
-    when: "branch != 'master'"
+    skip:
+      when: "branch == 'master'"
     task:
       prologue:
         commands:
@@ -38,7 +39,8 @@ blocks:
 
   - name: "Deploy GitHub Pages"
     dependencies: []
-    when: "branch == 'master'"
+    skip:
+      when: "branch != 'master'"
     task:
       prologue:
         commands:
