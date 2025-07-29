@@ -22,8 +22,9 @@ queue:
     processing: parallel
 
 blocks:
-  - name: "Deploy GitHub Pages"
+  - name: "Build and Test"
     dependencies: []
+    when: "branch != 'master'"
     task:
       prologue:
         commands:
@@ -32,6 +33,20 @@ blocks:
       jobs:
         - name: "build"
           commands:
+            - npm install
+            - npm run build
+
+  - name: "Deploy GitHub Pages"
+    dependencies: []
+    when: "branch == 'master'"
+    task:
+      prologue:
+        commands:
+          - sem-version node 22
+          - checkout
+      jobs:
+        - name: "build and deploy"
+          commands:
             - cd docs
             - npm install
-            - USE_SSH=true npm run deploy
+            - GIT_USER=semaphore npm run deploy
