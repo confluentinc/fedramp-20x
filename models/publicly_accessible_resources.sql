@@ -18,6 +18,9 @@ with
         -- Kubernetes services that back public ALBs
             {{ union () }}
         ({{ kubernetes_resources_backing_albs() }})
+        -- Kubernetes services reachable from API gateway
+            {{ union() }}
+        ({{ kubernetes_resources_reachable_from_api_gateway() }})
 )
 select
     {{ gen_timestamp() }},
