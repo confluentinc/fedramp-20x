@@ -29,7 +29,7 @@ cleaned_hosts as (
 select
     'Kubernetes services reachable from API Gateway' as title,
     cleaned_hosts.context as account_id,
-    CONCAT(cleaned_hosts.context, '.', COALESCE(SPLIT(cleaned_host, '.')[SAFE_OFFSET(1)], 'self-service'), '.service.', SPLIT(cleaned_host, '.')[SAFE_OFFSET(0)]),
+    CONCAT(cleaned_hosts.context, '.', COALESCE(SPLIT(cleaned_host, '.')[SAFE_OFFSET(1)], '{{ var("api_gateway_namespace") }}'), '.service.', SPLIT(cleaned_host, '.')[SAFE_OFFSET(0)]),
     'service' as resource_type,
     'api_gateway_proxy' as reachability_type,
     '' as endpoint,
