@@ -19,6 +19,9 @@ models:
     +materialized: table
 
 vars:
+  api_gateway_namespace: ""
+  api_gateway_service_name: ""
+  api_gateway_ignored_suffixes: []
   security_jira_project: ""
   change_management_jira_project: ""
   continuous_monitoring_jira_project: ""
@@ -26,6 +29,7 @@ vars:
   change_approval_steps: []
   image_signing_webhook: ""
   policy_enforcement_crds: []
+  aws_resources_tag_mapping: {}
   iac_tagging_scheme:
     key: ""
     values: []
