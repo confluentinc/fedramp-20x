@@ -1,11 +1,7 @@
 with
     aggregated as (
-        -- AutoscalingGroups with Public IP Enabled
-        -- Public DMS replication
         -- EC2 instances with a public IP
         ({{ instances_reachable_with_public_ip() }})
-        -- Elasticsearch instances with public IP, in a public subnet, with inbound rules allowing public access
-        -- Opensearch instances with public IP, in a public subnet, with inbound rules allowing public access
         -- Lambda functions with public access
             {{ union() }}
         ({{ lambda_functions_with_public_access() }})
