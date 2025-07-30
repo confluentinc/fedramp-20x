@@ -1,0 +1,55 @@
+# This file is managed by ServiceBot plugin - Semaphore. The content in this file is created using a common
+# template and configurations in service.yml.
+# Any modifications made to version, name, agent and global_job_config will be overwritten by the generated
+# content in nightly runs. Code changes made to the remaining sections will not be affected.
+# For more information, please refer to the page:
+# https://confluentinc.atlassian.net/wiki/spaces/Foundations/pages/2871296194/Add+SemaphoreCI
+version: v1.0
+name: build-test-release
+agent:
+  machine:
+    type: s1-prod-ubuntu24-04-amd64-2
+
+auto_cancel:
+  running:
+    when: "branch != 'master'"
+
+execution_time_limit:
+  hours: 1
+
+queue:
+  - when: "branch != 'master'"
+    processing: parallel
+
+blocks:
+  - name: "Build and Test"
+    dependencies: []
+    run:
+      when: branch != 'master'
+    task:
+      prologue:
+        commands:
+          - sem-version node 22
+          - checkout
+      jobs:
+        - name: "build"
+          commands:
+            - cd docs
+            - npm install
+            - npm run build
+
+  - name: "Deploy GitHub Pages"
+    dependencies: []
+    skip:
+      when: branch != 'master'
+    task:
+      prologue:
+        commands:
+          - sem-version node 22
+          - checkout
+      jobs:
+        - name: "build and deploy"
+          commands:
+            - cd docs
+            - npm install
+            - USE_SSH=true npm run deploy
