@@ -12,7 +12,7 @@ with
             {{ union() }}
         ({{ public_facing_elbv2() }})
         -- Kubernetes services that back public ALBs
-            {{ union () }}
+            {{ union() }}
         ({{ kubernetes_resources_backing_albs() }})
         -- Kubernetes services reachable from API gateway
             {{ union() }}
