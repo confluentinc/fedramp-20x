@@ -32,6 +32,9 @@ select
     CONCAT(cleaned_hosts.context, '.', COALESCE(SPLIT(cleaned_host, '.')[SAFE_OFFSET(1)], '{{ var("api_gateway_namespace") }}'), '.service.', SPLIT(cleaned_host, '.')[SAFE_OFFSET(0)]) as resource_id,
     'service' as resource_type,
     'api_gateway_proxy' as reachability_type,
+    NULL as from_port,
+    NULL as to_port,
+    '' as protocol,
     '' as endpoint,
     'api_gateway' as endpoint_type
 from cleaned_hosts
