@@ -7,11 +7,14 @@
 {% macro bigquery__lambda_functions_with_public_access() %}
 select
     'Lambda functions with public access' as title,
-    account_id,
-    arn as resource_id,
+    aws_lambda_functions.account_id,
+    aws_lambda_functions.arn as resource_id,
     'aws_lambda_functions' as resource_type,
     'public_invocation' as reachability_type,
-    NULL as endpoint,
+    NULL as from_port,
+    NULL as to_port,
+    NULL as protocol,
+    '' as endpoint,
     NULL as endpoint_type
 from {{ full_table_name("aws_lambda_functions") }},
      UNNEST(JSON_QUERY_ARRAY(policy_document.Statement)) AS statement
