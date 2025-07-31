@@ -25,7 +25,7 @@ cleaned_hosts as (
         ELSE addr
       END AS cleaned_host
     from gateway_args
-),
+)
 select
     'Kubernetes services reachable from API Gateway' as title,
     cleaned_hosts.context as account_id,
