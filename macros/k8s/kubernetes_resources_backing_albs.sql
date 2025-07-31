@@ -39,12 +39,20 @@ SELECT
     CONCAT(k8s.context, '.', k8s.namespace, '.', k8s_resource_type, '.', k8s.name) as resource_id,
     k8s_resource_type as resource_type,
     'publicly_accessible' as reachability_type,
+    ingress_rules.from_port as from_port,
+    ingress_rules.to_port as to_port,
+    CAST(ingress_rules.ip_protocol AS STRING) as protocol,
     alb.dns_name as endpoint,
     'dns_name' as endpoint_type
 FROM
     k8s_resources as k8s
 LEFT JOIN {{ full_table_name("aws_elbv2_load_balancers") }} as alb
-ON k8s.hostname = alb.dns_name
+    ON k8s.hostname = alb.dns_name
+LEFT JOIN UNNEST(alb.security_groups) AS security_group
+LEFT JOIN {{ ref("aws_compliance__security_group_ingress_rules") }} as ingress_rules
+    ON JSON_VALUE(security_group, "$.GroupId") = ingress_rules.id
 WHERE {{ partition_filter() }}
-AND alb.scheme = 'internet-facing'
+    AND alb.scheme = 'internet-facing'
+    AND ingress_rules.id IS NOT NULL
+    AND ingress_rules.ip = "0.0.0.0/0"
     {% endmacro %}
