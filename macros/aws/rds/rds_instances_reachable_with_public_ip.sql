@@ -11,6 +11,9 @@ SELECT
     arn AS resource_id,
     'aws_rds_instances' as resource_type,
     'publicly_accessible' as reachability_type,
+    NULL as from_port,
+    NULL as to_port,
+    '' as protocol,
     JSON_EXTRACT_SCALAR(endpoint, "$.Address") as endpoint,
     'dns_name' as endpoint_type
 FROM
