@@ -4,19 +4,6 @@
 
 with
     aggregated as (
-        -- KSI-AUD-01: Enable and configure detailed audit logging.
-        ({{ aws_cisv3_mapping('KSI-AUD-01', '1.0', '3.1') }}) -- CloudTrail is enabled in all regions
-            {{ union() }}
-        ({{ aws_cisv3_mapping('KSI-AUD-01', '1.1', '3.8') }}) -- CloudTrail Write events are enabled
-            {{ union() }}
-        ({{ aws_cisv3_mapping('KSI-AUD-01', '1.2', '3.9') }}) -- CloudTrail Read events are enabled
-            {{ union() }}
-        -- KSI-AUD-02: Protect audit logs from tampering and deletion.
-        -- KSI-AUD-03: Monitor audit logs for suspicious activity.
-        ({{ jira_should_have_security_project('KSI-AUD-03', '1.0') }})
-            {{ union() }}
-        -- KSI-AUD-04: Retain audit logs according to requirements.
-
         -- KSI-CED-01: Ensure all employees receive security awareness training.
         -- KSI-CED-02: Require role-specific training for high risk roles, including at least roles with privileged access.
 
@@ -161,13 +148,13 @@ with
         -- KSI-PIY-07: Document risk management decisions for software supply chain security.
 
         -- KSI-RPL-01: Define Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO).
-        ({{ db_instance_backup_enabled('KSI-RPL-01','1.0') }})
+        ({{ rds_instances_should_have_backup_enabled('KSI-RPL-01','1.0') }})
             {{ union() }}
         ({{ s3_buckets_should_have_backup_vault_configured('KSI-RPL-01','1.1') }})
             {{ union() }}
         -- KSI-RPL-02: Develop and maintain a recovery plan that aligns with the defined recovery objectives.
         -- KSI-RPL-03: Perform system backups aligned with recovery objectives.
-        ({{ db_instance_backup_enabled('KSI-RPL-03','1.0') }})
+        ({{ rds_instances_should_have_backup_enabled('KSI-RPL-03','1.0') }})
             {{ union() }}
         ({{ s3_buckets_should_have_backup_vault_configured('KSI-RPL-03','1.1') }})
             {{ union() }}
