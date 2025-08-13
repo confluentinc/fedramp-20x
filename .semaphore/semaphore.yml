@@ -8,7 +8,7 @@ version: v1.0
 name: build-test-release
 agent:
   machine:
-    type: s1-prod-ubuntu24-04-amd64-2
+    type: s1-prod-ubuntu24-04-amd64-1
 
 auto_cancel:
   running:
@@ -20,6 +20,18 @@ execution_time_limit:
 queue:
   - when: "branch != 'master'"
     processing: parallel
+
+global_job_config:
+  prologue:
+    commands:
+      - checkout
+      - make show-args
+      - . vault-setup
+      - make init-ci
+  epilogue:
+    always:
+      commands:
+        - make epilogue-ci
 
 blocks:
   - name: "Build and Test"
