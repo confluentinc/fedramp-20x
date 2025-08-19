@@ -7,11 +7,19 @@
 {% macro bigquery__verify_coverage_of_synced_sources(framework, check_id) %}
 with source_list as (
   (
-    select concat(name, '-', region) as name from cloudquery.aws_eks_clusters
+    select concat(name, '-', region) as name from {{ full_table_name("aws_eks_clusters") }}
     where {{ partition_filter() }}
   ) {{ union() }} (
-    select concat('gke-', name) as name from cloudquery.gcp_container_clusters
+    select concat('gke-', name) as name from {{ full_table_name("gcp_container_clusters") }}
     where {{ partition_filter() }}
+  ) {{ union() }} (
+    select concat('aws-', alias) as name
+      from {{ full_table_name("aws_iam_accounts") }}, unnest(aliases) as alias
+      where {{ partition_filter() }} group by alias
+  ) {{ union() }} (
+    select concat('gcp-', project_id) as name
+      from {{ full_table_name("gcp_projects") }}
+      where {{ partition_filter() }}
   )
 )
 select
