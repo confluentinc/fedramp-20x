@@ -6,7 +6,10 @@ with
     aggregated as (
         -- KSI-CED-01: Ensure all employees receive security awareness training.
         -- KSI-CED-02: Require role-specific training for high risk roles, including at least roles with privileged access.
-
+        ({{ verify_syncs_meet_success_threshold('FRR-MAS-01', '1.0') }})
+            {{ union() }}
+        ({{ verify_coverage_of_synced_sources('FRR-MAS-01', '1.1') }})
+            {{ union() }}
         -- KSI-CMT-01: Log and monitor system modifications.
         ({{ organization_cloudtrail_should_emit_events_to_s3('KSI-CMT-01', '1.0') }})
             {{ union() }}
