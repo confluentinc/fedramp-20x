@@ -7,7 +7,7 @@
 {% macro bigquery__verify_coverage_of_synced_sources(framework, check_id) %}
 with source_list as (
   (
-    select concat(name, '-', region) as name from {{ full_table_name("aws_eks_clusters") }}
+    select concat('eks-', name, '-', region) as name from {{ full_table_name("aws_eks_clusters") }}
     where {{ partition_filter() }}
   ) {{ union() }} (
     select concat('gke-', name) as name from {{ full_table_name("gcp_container_clusters") }}
