@@ -31,7 +31,8 @@ select
     case
         when css._cq_source_name is null then 'fail'
         else 'pass'
-    end as status
+    end as status,
+    JSON_OBJECT() as tags
 from source_list
 left join {{ full_table_name("cloudquery_sync_summaries") }} css
 on source_list.name = css._cq_source_name
