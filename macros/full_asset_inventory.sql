@@ -84,5 +84,5 @@ where _cq_table IN (
     "aws_elasticache_replication_groups",
     "aws_lambda_functions",
     "aws_dynamodb_tables"
-) and r.account_id IN ({{ to_sql_list(var('ksi_cna_07_account_ids'))}})
+)
 {% endmacro %}
