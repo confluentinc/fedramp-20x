@@ -30,7 +30,20 @@ WITH coalesced_data AS (
     )
 SELECT
     *,
-    REGEXP_EXTRACT(image, r'^(.*):[^:]*$') as image_name,
-    REGEXP_EXTRACT(image, r':([^:]+)$') as image_tag
+    case
+        when contains_substr(image, '@')
+            then REGEXP_EXTRACT(SPLIT(image, '@')[OFFSET(0)],  r'^(.*):[^:]*$')
+            else REGEXP_EXTRACT(image, r'^(.*):[^:]*$')
+    end as image_name,
+    case
+        when contains_substr(image, '@')
+            then REGEXP_EXTRACT(SPLIT(image, '@')[OFFSET(0)],  r':([^:]+)$')
+        else REGEXP_EXTRACT(image, r':([^:]+)$')
+    end as image_tag,
+    case
+        when contains_substr(image, '@')
+            then SPLIT(image, '@')[OFFSET(1)]
+            else null
+    end as image_digest
 FROM coalesced_data
 {% endmacro %}
