@@ -37,7 +37,7 @@ SELECT
     end as image_name,
     case
         when contains_substr(image, '@')
-            then REGEXP_EXTRACT(SPLIT(image, '@')[OFFSET(0)],  REGEXP_EXTRACT(image, r':([^:]+)$'))
+            then REGEXP_EXTRACT(SPLIT(image, '@')[OFFSET(0)],  r':([^:]+)$')
         else REGEXP_EXTRACT(image, r':([^:]+)$')
     end as image_tag,
     case
