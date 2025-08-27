@@ -19,7 +19,9 @@ select
 from {{ full_table_name("aws_ec2_security_groups") }} as sg
 left join (
   select id from {{ ref('aws_compliance__security_group_ingress_rules') }}
-  where (ip = '0.0.0.0/0' or ip = '::/0') group by id
+  where (ip = '0.0.0.0/0' or ip = '::/0')
+  and (port_range_to is null or port_range_from is null)
+  group by id
 ) ingress
 on ingress.id = sg.group_id
 left join {{ full_table_name("aws_ec2_vpcs") }} as vpc on sg.vpc_id = vpc.vpc_id
