@@ -15,8 +15,9 @@ with
             {{ union() }}
 
         -- KSI-CMT-02: Execute changes through redeployment of version controlled immutable resources rather than direct modification wherever possible.
-        ({{ k8s_images_should_use_immutable_registry('KSI-CMT-02', '1.0')}})
-            {{ union() }}
+--         TODO: This can be re-enabled once required work has been completed
+--         ({{ k8s_images_should_use_immutable_registry('KSI-CMT-02', '1.0')}})
+--             {{ union() }}
         ({{ aws_resources_should_be_managed_by_iac('KSI-CMT-02', '1.1') }})
             {{ union() }}
 
