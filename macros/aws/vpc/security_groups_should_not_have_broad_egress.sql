@@ -28,6 +28,8 @@ left join {{ full_table_name("aws_ec2_vpcs") }} as vpc on sg.vpc_id = vpc.vpc_id
     and {{ partition_join("sg", "vpc")}}
 left join {{ ref("aws_security_group_inventory") }} as inv
     on inv.security_group_arn = sg.arn
+    and resource_type NOT IN ('aws_elbv2_load_balancers', 'aws_rds_instances')
+    and security_group_name != 'node'
 where {{ partition_filter("sg") }}
 and vpc.is_default = false
 and inv.security_group_arn IS NOT NULL
