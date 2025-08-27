@@ -19,13 +19,17 @@ select
 from {{ full_table_name("aws_ec2_security_groups") }} as sg
 left join (
   select id from {{ ref('aws_compliance__security_group_egress_rules') }}
-  where (ip = '0.0.0.0/0' or ip = '::/0') group by id
+  where (ip = '0.0.0.0/0' or ip = '::/0')
+  and (to_port is null or from_port is null)
+  group by id
 ) egress
 on egress.id = sg.group_id
 left join {{ full_table_name("aws_ec2_vpcs") }} as vpc on sg.vpc_id = vpc.vpc_id
     and {{ partition_join("sg", "vpc")}}
 left join {{ ref("aws_security_group_inventory") }} as inv
     on inv.security_group_arn = sg.arn
+    and resource_type NOT IN ('aws_elbv2_load_balancers', 'aws_rds_instances')
+    and security_group_name != 'node'
 where {{ partition_filter("sg") }}
 and vpc.is_default = false
 and inv.security_group_arn IS NOT NULL
