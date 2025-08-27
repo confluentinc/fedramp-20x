@@ -65,8 +65,11 @@ select
     "N/A" as application_administrator,
     NULL as function,
     NULL as end_of_life_date
-from {{ full_table_name("aws_resources") }} r
-left join {{ full_table_name("aws_ecr_repositories") }} re on re.arn = r.arn and {{ partition_filter("re") }}
+from {{ ref("aws_resources") }} r
+left join {{ full_table_name("aws_ecr_repositories") }} re
+    on re.arn = r.arn and {{ partition_filter("re") }}
+    and re.repository_uri not like '%/helm/%'
+    and re.repository_uri not like '%/docker/dev/%'
 left join {{ full_table_name("aws_ec2_instances") }} instance on instance.arn = r.arn and {{ partition_filter("instance") }}
 left join {{ full_table_name("aws_rds_instances") }} database on database.arn = r.arn and {{ partition_filter("database") }}
 left join {{ full_table_name("aws_sqs_queues") }} queue on queue.arn = r.arn and {{ partition_filter("queue") }}
