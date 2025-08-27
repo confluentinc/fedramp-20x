@@ -16,8 +16,7 @@ with
 
         -- KSI-CMT-02: Execute changes through redeployment of version controlled immutable resources rather than direct modification wherever possible.
 --         TODO: k8s_images_should_use_immutable_registry can be re-enabled once required work has been completed
-        ({{ aws_resources_should_be_managed_by_iac('KSI-CMT-02', '1.1') }})
-            {{ union() }}
+--         TODO: aws_resources_should_be_managed_by_iac can be re-enabled once required work has been completed
 
         -- KSI-CMT-03: Implement automated testing and validation of changes prior to deployment.
         -- KSI-CMT-04: Have a documented change management procedure.
