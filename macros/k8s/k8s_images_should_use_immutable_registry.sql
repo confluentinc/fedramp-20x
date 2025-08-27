@@ -33,4 +33,6 @@ from images
 left join {{ full_table_name("aws_ecr_repositories") }} as er
     on images.image_name = REPLACE(er.repository_uri, 'ecr-fips', 'ecr')
     and {{ partition_filter("er") }}
+    and er.repository_uri not like '%/helm/%'
+    and er.repository_uri not like '%/docker/dev/%'
     {% endmacro %}
