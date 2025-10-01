@@ -168,6 +168,10 @@ with
             {{ union() }}
         {{ alb_should_redirect_plaintext_ports('KSI-SVC-02', '1.1')}}
             {{ union() }}
+        ({{ organization_policies_should_require_fips_compliant_load_balancers('KSI-SVC-02', '1.2')}})
+            {{ union() }}
+        ({{ s3_buckets_should_require_secure_transport('KSI-SVC-02', '1.3')}})
+            {{ union() }}
 
         -- KSI-SVC-03: Encrypt all federal and sensitive information at rest
         ({{ ebs_volumes_should_be_encrypted_at_rest('KSI-SVC-03', '1.0') }})
@@ -179,6 +183,12 @@ with
         ({{ elasticache_clusters_should_be_encrypted_at_rest('KSI-SVC-03', '1.3') }})
             {{ union() }}
         ({{ elasticache_replication_groups_should_be_encrypted_at_rest('KSI-SVC-03', '1.4') }})
+            {{ union() }}
+        ({{ ebs_volumes_should_be_encrypted_by_default('KSI-SVC-03', '1.5')}})
+            {{ union() }}
+        ({{ organization_policies_should_block_unencrypted_ec2_instances('KSI-SVC-03', '1.6')}})
+            {{ union() }}
+        ({{ organization_policies_should_block_unencrypted_rds_instances('KSI-SVC-03', '1.7')}})
             {{ union() }}
 
         -- KSI-SVC-04: Manage configuration centrally
