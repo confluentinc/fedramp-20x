@@ -180,7 +180,16 @@ with
             {{ union() }}
         ({{ elasticache_replication_groups_should_be_encrypted_at_rest('KSI-SVC-03', '1.4') }})
             {{ union() }}
-
+        ({{ s3_buckets_should_require_secure_transport('KSI-SVC-03', '1.5')}})
+            {{ union() }}
+        ({{ ebs_volumes_should_be_encrypted_by_default('KSI-SVC-03', '1.6')}})
+            {{ union() }}
+        ({{ organization_policies_should_block_unencrypted_ec2_instances('KSI-SVC-03', '1.7')}})
+            {{ union() }}
+        ({{ organization_policies_should_block_unencrypted_rds_instances('KSI-SVC-03', '1.8')}})
+            {{ union() }}
+        ({{ organization_policies_should_require_fips_compliant_load_balancers('KSI-SVC-03', '1.9')}})
+            {{ union() }}
         -- KSI-SVC-04: Manage configuration centrally
 
         -- KSI-SVC-05: Enforce system and information resource integrity through cryptographic means
