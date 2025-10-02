@@ -67,6 +67,10 @@ with
             {{ union() }}
 
         -- KSI-CNA-05: Have denial of service protection
+        ({{ aws_shield_included_in_govcloud('KSI-CNA-05', '1.0') }})
+            {{ union() }}
+        ({{ eks_control_planes_limit_inbound_ip_ranges('KSI-CNA-05', '1.1') }})
+            {{ union() }}
 
         -- KSI-CNA-06: Design systems for high availability and rapid recovery
         ({{ vpcs_should_have_subnets_in_multiple_azs('KSI-CNA-06', '1.0')}})
