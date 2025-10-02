@@ -71,6 +71,10 @@ with
             {{ union() }}
         ({{ eks_control_planes_limit_inbound_ip_ranges('KSI-CNA-05', '1.1') }})
             {{ union() }}
+        ({{ load_balancers_have_cloud_armor_policies('KSI-CNA-05', '1.2') }})
+            {{ union() }}
+        ({{ gcp_compute_clusters_should_restrict_inbound_ips('KSI-CNA-05', '1.3') }})
+            {{ union() }}
 
         -- KSI-CNA-06: Design systems for high availability and rapid recovery
         ({{ vpcs_should_have_subnets_in_multiple_azs('KSI-CNA-06', '1.0')}})
