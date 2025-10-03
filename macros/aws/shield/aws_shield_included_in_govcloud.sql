@@ -9,8 +9,11 @@ select
     '{{framework}}' As framework,
     '{{check_id}}' As check_id,
     'AWS Shield (Standard) is active on GovCloud accounts' as title,
-    "" as identifier,
+    id as identifier,
     JSON_OBJECT() as metadata,
-    'pass' as status,
+    case when CONTAINS_SUBSTR(arn, "aws-us-gov") then 'pass' else 'fail' end as status,
     JSON_OBJECT() as tags
+from {{ full_table_name("aws_organizations_accounts") }}
+where _cq_source_name = 'aws-root-account-govcloud'
+and {{ partition_filter() }}
     {% endmacro %}
