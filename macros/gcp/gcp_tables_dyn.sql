@@ -8,6 +8,7 @@ SELECT
     t.table_name,
     MAX(CASE WHEN UPPER(c.column_name) = 'PROJECT_ID' THEN 1 ELSE 0 END) AS project_id_exist,
     MAX(CASE WHEN UPPER(c.column_name) = 'ID' THEN 1 ELSE 0 END) AS id_exist,
+    MAX(CASE WHEN UPPER(c.column_name) = 'SELF_LINK' THEN 1 ELSE 0 END) as self_link_exist,
     MAX(CASE WHEN UPPER(c.column_name) = 'REGION' THEN 1 ELSE 0 END) AS region_exist,
     MAX(CASE WHEN UPPER(c.column_name) = 'DESCRIPTION' THEN 1 ELSE 0 END) AS description_exist,
     MAX(CASE WHEN UPPER(c.column_name) = 'NAME' THEN 1 ELSE 0 END) AS name_exist  
