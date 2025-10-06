@@ -1,9 +1,9 @@
-{% macro gcp_asset_resources(table_name, project_id_exist, id_exist, region_exist, description_exist, name_exist) %}
-  {{ return(adapter.dispatch('gcp_asset_resources')(table_name, project_id_exist, id_exist, region_exist, description_exist, name_exist)) }}
+{% macro gcp_asset_resources(table_name, project_id_exist, self_link_exist, id_exist, region_exist, description_exist, name_exist) %}
+  {{ return(adapter.dispatch('gcp_asset_resources')(table_name, project_id_exist, self_link_exist, id_exist, region_exist, description_exist, name_exist)) }}
 {% endmacro %}
 
 
-{% macro bigquery__gcp_asset_resources(table_name, project_id_exist, id_exist, region_exist, description_exist, name_exist) %}
+{% macro bigquery__gcp_asset_resources(table_name, project_id_exist, self_link_exist, id_exist, region_exist, description_exist, name_exist) %}
 SELECT
 _cq_id, _cq_source_name, _cq_sync_time,
 {% if project_id_exist %}
@@ -11,7 +11,9 @@ project_id
 {% else %}
 'unavailable'
 {% endif %} AS project_id,
-{% if id_exist %}
+{% if self_link_exist %}
+  self_link
+{% elif id_exist %}
 cast(id as string)
 {% else %}
 'unavailable'
