@@ -146,6 +146,15 @@ with
         ({{ jira_should_have_continuous_monitoring_project('KSI-MLA-06', '1.1') }})
             {{ union() }}
 
+        -- KSI-MLA-07: Maintain a list of information resources and event types that will be monitored, logged, and audited.
+        -- KSI-MLA-08: Use a least-privileged, role and attribute-based, and just-in-time access authorization model for access to log data.
+        ({{ eks_control_planes_should_use_oidc_access('KSI-MLA-08', '1.0') }})
+            {{ union() }}
+        ({{ iam_roles_for_engineer_access_use_saml('KSI-MLA-08', '1.1') }})
+            {{ union() }}
+        ({{ okta_system_logs_just_in_time_access('KSI-MLA-08', '1.2') }})
+            {{ union() }}
+
         -- KSI-PIY-01: Have an up-to-date information resource inventory or code defining all deployed assets, software, and services.
         ({{ asset_inventories_should_be_up_to_date('KSI-PIY-01', '1.0') }})
             {{ union() }}
