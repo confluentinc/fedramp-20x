@@ -20,6 +20,6 @@ select
     ) as target_user,
     (
         select * from unnest(JSON_QUERY_ARRAY(target)) as item where JSON_VALUE(item, '$.type') = 'UserGroup' limit 1
-    ) as target_user_group,
+    ) as target_user_group
 from {{ full_table_name("okta_system_log_events")}}
 where {{ partition_filter() }}
