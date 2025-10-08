@@ -152,7 +152,7 @@ with
             {{ union() }}
         ({{ iam_roles_for_engineer_access_use_saml('KSI-MLA-08', '1.1') }})
             {{ union() }}
-        ({{ okta_system_logs_just_in_time_access('KSI-MLA-08', '1.2') }})
+        ({{ okta_system_logs_just_in_time_access('KSI-MLA-08', '1.2', var('logging_applications')) }})
             {{ union() }}
 
         -- KSI-PIY-01: Have an up-to-date information resource inventory or code defining all deployed assets, software, and services.
