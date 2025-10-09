@@ -23,4 +23,4 @@ left join {{ full_table_name("aws_eks_cluster_oidc_identity_provider_configs") }
     and oidc.identity_provider_config_name LIKE '%okta%'
     and UPPER(oidc.status) = 'ACTIVE'
 where {{ partition_filter("eks") }}
-    {% endmacro %}
+{% endmacro %}

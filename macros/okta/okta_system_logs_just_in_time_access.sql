@@ -22,7 +22,7 @@ group_additions as (
     event_uuid,
     JSON_VALUE(target_user, '$.id') as user_id,
     JSON_VALUE(target_user_group, '$.id') as user_group_id,
-    event_time,
+    event_time
   from cloudquery.okta_system_log_normalized
   where event_type = 'group.user_membership.add'
   --and actor_id = '{{ var("okta_jit_actor_id") }}'
@@ -33,7 +33,7 @@ group_removals as (
     event_uuid,
     JSON_VALUE(target_user, '$.id') as user_id,
     JSON_VALUE(target_user_group, '$.id') as user_group_id,
-    event_time,
+    event_time
   from cloudquery.okta_system_log_normalized
   where event_type = 'group.user_membership.remove'
   --and actor_id = '{{ var("okta_jit_actor_id") }}'
