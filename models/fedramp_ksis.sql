@@ -108,7 +108,9 @@ with
         ({{ iam_root_user_has_no_access_keys('KSI-IAM-04', '1.0') }})
             {{ union() }}
 
-        -- KSI-IAM-05: Apply zero trust design principles.
+        -- KSI-IAM-05: Design identity and access management systems that assume resources will be compromised
+        ({{ okta_behavior_rules_detect_compromise('KSI-IAM-05', '1.0') }})
+            {{ union() }}
         -- KSI-IAM-06: Automatically disable or otherwise secure accounts with privileged access in response to suspicious activity.
 
         -- KSI-INR-01: Report incidents according to FedRAMP requirements and cloud service provider policies.
