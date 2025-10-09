@@ -241,3 +241,5 @@ vars:
     - aws_elbv2_load_balancers
     - aws_lambda_functions
     - aws_rds_instances
+  logging_applications: {}
+  okta_jit_actor_id: ''

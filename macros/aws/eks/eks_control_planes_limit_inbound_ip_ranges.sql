@@ -18,4 +18,4 @@ select
     eks.tags
 from {{ full_table_name("aws_eks_clusters") }} eks
 where {{ partition_filter() }}
-    {% endmacro %}
+{% endmacro %}
