@@ -110,6 +110,7 @@ with
 
         -- KSI-IAM-05: Design identity and access management systems that assume resources will be compromised
         ({{ okta_behavior_rules_detect_compromise('KSI-IAM-05', '1.0') }})
+            {{ union() }}
         -- KSI-IAM-06: Automatically disable or otherwise secure accounts with privileged access in response to suspicious activity.
 
         -- KSI-INR-01: Report incidents according to FedRAMP requirements and cloud service provider policies.
