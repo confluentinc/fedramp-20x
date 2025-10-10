@@ -4,28 +4,38 @@
 
 with
     aggregated as (
-        -- KSI-CED-01: Ensure all employees receive security awareness training.
-        -- KSI-CED-02: Require role-specific training for high risk roles, including at least roles with privileged access.
+        -- FRR-MAS-01: Providers MUST identify a set of information resources to assess for FedRAMP authorization that
+        -- includes all information resources that are likely to handle federal information or likely to impact the
+        -- confidentiality, integrity, or availability of federal information handled by the cloud service offering.
         ({{ verify_syncs_meet_success_threshold('FRR-MAS-01', '1.0') }})
             {{ union() }}
         ({{ verify_coverage_of_synced_sources('FRR-MAS-01', '1.1') }})
             {{ union() }}
-        -- KSI-CMT-01: Log and monitor system modifications.
+        -- KSI-CED: Cybersecurity Education
+        -- KSI-CED-01: Ensure all employees receive security and privacy awareness training, incident response training, and are familiar with all relevant policies and procedures.
+        -- KSI-CED-02: Require role-specific training for high risk roles, including at least roles with privileged access.
+        -- KSI-CED-03: Require role-specific training for development and engineering staff covering best practices for delivering secure software.
+
+
+
+        -- KSI-CMT: Change Management
+        -- KSI-CMT-01: Log and monitor service modifications
         ({{ organization_cloudtrail_should_emit_events_to_s3('KSI-CMT-01', '1.0') }})
             {{ union() }}
 
         -- KSI-CMT-02: Execute changes through redeployment of version controlled immutable resources rather than direct modification wherever possible.
 --         TODO: k8s_images_should_use_immutable_registry can be re-enabled once required work has been completed
 --         TODO: aws_resources_should_be_managed_by_iac can be re-enabled once required work has been completed
-
-        -- KSI-CMT-03: Implement automated testing and validation of changes prior to deployment.
-        -- KSI-CMT-04: Have a documented change management procedure.
+        -- KSI-CMT-03: Implement persistent automated testing and validation of changes
+        -- KSI-CMT-04: Consistently follow a documented change management procedure
         -- KSI-CMT-05: Evaluate the risk and potential impact of any change.
         ({{ jira_should_have_change_management_project('KSI-CMT-05', '1.0') }})
             {{ union() }}
         ({{ jira_change_tickets_should_be_approved('KSI-CMT-05', '1.1') }})
             {{ union() }}
-        -- KSI-CNA-01: Configure ALL information resources to limit inbound and outbound traffic
+
+        -- KSI-CNA: Cloud Native Architecture
+        -- KSI-CNA-01: Configure ALL machine-based information resources to limit inbound and outbound traffic
         ({{ aws_cisv3_mapping('KSI-CNA-01', '1.0', '2.3.3') }}) -- RDS Should not be publicly accessible
             {{ union() }}
         ({{ aws_foundational_security_mapping('KSI-CNA-01', '1.1', 'ec2.2') }})
@@ -44,7 +54,6 @@ with
             {{ union() }}
         ({{ verify_default_vpc_unused('KSI-CNA-02', '1.4')}})
             {{ union() }}
-
 
         -- KSI-CNA-03: Use logical networking and related capabilities to enforce traffic flow controls
         ({{ security_groups_should_not_have_broad_ingress('KSI-CNA-03', '1.0') }})
@@ -66,7 +75,7 @@ with
         ({{ k8s_images_should_use_internal_registry('KSI-CNA-04', '1.2') }})
             {{ union() }}
 
-        -- KSI-CNA-05: Have denial of service protection
+        -- KSI-CNA-05: Protect against denial of service attacks and unwanted spam
         ({{ aws_shield_included_in_govcloud('KSI-CNA-05', '1.0') }})
             {{ union() }}
         ({{ eks_control_planes_limit_inbound_ip_ranges('KSI-CNA-05', '1.1') }})
@@ -90,6 +99,9 @@ with
         ({{ gcp_cis_compliance_summary('KSI-CNA-07', '1.2') }}) -- GCP CIS v2 Compliance (Scored)
             {{ union() }}
 
+        -- KSI-CNA-08: Use automated services to persistently assess the security posture of all services and automatically enforce secure operations.
+
+        -- KSI-IAM: Identity and Access Management
         -- KSI-IAM-01: Enforce multi-factor authentication (MFA) using methods that are difficult to intercept or impersonate (phishing-resistant MFA) for all user authentication.
         ({{ okta_users_require_mfa('KSI-IAM-01', '1.0')}})
             {{ union() }}
@@ -111,18 +123,21 @@ with
         -- KSI-IAM-05: Design identity and access management systems that assume resources will be compromised
         ({{ okta_behavior_rules_detect_compromise('KSI-IAM-05', '1.0') }})
             {{ union() }}
-        -- KSI-IAM-06: Automatically disable or otherwise secure accounts with privileged access in response to suspicious activity.
 
-        -- KSI-INR-01: Report incidents according to FedRAMP requirements and cloud service provider policies.
+        -- KSI-IAM-06: Automatically disable or otherwise secure accounts with privileged access in response to suspicious activity.
+        -- KSI-IAM-07: Securely manage the lifecycle and privileges of all accounts, roles, and groups.
+
+        -- KSI-INR: Incident Response
+        -- KSI-INR-01: Respond to incidents according to FedRAMP requirements and cloud service provider policies
         -- KSI-INR-02: Maintain a log of incidents and periodically review past incidents for patterns or vulnerabilities.
         ({{ jira_should_have_security_project('KSI-INR-02', '1.0') }})
             {{ union() }}
         ({{ jira_should_have_incident_tracking_project('KSI-INR-02', '1.1') }})
             {{ union() }}
 
-
         -- KSI-INR-03: Generate after action reports and regularly incorporate lessons learned into operations.
 
+        -- KSI-MLA: Monitoring, Logging, and Auditing
         -- KSI-MLA-01: Operate a Security Information and Event Management (SIEM) or similar system(s) for centralized, tamper-resistent logging of events, activities, and changes.
         ({{ aws_cisv3_mapping('KSI-MLA-01', '1.0', '3.1') }}) -- CloudTrail is enabled in all regions
             {{ union() }}
@@ -134,15 +149,13 @@ with
             {{ union() }}
 
         -- KSI-MLA-02: Regularly review and audit logs.
-        -- KSI-MLA-03: Rapidly detect and remediate or mitigate vulnerabilities.
+        -- KSI-MLA-03: Rapidly detect and respond to vulnerabilities following requirements and recommendations in the FedRAMP Vulnerability Response and Detection standard
         ({{ ec2_instances_should_be_scanned_by_inspector('KSI-MLA-03', '1.0')}})
             {{ union() }}
         ({{ inspector_vulnerabilities_should_be_resolved_in_sla('KSI-MLA-03', '1.1') }})
             {{ union() }}
 
-        -- KSI-MLA-04: Perform authenticated vulnerability scanning on information resources.
         -- KSI-MLA-05: Perform Infrastructure as Code and configuration evaluation and testing.
-        -- KSI-MLA-06: Centrally track and prioritize the mitigation and/or remediation of identified vulnerabilities.
         ({{ jira_should_be_used_for_tracking_vulnerabilities('KSI-MLA-06', '1.0') }})
             {{ union() }}
         ({{ jira_should_have_continuous_monitoring_project('KSI-MLA-06', '1.1') }})
@@ -157,16 +170,19 @@ with
         ({{ okta_system_logs_just_in_time_access('KSI-MLA-08', '1.2', var('logging_applications')) }})
             {{ union() }}
 
-        -- KSI-PIY-01: Have an up-to-date information resource inventory or code defining all deployed assets, software, and services.
+        -- KSI-PIY: Policy and Inventory
+        -- KSI-PIY-01: Generate inventories of information resources from authoritative sources
         ({{ asset_inventories_should_be_up_to_date('KSI-PIY-01', '1.0') }})
             {{ union() }}
-        -- KSI-PIY-02: Have policies outlining the security objectives of all information resources.
+        -- KSI-PIY-02: Document the security objectives and requirements for each information resource
         -- KSI-PIY-03: Maintain a vulnerability disclosure program.
-        -- KSI-PIY-04: Build security considerations into the Software Development Lifecycle and align with CISA Secure By Design principles.
+        -- KSI-PIY-04: Build security and privacy considerations into the Software Development Lifecycle and align with CISA Secure By Design principles
         -- KSI-PIY-05: Document methods used to evaluate information resource implementations.
-        -- KSI-PIY-06: Have a dedicated staff and budget for security with executive support, commensurate with the size, complexity, scope, and risk of the service offering.
+        -- KSI-PIY-06: Have staff and budget for security commensurate with the size, complexity, scope, executive
+        -- priorities, and risk of the service offering that demonstrates commitment to delivering a secure service.
         -- KSI-PIY-07: Document risk management decisions for software supply chain security.
 
+        -- KSI-RPL: Recovery Planning
         -- KSI-RPL-01: Define Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO).
         ({{ rds_instances_should_have_backup_enabled('KSI-RPL-01','1.0') }})
             {{ union() }}
@@ -180,8 +196,8 @@ with
             {{ union() }}
         -- KSI-RPL-04: Regularly test the capability to recover from incidents and contingencies.
 
-        -- KSI-SVC-01: Harden and review network and system configurations
-
+        -- KSI-SVC: Service Configuration
+        -- KSI-SVC-01: Continuously evaluate machine-based information resources for opportunities to improve security
         -- KSI-SVC-02: Encrypt or otherwise secure network traffic
         {{ alb_should_have_acceptable_tls_policy('KSI-SVC-02', '1.0')}}
             {{ union() }}
@@ -192,7 +208,7 @@ with
         ({{ s3_buckets_should_require_secure_transport('KSI-SVC-02', '1.3')}})
             {{ union() }}
 
-        -- KSI-SVC-03: Encrypt all federal and sensitive information at rest
+        -- KSI-SVC-03: Encrypt information at rest by default
         ({{ ebs_volumes_should_be_encrypted_at_rest('KSI-SVC-03', '1.0') }})
             {{ union() }}
         ({{ rds_instances_should_be_encrypted_at_rest('KSI-SVC-03', '1.1') }})
@@ -210,9 +226,9 @@ with
         ({{ organization_policies_should_block_unencrypted_rds_instances('KSI-SVC-03', '1.7')}})
             {{ union() }}
 
-        -- KSI-SVC-04: Manage configuration centrally
+        -- KSI-SVC-04: Manage configuration of machine-based information resources using automation
 
-        -- KSI-SVC-05: Enforce system and information resource integrity through cryptographic means
+        -- KSI-SVC-05: Use cryptographic methods to validate the integrity of machine-based information resources
         ({{ k8s_clusters_should_have_enforcement_webhooks('KSI-SVC-05', '1.0') }})
             {{ union() }}
         ({{ k8s_has_image_enforcement_policies('KSI-SVC-05', '1.1') }})
@@ -224,10 +240,14 @@ with
         ({{ aws_cisv3_mapping('KSI-SVC-06', '1.0', '3.6') }}) -- Ensure Key rotation is enabled for all customer managed KMS keys
             {{ union() }}
         -- KSI-SVC-07: Use a consistent, risk-informed approach for applying security patches
+        -- KSI-SVC-08: Ensure that changes do not introduce or leave behind residual elements that could negatively
+        -- affect confidentiality, integrity, or availability of information resources.
+        -- KSI-SVC-09: Use mechanisms that continuously validate the authenticity and integrity of communications between information resources.
+        -- KSI-SVC-10: Remove unwanted information promptly, including from backups if appropriate.
 
-        -- KSI-TPR-01: Identify all third-party information resources .
-        -- KSI-TPR-02: Regularly confirm that services handling federal information or are likely to impact the confidentiality, integrity, or availability of federal information are FedRAMP authorized and securely configured.
-        ({{ vendors_should_have_fedramp_authorization('KSI-TPR-02', '1.0') }})
+        -- KSI-TPR: Third-Party Information Resources
+        -- KSI-TPR-01: Follow the requirements and recommendations in the FedRAMP Minimum Assessment Standard regarding third-party information resources
+        ({{ vendors_should_have_fedramp_authorization('KSI-TPR-01', '1.0') }})
 
         -- KSI-TPR-03: Identify and prioritize mitigation of potential supply chain risks.
         -- KSI-TPR-04: Monitor third party software information resources for upstream vulnerabilities, with contractual notification requirements or active monitoring services.
