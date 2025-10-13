@@ -11,7 +11,7 @@ KSI-SVC,Service Configuration,KSI-SVC-02,Encrypt or otherwise secure network tra
 KSI-SVC,Service Configuration,KSI-SVC-03,Encrypt information at rest by default
 KSI-SVC,Service Configuration,KSI-SVC-04,Manage configuration of machine-based information resources using automation
 KSI-SVC,Service Configuration,KSI-SVC-05,Use cryptographic methods to validate the integrity of machine-based information resources
-KSI-SVC,Service Configuration,KSI-SVC-06,Use automated key management systems to manage
+KSI-SVC,Service Configuration,KSI-SVC-06,"Use automated key management systems to manage, protect, and regularly rotate digital keys and certificates."
 KSI-SVC,Service Configuration,KSI-SVC-07,"Use a consistent, risk-informed approach for applying security patches"
 KSI-IAM,Identity and Access Management,KSI-IAM-01,Enforce multi-factor authentication (MFA) using methods that are difficult to intercept or impersonate (phishing-resistant MFA) for all user authentication.
 KSI-IAM,Identity and Access Management,KSI-IAM-02,"Use secure passwordless methods for user authentication and authorization when feasible, otherwise enforce strong passwords with MFA."
@@ -33,7 +33,7 @@ KSI-PIY,Policy and Inventory,KSI-PIY-02,Document the security objectives and req
 KSI-PIY,Policy and Inventory,KSI-PIY-03,Maintain a vulnerability disclosure program.
 KSI-PIY,Policy and Inventory,KSI-PIY-04,Build security and privacy considerations into the Software Development Lifecycle and align with CISA Secure By Design principles
 KSI-PIY,Policy and Inventory,KSI-PIY-05,Document methods used to evaluate information resource implementations.
-KSI-PIY,Policy and Inventory,KSI-PIY-06,Have staff and budget for security commensurate with the size
+KSI-PIY,Policy and Inventory,KSI-PIY-06,"Have staff and budget for security commensurate with the size, complexity, scope, executive priorities, and risk of the service offering that demonstrates commitment to delivering a secure service."
 KSI-PIY,Policy and Inventory,KSI-PIY-07,Document risk management decisions for software supply chain security.
 KSI-TPR,Third-Party Information Resources,KSI-TPR-01,Follow the requirements and recommendations in the FedRAMP Minimum Assessment Standard regarding third-party information resources
 KSI-TPR,Third-Party Information Resources,KSI-TPR-03,Identify and prioritize mitigation of potential supply chain risks.
