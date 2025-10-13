@@ -12,8 +12,8 @@ select
     JSON_VALUE(target_user, '$.id') as identifier,
     JSON_OBJECT() as metadata,
     case when actor_type = 'User'
-        then 'pass'
-        else 'fail'
+        then 'fail'
+        else 'pass'
     end as status,
     JSON_OBJECT() as tags
 from {{ full_table_name("okta_system_log_normalized") }}
