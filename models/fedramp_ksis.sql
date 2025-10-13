@@ -176,6 +176,11 @@ with
             {{ union() }}
         -- KSI-PIY-02: Document the security objectives and requirements for each information resource
         -- KSI-PIY-03: Maintain a vulnerability disclosure program.
+        ({{ confluent_has_vulnerability_disclosure_email('KSI-PIY-03', '1.0') }})
+            {{ union() }}
+        ({{ confluent_has_hackerone_subject('KSI-PIY-03', '1.1') }})
+            {{ union() }}
+
         -- KSI-PIY-04: Build security and privacy considerations into the Software Development Lifecycle and align with CISA Secure By Design principles
         -- KSI-PIY-05: Document methods used to evaluate information resource implementations.
         -- KSI-PIY-06: Have staff and budget for security commensurate with the size, complexity, scope, executive
