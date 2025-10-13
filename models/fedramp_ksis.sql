@@ -198,6 +198,9 @@ with
 
         -- KSI-SVC: Service Configuration
         -- KSI-SVC-01: Continuously evaluate machine-based information resources for opportunities to improve security
+        {{ jira_tickets_created_for_security_configuration_updates('KSI-SVC-01', '1.0') }}
+            {{ union() }}
+
         -- KSI-SVC-02: Encrypt or otherwise secure network traffic
         {{ alb_should_have_acceptable_tls_policy('KSI-SVC-02', '1.0')}}
             {{ union() }}
