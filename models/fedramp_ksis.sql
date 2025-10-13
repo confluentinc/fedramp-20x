@@ -125,7 +125,14 @@ with
             {{ union() }}
 
         -- KSI-IAM-06: Automatically disable or otherwise secure accounts with privileged access in response to suspicious activity.
+        ({{ okta_behavior_rules_suspicious_activity_requires_mfa('KSI-IAM-06', '1.0') }})
+            {{ union() }}
+
         -- KSI-IAM-07: Securely manage the lifecycle and privileges of all accounts, roles, and groups.
+        ({{ okta_users_should_not_be_manually_created('KSI-IAM-07', '1.0') }})
+            {{ union() }}
+        ({{ iam_roles_for_engineer_access_use_saml('KSI-IAM-07', '1.1') }})
+            {{ union() }}
 
         -- KSI-INR: Incident Response
         -- KSI-INR-01: Respond to incidents according to FedRAMP requirements and cloud service provider policies
