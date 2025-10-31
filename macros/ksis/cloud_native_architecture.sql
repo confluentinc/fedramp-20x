@@ -1,8 +1,9 @@
 {% macro cloud_native_architecture() %}
 
 -- KSI-CNA: Cloud Native Architecture
+-- something else
 -- KSI-CNA-01: Configure ALL machine-based information resources to limit inbound and outbound traffic
-({{ aws_cisv3_mapping('KSI-CNA-01', '1.0', '2.3.3') }}) -- RDS Should not be publicly accessible
+({{ rds_instances_have_inbound_access_restrictions('KSI-CNA-01', '1.0') }})
     {{ union() }}
 ({{ aws_foundational_security_mapping('KSI-CNA-01', '1.1', 'ec2.2') }})
     {{ union() }}
