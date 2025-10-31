@@ -21,8 +21,8 @@ select
     '{{framework}}' as framework,
     '{{check_id}}' as check_id,
     'RDS Instances should have restrictions on inbound access' as title,
-    JSON_OBJECT() as metadata,
     arn AS identifier,
+    JSON_OBJECT() as metadata,
     case when exists
         -- We check for any security groups that allow broad access, and fail
         (select *

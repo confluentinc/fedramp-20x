@@ -2,7 +2,6 @@
 
 -- KSI-CNA: Cloud Native Architecture
 -- KSI-CNA-01: Configure ALL machine-based information resources to limit inbound and outbound traffic
-
 ({{ verify_default_vpc_unused('KSI-CNA-01', '1.0')}})
     {{ union() }}
 ({{ verify_default_security_group_unused('KSI-CNA-01', '1.1') }})
