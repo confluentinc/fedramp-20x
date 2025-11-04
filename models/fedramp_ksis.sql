@@ -28,6 +28,7 @@ with
         ({{ service_configuration() }})
         {{ union() }}
         ({{ third_party_information_resources() }})
+
     )
 select
     {{ gen_timestamp() }},

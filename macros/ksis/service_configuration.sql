@@ -33,6 +33,10 @@
     {{ union() }}
 
 -- KSI-SVC-04: Manage configuration of machine-based information resources using automation
+({{ aws_resources_should_be_managed_by_iac('KSI-SVC-04', '1.0') }})
+    {{ union() }}
+({{ k8s_workloads_should_be_immutable('KSI-SVC-04', '1.1') }})
+    {{ union() }}
 
 -- KSI-SVC-05: Use cryptographic methods to validate the integrity of machine-based information resources
 ({{ k8s_clusters_should_have_enforcement_webhooks('KSI-SVC-05', '1.0') }})
