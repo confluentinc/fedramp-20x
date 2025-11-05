@@ -15,7 +15,12 @@ select
         when
             JSON_VALUE(logConfig, '$.Enabled') = 'false'
             or
-            TO_JSON_STRING(JSON_VALUE_ARRAY(logConfig, '$.Types')) != TO_JSON_STRING(['api', 'audit', 'authenticator', 'controllerManager', 'scheduler'])
+            ARRAY_LENGTH(JSON_VALUE_ARRAY(logConfig, '$.Types')) != 5
+            or NOT ('api' IN UNNEST(JSON_VALUE_ARRAY(logConfig, '$.Types')))
+            or NOT ('audit' IN UNNEST(JSON_VALUE_ARRAY(logConfig, '$.Types')))
+            or NOT ('authenticator' IN UNNEST(JSON_VALUE_ARRAY(logConfig, '$.Types')))
+            or NOT ('controllerManager' IN UNNEST(JSON_VALUE_ARRAY(logConfig, '$.Types')))
+            or NOT ('scheduler' IN UNNEST(JSON_VALUE_ARRAY(logConfig, '$.Types')))
              then 'fail'
          else 'pass'
         end as status,
@@ -23,4 +28,4 @@ select
 from {{ full_table_name("aws_eks_clusters") }} eks,
 UNNEST(JSON_QUERY_ARRAY(eks.logging, '$.ClusterLogging')) as logConfig
 where {{ partition_filter() }}
-    {% endmacro %}
+{% endmacro %}
