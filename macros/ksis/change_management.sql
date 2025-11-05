@@ -3,7 +3,8 @@
 -- KSI-CMT-01: Log and monitor service modifications
 ({{ organization_cloudtrail_should_emit_events_to_s3('KSI-CMT-01', '1.0') }})
     {{ union() }}
-
+({{ eks_control_planes_should_log_all_events('KSI-CMT-01', '1.1') }})
+    {{ union() }}
 -- KSI-CMT-02: Execute changes through redeployment of version controlled immutable resources rather than direct modification wherever possible.
 --         TODO: k8s_images_should_use_immutable_registry can be re-enabled once required work has been completed
 --         TODO: aws_resources_should_be_managed_by_iac can be re-enabled once required work has been completed
