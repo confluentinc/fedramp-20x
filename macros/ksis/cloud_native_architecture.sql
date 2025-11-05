@@ -2,11 +2,15 @@
 
 -- KSI-CNA: Cloud Native Architecture
 -- KSI-CNA-01: Configure ALL machine-based information resources to limit inbound and outbound traffic
-({{ aws_cisv3_mapping('KSI-CNA-01', '1.0', '2.3.3') }}) -- RDS Should not be publicly accessible
+({{ verify_default_vpc_unused('KSI-CNA-01', '1.0')}})
     {{ union() }}
-({{ aws_foundational_security_mapping('KSI-CNA-01', '1.1', 'ec2.2') }})
+({{ verify_default_security_group_unused('KSI-CNA-01', '1.1') }})
     {{ union() }}
 ({{ alb_security_groups_should_restrict_to_limited_ports('KSI-CNA-01', '1.2') }})
+    {{ union() }}
+({{ rds_instances_have_inbound_access_restrictions('KSI-CNA-01', '1.3') }})
+    {{ union() }}
+({{ rds_instances_have_outbound_access_restrictions('KSI-CNA-01', '1.4') }})
     {{ union() }}
 
 -- KSI-CNA-02: Design systems to minimize the attack surface and minimize lateral movement if compromised
