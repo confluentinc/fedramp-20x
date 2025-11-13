@@ -12,8 +12,8 @@ select
     arn as identifier,
     JSON_OBJECT() as metadata,
     case when
-        role_last_used_last_used_date is not null
-        and DATETIME_DIFF(CURRENT_DATETIME(), DATETIME(role_last_used_last_used_date), DAY) > 90
+        role_last_used is not null
+        and DATETIME_DIFF(CURRENT_DATETIME(), DATETIME(TIMESTAMP(JSON_VALUE(role_last_used.LastUsedDate))), DAY) > 90
         then 'fail'
         else 'pass'
     end as status,
