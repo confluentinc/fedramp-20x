@@ -22,8 +22,5 @@ select
     end as status,
     b.tags as tags
 from {{ full_table_name("aws_s3_buckets") }} b
-left join {{ full_table_name("aws_s3_bucket_lifecycles") }} bl 
-    on b.arn = bl.bucket_arn
-    and {{ partition_filter("bl") }}
 where {{ partition_filter("b") }}
 {% endmacro %}
