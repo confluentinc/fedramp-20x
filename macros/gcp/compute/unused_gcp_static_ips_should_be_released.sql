@@ -14,8 +14,8 @@ select
     case when
         status = 'RESERVED'
         and DATETIME_DIFF(
-            CURRENT_DATETIME(), 
-            DATETIME(PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%S.%fZ', creation_timestamp)),
+            CURRENT_DATETIME(),
+            DATETIME(PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%E*S%Ez', creation_timestamp)),
             DAY
         ) > 7
         then 'fail'
