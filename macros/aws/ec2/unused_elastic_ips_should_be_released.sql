@@ -9,7 +9,7 @@ select
     '{{framework}}' as framework,
     '{{check_id}}' as check_id,
     'Elastic IP addresses should be associated with instances' as title,
-    arn as identifier,
+    public_ip as identifier,
     JSON_OBJECT() as metadata,
     case when
         instance_id is null
