@@ -51,6 +51,10 @@
     {{ union() }}
 
 -- KSI-SVC-07: Use a consistent, risk-informed approach for applying security patches
+({{ ec2_instances_should_use_current_generation_types('KSI-SVC-07', '1.0') }})
+    {{ union() }}
+({{ eks_node_groups_should_use_recent_amis('KSI-SVC-07', '1.1') }})
+    {{ union() }}
 
 -- KSI-SVC-08: Ensure that changes do not introduce or leave behind residual elements that could negatively
 -- affect confidentiality, integrity, or availability of information resources.
@@ -76,7 +80,11 @@
     {{ union() }}
 
 -- KSI-SVC-09: Use mechanisms that continuously validate the authenticity and integrity of communications between information resources.
+
 -- KSI-SVC-10: Remove unwanted information promptly, including from backups if appropriate.
+({{ s3_buckets_should_have_lifecycle_policies('KSI-SVC-10', '1.0') }})
+    {{ union() }}
+({{ ebs_snapshots_should_have_retention_tags('KSI-SVC-10', '1.1') }})
 
 {% endmacro %}
 
