@@ -48,10 +48,23 @@
 
 -- KSI-SVC-06: Use automated key management systems to manage, protect, and regularly rotate digital keys and certificates.
 ({{ aws_cisv3_mapping('KSI-SVC-06', '1.0', '3.6') }}) -- Ensure Key rotation is enabled for all customer managed KMS keys
+    {{ union() }}
+
 -- KSI-SVC-07: Use a consistent, risk-informed approach for applying security patches
+
 -- KSI-SVC-08: Ensure that changes do not introduce or leave behind residual elements that could negatively
 -- affect confidentiality, integrity, or availability of information resources.
+
 -- KSI-SVC-09: Use mechanisms that continuously validate the authenticity and integrity of communications between information resources.
+({{ load_balancers_should_enforce_https_only('KSI-SVC-09', '1.1') }})
+    {{ union() }}
+({{ load_balancer_listeners_should_use_mutual_tls('KSI-SVC-09', '1.2') }})
+    {{ union() }}
+({{ kubernetes_ingresses_should_enforce_tls('KSI-SVC-09', '1.3') }})
+    {{ union() }}
+({{ kubernetes_namespaces_should_have_network_policies('KSI-SVC-09', '1.4') }})
+    {{ union() }}
+
 -- KSI-SVC-10: Remove unwanted information promptly, including from backups if appropriate.
 
 {% endmacro %}
