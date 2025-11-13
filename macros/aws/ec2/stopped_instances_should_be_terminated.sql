@@ -9,14 +9,15 @@ select
     '{{framework}}' as framework,
     '{{check_id}}' as check_id,
     'Long-stopped EC2 instances should be terminated' as title,
-    account_id,
-    instance_id as resource_id,
+    instance_id as identifier,
+    JSON_OBJECT() as metadata,
     case when
         JSON_VALUE(state.Name) IN ('stopped', 'stopping')
         and DATETIME_DIFF(CURRENT_DATETIME(), DATETIME(state_transition_reason_time), DAY) > 30
         then 'fail'
         else 'pass'
-    end as status
+    end as status,
+    tags
 from {{ full_table_name("aws_ec2_instances") }}
 where {{ partition_filter() }}
 {% endmacro %}

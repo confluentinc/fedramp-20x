@@ -9,14 +9,15 @@ select
     '{{framework}}' as framework,
     '{{check_id}}' as check_id,
     'EBS volumes should be attached to EC2 instances' as title,
-    account_id,
-    volume_id as resource_id,
+    volume_id as identifier,
+    JSON_OBJECT() as metadata,
     case when
         state = 'available'
         and DATETIME_DIFF(CURRENT_DATETIME(), DATETIME(create_time), DAY) > 7
         then 'fail'
         else 'pass'
-    end as status
+    end as status,
+    tags
 from {{ full_table_name("aws_ec2_ebs_volumes") }}
 where {{ partition_filter() }}
 {% endmacro %}

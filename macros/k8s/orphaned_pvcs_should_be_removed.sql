@@ -9,14 +9,15 @@ select
     '{{framework}}' as framework,
     '{{check_id}}' as check_id,
     'Kubernetes PersistentVolumeClaims should be bound to volumes' as title,
-    context,
-    concat(namespace, '/', name) as resource_id,
+    concat(context, '/', namespace, '/', name) as identifier,
+    JSON_OBJECT() as metadata,
     case when
         JSON_VALUE(status.phase) in ('Pending', 'Available')
         and DATETIME_DIFF(CURRENT_DATETIME(), DATETIME(creation_timestamp), DAY) > 7
         then 'fail'
         else 'pass'
-    end as status
+    end as status,
+    JSON_OBJECT() as tags
 from {{ full_table_name("k8s_core_pvcs") }}
 where {{ partition_filter() }}
 {% endmacro %}

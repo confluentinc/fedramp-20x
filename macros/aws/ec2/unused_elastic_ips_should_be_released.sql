@@ -9,14 +9,15 @@ select
     '{{framework}}' as framework,
     '{{check_id}}' as check_id,
     'Elastic IP addresses should be associated with instances' as title,
-    account_id,
-    public_ip as resource_id,
+    arn as identifier,
+    JSON_OBJECT() as metadata,
     case when
         instance_id is null
         and network_interface_id is null
         then 'fail'
         else 'pass'
-    end as status
+    end as status,
+    tags
 from {{ full_table_name("aws_ec2_eips") }}
 where {{ partition_filter() }}
 {% endmacro %}

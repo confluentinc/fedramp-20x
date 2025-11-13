@@ -9,14 +9,15 @@ select
     '{{framework}}' as framework,
     '{{check_id}}' as check_id,
     'Target groups should be associated with load balancers' as title,
-    account_id,
-    target_group_name as resource_id,
+    arn as identifier,
+    JSON_OBJECT() as metadata,
     case when
         array_length(load_balancer_arns) = 0
         or load_balancer_arns is null
         then 'fail'
         else 'pass'
-    end as status
+    end as status,
+    tags
 from {{ full_table_name("aws_elbv2_target_groups") }}
 where {{ partition_filter() }}
 {% endmacro %}

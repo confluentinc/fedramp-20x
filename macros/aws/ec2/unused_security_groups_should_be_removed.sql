@@ -15,14 +15,15 @@ select
     '{{framework}}' as framework,
     '{{check_id}}' as check_id,
     'Security groups should be associated with resources' as title,
-    sg.account_id,
-    sg.group_id as resource_id,
+    sg.arn as identifier,
+    JSON_OBJECT() as metadata,
     case when
         sg.group_name != 'default'
         and attached_sgs.group_id is null
         then 'fail'
         else 'pass'
-    end as status
+    end as status,
+    sg.tags as tags
 from {{ full_table_name("aws_ec2_security_groups") }} sg
 left join attached_sgs on sg.group_id = attached_sgs.group_id
 where {{ partition_filter("sg") }}
