@@ -48,9 +48,33 @@
 
 -- KSI-SVC-06: Use automated key management systems to manage, protect, and regularly rotate digital keys and certificates.
 ({{ aws_cisv3_mapping('KSI-SVC-06', '1.0', '3.6') }}) -- Ensure Key rotation is enabled for all customer managed KMS keys
+    {{ union() }}
+
 -- KSI-SVC-07: Use a consistent, risk-informed approach for applying security patches
+
 -- KSI-SVC-08: Ensure that changes do not introduce or leave behind residual elements that could negatively
 -- affect confidentiality, integrity, or availability of information resources.
+({{ unattached_ebs_volumes('KSI-SVC-08', '1.0') }})
+    {{ union() }}
+({{ stopped_instances_should_be_terminated('KSI-SVC-08', '1.1') }})
+    {{ union() }}
+({{ unused_elastic_ips_should_be_released('KSI-SVC-08', '1.2') }})
+    {{ union() }}
+({{ unused_security_groups_should_be_removed('KSI-SVC-08', '1.3') }})
+    {{ union() }}
+({{ unused_load_balancers_should_be_removed('KSI-SVC-08', '1.4') }})
+    {{ union() }}
+({{ empty_target_groups_should_be_removed('KSI-SVC-08', '1.5') }})
+    {{ union() }}
+({{ unused_iam_roles_should_be_removed('KSI-SVC-08', '1.6') }})
+    {{ union() }}
+({{ unattached_gcp_disks_should_be_removed('KSI-SVC-08', '1.7') }})
+    {{ union() }}
+({{ unused_gcp_static_ips_should_be_released('KSI-SVC-08', '1.8') }})
+    {{ union() }}
+({{ orphaned_pvcs_should_be_removed('KSI-SVC-08', '1.9') }})
+    {{ union() }}
+
 -- KSI-SVC-09: Use mechanisms that continuously validate the authenticity and integrity of communications between information resources.
 -- KSI-SVC-10: Remove unwanted information promptly, including from backups if appropriate.
 
