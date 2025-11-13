@@ -1,5 +1,5 @@
 {% macro s3_buckets_should_have_lifecycle_policies(framework, check_id) %}
-  {{ return(adapter.dispatch('s3_buckets_should_have_lifecycle_policies')(framework, check_id) }}
+  {{ return(adapter.dispatch('s3_buckets_should_have_lifecycle_policies')(framework, check_id)) }}
 {% endmacro %}
 
 {% macro default__s3_buckets_should_have_lifecycle_policies(framework, check_id) %}{% endmacro %}

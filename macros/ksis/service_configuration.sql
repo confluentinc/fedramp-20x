@@ -58,6 +58,26 @@
 
 -- KSI-SVC-08: Ensure that changes do not introduce or leave behind residual elements that could negatively
 -- affect confidentiality, integrity, or availability of information resources.
+({{ unattached_ebs_volumes('KSI-SVC-08', '1.0') }})
+    {{ union() }}
+({{ stopped_instances_should_be_terminated('KSI-SVC-08', '1.1') }})
+    {{ union() }}
+({{ unused_elastic_ips_should_be_released('KSI-SVC-08', '1.2') }})
+    {{ union() }}
+({{ unused_security_groups_should_be_removed('KSI-SVC-08', '1.3') }})
+    {{ union() }}
+({{ unused_load_balancers_should_be_removed('KSI-SVC-08', '1.4') }})
+    {{ union() }}
+({{ empty_target_groups_should_be_removed('KSI-SVC-08', '1.5') }})
+    {{ union() }}
+({{ unused_iam_roles_should_be_removed('KSI-SVC-08', '1.6') }})
+    {{ union() }}
+({{ unattached_gcp_disks_should_be_removed('KSI-SVC-08', '1.7') }})
+    {{ union() }}
+({{ unused_gcp_static_ips_should_be_released('KSI-SVC-08', '1.8') }})
+    {{ union() }}
+({{ orphaned_pvcs_should_be_removed('KSI-SVC-08', '1.9') }})
+    {{ union() }}
 
 -- KSI-SVC-09: Use mechanisms that continuously validate the authenticity and integrity of communications between information resources.
 
