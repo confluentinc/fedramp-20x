@@ -10,14 +10,17 @@ select
     '{{framework}}' as framework,
     '{{check_id}}' as check_id,
     'S3 buckets should have lifecycle policies for data management' as title,
-    b.account_id,
-    b.name as resource_id,
+    b.arn as identifier,
+    JSON_OBJECT() as metadata,
     case when
-        bl.lifecycle_rules is null
-        or JSON_EXTRACT_ARRAY(bl.lifecycle_rules) = []
+        NOT EXISTS(
+            select 1 from {{ full_table_name("aws_s3_bucket_lifecycles") }} bl2
+            where b.arn = bl2.bucket_arn
+        )
         then 'fail'
         else 'pass'
-    end as status
+    end as status,
+    b.tags as tags
 from {{ full_table_name("aws_s3_buckets") }} b
 left join {{ full_table_name("aws_s3_bucket_lifecycles") }} bl 
     on b.arn = bl.bucket_arn

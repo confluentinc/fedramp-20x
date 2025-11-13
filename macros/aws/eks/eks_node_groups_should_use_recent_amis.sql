@@ -21,7 +21,7 @@ launch_template_versions as (
     select
         ltv.account_id,
         ltv.launch_template_id,
-        ltv.image_id,
+        JSON_VALUE(ltv.launch_template_data.ImageId) as image_id,
         ltv.create_time as template_create_time
     from {{ full_table_name("aws_ec2_launch_template_versions") }} ltv
     where {{ partition_filter("ltv") }}
@@ -39,14 +39,15 @@ select
     '{{framework}}' as framework,
     '{{check_id}}' as check_id,
     'EKS node groups should use AMIs created within the last 30 days for security patches' as title,
-    ng.account_id,
-    concat(ng.cluster_name, '/', ng.nodegroup_name) as resource_id,
+    concat(ng.cluster_name, '/', ng.nodegroup_name) as identifier,
+    JSON_OBJECT() as metadata,
     case when
         ami.ami_age_days > 30
         or ami.ami_age_days is null
         then 'fail'
         else 'pass'
-    end as status
+    end as status,
+    JSON_OBJECT() as tags
 from node_group_launch_templates ng
 left join launch_template_versions ltv 
     on ng.launch_template_id = ltv.launch_template_id

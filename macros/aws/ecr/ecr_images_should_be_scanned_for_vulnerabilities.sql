@@ -9,13 +9,14 @@ select
     '{{framework}}' as framework,
     '{{check_id}}' as check_id,
     'Container images should be scanned for vulnerabilities' as title,
-    account_id,
-    repository_name as resource_id,
+    arn as identifier,
+    JSON_OBJECT() as metadata,
     case when
         JSON_VALUE(image_scanning_configuration.scanOnPush) != 'true'
         then 'fail'
         else 'pass'
-    end as status
+    end as status,
+    tags
 from {{ full_table_name("aws_ecr_repositories") }}
 where {{ partition_filter() }}
 {% endmacro %}

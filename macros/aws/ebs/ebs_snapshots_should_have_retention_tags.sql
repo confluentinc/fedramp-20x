@@ -9,8 +9,8 @@ select
     '{{framework}}' as framework,
     '{{check_id}}' as check_id,
     'EBS snapshots should have retention policies or lifecycle tags' as title,
-    account_id,
-    snapshot_id as resource_id,
+    arn as identifier,
+    JSON_OBJECT() as metadata,
     case when
         JSON_EXTRACT_SCALAR(tags, '$.Retention') is null
         and JSON_EXTRACT_SCALAR(tags, '$.Lifecycle') is null
@@ -18,7 +18,8 @@ select
         and TIMESTAMP_DIFF(CURRENT_TIMESTAMP(), start_time, DAY) > 180
         then 'fail'
         else 'pass'
-    end as status
+    end as status,
+    tags
 from {{ full_table_name("aws_ec2_ebs_snapshots") }}
 where {{ partition_filter() }}
     and state = 'completed'
