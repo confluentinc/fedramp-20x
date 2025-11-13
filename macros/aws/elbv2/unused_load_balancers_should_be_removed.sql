@@ -6,12 +6,9 @@
 
 {% macro bigquery__unused_load_balancers_should_be_removed(framework, check_id) %}
 with lb_with_targets as (
-    select distinct lb_arn
-    from (
-        select unnest(load_balancer_arns) as lb_arn
-        from {{ full_table_name("aws_elbv2_target_groups") }}
-        where {{ partition_filter() }}
-    )
+    select distinct arn as lb_arn
+    from {{ full_table_name("aws_elbv2_load_balancers") }}
+    where TIMESTAMP_TRUNC(_cq_sync_time, DAY) = TIMESTAMP(CURRENT_DATE())
 )
 select
     '{{framework}}' as framework,

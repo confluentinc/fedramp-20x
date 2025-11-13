@@ -12,15 +12,9 @@
 
 -- KSI-MLA-02: Regularly review and audit logs.
 -- KSI-MLA-03: Rapidly detect and respond to vulnerabilities following requirements and recommendations in the FedRAMP Vulnerability Response and Detection standard
-({{ ec2_instances_should_be_scanned_by_inspector('KSI-MLA-03', '1.0')}})
-    {{ union() }}
-({{ inspector_vulnerabilities_should_be_resolved_in_sla('KSI-MLA-03', '1.1') }})
-    {{ union() }}
 
 -- KSI-MLA-05: Perform Infrastructure as Code and configuration evaluation and testing.
-({{ jira_should_be_used_for_tracking_vulnerabilities('KSI-MLA-06', '1.0') }})
-    {{ union() }}
-({{ jira_should_have_continuous_monitoring_project('KSI-MLA-06', '1.1') }})
+({{ ecr_images_should_be_scanned_for_vulnerabilities('KSI-MLA-05', '1.0') }})
     {{ union() }}
 
 -- KSI-MLA-07: Maintain a list of information resources and event types that will be monitored, logged, and audited.
