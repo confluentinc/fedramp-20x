@@ -12,12 +12,13 @@ select
     arn as identifier,
     JSON_OBJECT() as metadata,
     case when
-        JSON_EXTRACT_SCALAR(tags, '$.Retention') is null
-        and JSON_EXTRACT_SCALAR(tags, '$.Lifecycle') is null
-        and JSON_EXTRACT_SCALAR(tags, '$.DeleteAfter') is null
-        and TIMESTAMP_DIFF(CURRENT_TIMESTAMP(), start_time, DAY) > 180
-        then 'fail'
-        else 'pass'
+        (
+            JSON_VALUE(tags, '$.dlm:managed') IS NOT NULL
+        ) or (
+            JSON_VALUE(tags, '$.CreatedBy') = 'EC2 Image Builder'
+        )
+        then 'pass'
+        else 'fail'
     end as status,
     tags
 from {{ full_table_name("aws_ec2_ebs_snapshots") }}
