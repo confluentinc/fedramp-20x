@@ -12,8 +12,7 @@ select
     concat(context, '/', namespace, '/', name) as identifier,
     JSON_OBJECT() as metadata,
     case when
-        JSON_VALUE(status.phase) in ('Pending', 'Available')
-        and DATETIME_DIFF(CURRENT_DATETIME(), DATETIME(creation_timestamp), DAY) > 7
+        JSON_VALUE(status_phase) in ('Pending', 'Available')
         then 'fail'
         else 'pass'
     end as status,
