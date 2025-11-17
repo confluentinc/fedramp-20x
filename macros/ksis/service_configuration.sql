@@ -41,7 +41,7 @@
     {{ union() }}
 
 -- KSI-SVC-05: Use cryptographic methods to validate the integrity of machine-based information resources
-({{ rds_instances_should_use_customer_managed_kms_keys('KSI-SVC-05', '1.0') }}) -- Ensure Key rotation is enabled for all customer managed KMS keys
+({{ rds_instances_should_use_customer_managed_kms_keys('KSI-SVC-05', '1.0') }})
     {{ union() }}
 ({{ s3_buckets_should_be_encrypted_at_rest('KSI-SVC-05', '1.1') }})
     {{ union() }}
