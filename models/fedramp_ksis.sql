@@ -8,11 +8,8 @@ with
         {{ union() }}
         ({{ change_management() }})
         {{ union() }}
-
-{# Cybersecurity Education currently has no checks #}
-{# ({{ cybersecurity_education() }}) #}
-{# {{ union() }} #}
-
+        ({{ cybersecurity_education() }})
+        {{ union() }}
         ({{ cloud_native_architecture() }})
         {{ union() }}
         ({{ identity_and_access_management() }})
