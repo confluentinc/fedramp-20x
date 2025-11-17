@@ -13,6 +13,8 @@
     {{ union() }}
 ({{ s3_buckets_should_require_secure_transport('KSI-SVC-02', '1.3')}})
     {{ union() }}
+({{ rds_instances_should_force_ssl('KSI-SVC-02', '1.4') }})
+    {{ union() }}
 
 -- KSI-SVC-03: Encrypt information at rest by default
 ({{ ebs_volumes_should_be_encrypted_at_rest('KSI-SVC-03', '1.0') }})
