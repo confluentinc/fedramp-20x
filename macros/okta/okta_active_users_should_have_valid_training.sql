@@ -23,6 +23,7 @@ training_status as (
         training.rules_of_behavior_completed_within_12_months,
         training.cyber_awareness_challenge_and_certificate_completed_within_12_months
     from {{ full_table_name("workday_training") }} as training
+    where {{ partition_filter("training") }}
 )
 select
     '{{ framework }}' as framework,
