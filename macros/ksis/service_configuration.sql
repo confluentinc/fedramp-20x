@@ -41,15 +41,15 @@
     {{ union() }}
 
 -- KSI-SVC-05: Use cryptographic methods to validate the integrity of machine-based information resources
-({{ k8s_clusters_should_have_enforcement_webhooks('KSI-SVC-05', '1.0') }})
+({{ rds_instances_should_use_customer_managed_kms_keys('KSI-SVC-05', '1.0') }})
     {{ union() }}
-({{ k8s_has_image_enforcement_policies('KSI-SVC-05', '1.1') }})
-    {{ union() }}
-({{ k8s_image_enforcement_policies_should_not_ignore_failures('KSI-SVC-05', '1.2') }})
+({{ s3_buckets_should_be_encrypted_at_rest('KSI-SVC-05', '1.1') }})
     {{ union() }}
 
 -- KSI-SVC-06: Use automated key management systems to manage, protect, and regularly rotate digital keys and certificates.
 ({{ aws_cisv3_mapping('KSI-SVC-06', '1.0', '3.6') }}) -- Ensure Key rotation is enabled for all customer managed KMS keys
+    {{ union() }}
+({{ rds_instances_should_use_customer_managed_kms_keys('KSI-SVC-06', '1.1') }})
     {{ union() }}
 
 -- KSI-SVC-07: Use a consistent, risk-informed approach for applying security patches
