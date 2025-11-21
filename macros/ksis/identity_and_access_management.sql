@@ -18,15 +18,15 @@
 ({{ iam_root_user_has_no_access_keys('KSI-IAM-04', '1.0') }})
     {{ union() }}
 
--- KSI-IAM-05: Design identity and access management systems that assume resources will be compromised
+-- KSI-IAM-05: Configure identity and access management with measures that always verify each user or device can only access the resources they need.
 ({{ okta_behavior_rules_detect_compromise('KSI-IAM-05', '1.0') }})
     {{ union() }}
 
--- KSI-IAM-06: Automatically disable or otherwise secure accounts with privileged access in response to suspicious activity.
+-- KSI-IAM-06: Automatically disable or otherwise secure accounts with privileged access in response to suspicious activity
 ({{ okta_behavior_rules_suspicious_activity_requires_mfa('KSI-IAM-06', '1.0') }})
     {{ union() }}
 
--- KSI-IAM-07: Securely manage the lifecycle and privileges of all accounts, roles, and groups.
+-- KSI-IAM-07: Securely manage the lifecycle and privileges of all accounts, roles, and groups, using automation.
 ({{ okta_users_should_not_be_manually_created('KSI-IAM-07', '1.0') }})
     {{ union() }}
 ({{ iam_roles_for_engineer_access_use_saml('KSI-IAM-07', '1.1') }})

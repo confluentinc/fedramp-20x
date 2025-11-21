@@ -11,14 +11,13 @@
     {{ union() }}
 
 -- KSI-MLA-02: Regularly review and audit logs.
--- KSI-MLA-03: Rapidly detect and respond to vulnerabilities following requirements and recommendations in the FedRAMP Vulnerability Response and Detection standard
 
 -- KSI-MLA-05: Perform Infrastructure as Code and configuration evaluation and testing.
 ({{ ecr_images_should_be_scanned_for_vulnerabilities('KSI-MLA-05', '1.0') }})
     {{ union() }}
 
--- KSI-MLA-07: Maintain a list of information resources and event types that will be monitored, logged, and audited.
--- KSI-MLA-08: Use a least-privileged, role and attribute-based, and just-in-time access authorization model for access to log data.
+-- KSI-MLA-07: Maintain a list of information resources and event types that will be monitored, logged, and audited, then do so.
+-- KSI-MLA-08: Use a least-privileged, role and attribute-based, and just-in-time access authorization model for access to log data based on organizationally defined data sensitivity.
 ({{ eks_control_planes_should_use_oidc_access('KSI-MLA-08', '1.0') }})
     {{ union() }}
 ({{ iam_roles_for_engineer_access_use_saml('KSI-MLA-08', '1.1') }})
