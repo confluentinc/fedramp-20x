@@ -12,8 +12,8 @@ with training_data as (
         data_classification_and_handling_standard_policy_completion_date,
         -- Check if data classification and handling standard policy training is completed within the past 12 months
         case 
-            when data_classification_and_handling_standard_policy_completion_date is not null 
-                 and PARSE_DATE('%Y-%m-%d', data_classification_and_handling_standard_policy_completion_date) >= DATE_SUB(CURRENT_DATE(), INTERVAL 12 MONTH)
+            when data_classification_and_handling_standard_policy_completion_date != ''
+                 and PARSE_DATE('%m/%d/%Y', data_classification_and_handling_standard_policy_completion_date) >= DATE_SUB(CURRENT_DATE(), INTERVAL 12 MONTH)
             then true 
             else false 
         end as data_classification_valid

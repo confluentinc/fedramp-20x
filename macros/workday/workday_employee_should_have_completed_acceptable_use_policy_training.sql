@@ -12,8 +12,8 @@ with training_data as (
         acceptable_use_policy_completion_date,
         -- Check if acceptable use policy training is completed within the past 12 months
         case 
-            when acceptable_use_policy_completion_date is not null 
-                 and PARSE_DATE('%Y-%m-%d', acceptable_use_policy_completion_date) >= DATE_SUB(CURRENT_DATE(), INTERVAL 12 MONTH)
+            when acceptable_use_policy_completion_date != ''
+                 and PARSE_DATE('%m/%d/%Y', acceptable_use_policy_completion_date) >= DATE_SUB(CURRENT_DATE(), INTERVAL 12 MONTH)
             then true 
             else false 
         end as acceptable_use_policy_valid
