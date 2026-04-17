@@ -48,7 +48,7 @@ blocks:
         - name: "build"
           commands:
             - cd docs
-            - npm install
+            - npm ci
             - npm run build
 
   - name: "Deploy GitHub Pages"
@@ -64,5 +64,5 @@ blocks:
         - name: "build and deploy"
           commands:
             - cd docs
-            - npm install
+            - npm ci
             - USE_SSH=true npm run deploy
